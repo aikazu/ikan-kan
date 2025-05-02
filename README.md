@@ -13,6 +13,7 @@ Many incremental games follow the same pattern and quickly become repetitive. Ik
 - **Visually Engaging**: Watch your fish swim and your aquarium environments grow with your progress
 - **Special Events**: Lucky Bubbles, Expeditions, and Tourism systems add variety and surprise
 - **Deep Progression System**: Prestige mechanic ("Conservation Grants") for long-term gameplay
+- **Immersive Experience**: Fullscreen aquarium view with clean, intuitive UI and minimal distractions
 
 ## Game Phases
 
@@ -33,7 +34,7 @@ git clone https://github.com/yourusername/ikan-kan.git
 cd ikan-kan
 
 # Install dependencies
-npm install
+npm install --legacy-peer-deps
 
 # Start development server
 npm start
@@ -43,7 +44,8 @@ npm start
 
 - **v0.1.0**: Basic clicking mechanics, first upgrades, and tank visualization
 - **v0.2.0**: Improved fish visualization, breeding system, and tank capacity management
-- **v0.3.0** (Current): Full-screen responsive design, in-tank indicators, and enhanced UI/UX
+- **v0.3.0**: Full-screen responsive design, in-tank indicators, and enhanced UI/UX
+- **v0.3.4** (Current): Improved fullscreen layout, enhanced visuals, and UI refinements
 - **v0.4.0**: Fish variety system, Lucky Bubbles events, and achievements
 - **v0.5.0**: Multiple locations, visitor/tourism mechanics, and settings menu
 - **v0.6.0**: Expeditions system, fish encyclopedia, and achievement tracking
@@ -76,6 +78,7 @@ game.saveGame();
 - HTML5 Canvas for fish animations
 - GSAP for fluid animations
 - LocalStorage for save data
+- CSS for styling with advanced features like backdrop-filter
 
 ## Project Structure
 
@@ -89,8 +92,9 @@ ikan-kan/
 │   │   ├── systems/     # Game systems (economy, upgrades, etc.)
 │   │   └── events/      # Special events logic
 │   ├── store/           # Redux store configuration
+│   │   └── reducers/    # Domain-specific reducers
 │   ├── utils/           # Utility functions
-│   └── App.js           # Main application component
+│   └── App.tsx          # Main application component
 ├── PLANNING.md          # Project planning document
 ├── TASK.md              # Task tracking
 ├── CHANGELOG.md         # Version history

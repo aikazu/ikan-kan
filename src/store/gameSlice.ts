@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { GameState } from './gameModels';
+
 import { initialState } from './initialData';
 
 // Import reducers from separate files
@@ -7,22 +7,19 @@ import {
   feedFishReducer, 
   clearBreedingEventReducer 
 } from './reducers/breedingReducers';
-
 import { 
-  buyTankReducer, 
-  buyLocationReducer, 
-  buyUpgradeReducer 
-} from './reducers/purchaseReducers';
-
+  gameTickReducer 
+} from './reducers/gameLoopReducers';
 import { 
   switchLocationReducer, 
   saveGameReducer, 
   loadGameReducer 
 } from './reducers/navigationReducers';
-
 import { 
-  gameTickReducer 
-} from './reducers/gameLoopReducers';
+  buyTankReducer, 
+  buyLocationReducer, 
+  buyUpgradeReducer 
+} from './reducers/purchaseReducers';
 
 // Create the slice
 const gameSlice = createSlice({

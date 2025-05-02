@@ -1,5 +1,34 @@
-import { Tank, Upgrade, Location, GameState } from './gameModels';
+import { Tank, Upgrade, Location, GameState, FishSpecies } from './gameModels';
 import { createRandomFish } from './gameUtils';
+
+// Initial fish species data
+export const initialFishSpecies: Record<string, FishSpecies> = {
+  common: {
+    id: 'common',
+    name: 'Common Fish',
+    color: '#FFA500', // Orange
+    basePointValue: 1,
+    breedingBonus: 0,
+    rarity: 1, // Most common
+  },
+  goldie: {
+    id: 'goldie',
+    name: 'Goldie',
+    color: '#FFD700', // Gold
+    basePointValue: 2, // Generates more points
+    breedingBonus: 0.01, // Slightly better breeding chance
+    rarity: 3, // Less common
+  },
+  speedy: {
+    id: 'speedy',
+    name: 'Speedy Fin',
+    color: '#ADD8E6', // Light blue
+    basePointValue: 1,
+    breedingBonus: 0,
+    rarity: 2, // Somewhat common
+    // Can add speed multiplier later
+  },
+};
 
 // Initial tanks data with 5 levels
 export const initialTanks: Record<string, Tank> = {
@@ -94,7 +123,7 @@ export const initialLocations: Record<string, Location> = {
     tankId: 'fishBowl',
     fishCount: 1,
     fish: [
-      createRandomFish('fish-1', 'guppy', false, 'location-1')
+      createRandomFish('fish-1', 'common', false, 'location-1', initialFishSpecies['common'])
     ],
     unlocked: true,
     cost: 0
@@ -123,7 +152,7 @@ export const initialLocations: Record<string, Location> = {
 
 // Define initial state
 export const initialState: GameState = {
-  version: '0.3.1',
+  version: '0.3.4',
   fishPoints: 0,
   fishCount: 1, // Start with one fish
   clickPower: 1,
@@ -133,6 +162,8 @@ export const initialState: GameState = {
   tanks: initialTanks,
   locations: initialLocations,
   upgrades: initialUpgrades,
+  fishSpecies: initialFishSpecies,
+  discoveredSpecies: ['common'],
   lastSaved: Date.now(),
   lastTick: Date.now(),
   capacityReached: false,

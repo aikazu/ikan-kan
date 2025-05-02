@@ -9,6 +9,7 @@ The primary goal is to create an engaging, visually appealing idle game that:
 - Offers meaningful choices and multiple progression paths
 - Scales smoothly from simple clicking to complex management
 - Maintains player interest through varied visual and gameplay elements
+- Creates an immersive, fullscreen experience with minimal UI distractions
 
 ## Architectural Overview
 
@@ -28,6 +29,7 @@ The primary goal is to create an engaging, visually appealing idle game that:
    - Renders the game interface
    - Handles user interactions
    - Updates visual elements based on game state
+   - Provides responsive, fullscreen experience across devices
 
 4. **Entity System**
    - Manages fish instances and their properties
@@ -66,6 +68,8 @@ The primary goal is to create an engaging, visually appealing idle game that:
 - **Performance Optimization**: Efficient handling of potentially thousands of entities
 - **Storage Limits**: Local storage constraints for save data
 - **Animation Performance**: Balance between visual appeal and performance
+- **Canvas Rendering**: Optimized drawing for smooth fish animations
+- **Viewport Utilization**: Properly fill available screen space on all devices
 
 ## Performance Requirements
 
@@ -74,17 +78,19 @@ The primary goal is to create an engaging, visually appealing idle game that:
 - **Save Data Size**: Compress save data to stay within local storage limits (5-10MB)
 - **Load Time**: Initial game load under 3 seconds on average connections
 - **Tick Rate**: Game logic updates at minimum 30 ticks per second
+- **Responsive Layout**: UI adaptations for different screen sizes without performance impact
 
 ## Tech Stack
 
 - **Frontend Framework**: React for UI components and state management
 - **State Management**: Redux for global state management
 - **Rendering**: HTML5 Canvas for fish animations and environments
-- **Styling**: CSS with SASS for preprocessing
+- **Styling**: CSS with advanced features like backdrop-filter
 - **Build Tools**: Webpack for bundling and optimization
 - **Testing**: Jest for unit and integration tests
 - **Storage**: LocalStorage for saving game progress
 - **Animations**: GreenSock Animation Platform (GSAP) for smooth animations
+- **TypeScript**: For type safety and better code quality
 
 ## Development Approach and Methodology
 
@@ -92,6 +98,7 @@ The primary goal is to create an engaging, visually appealing idle game that:
 - **Feature-Based Iterations**: Complete one gameplay feature fully before moving to the next
 - **Playtest-Driven Design**: Regular playtesting to ensure balance and engagement
 - **Modular Architecture**: Components designed for reusability and clear separation of concerns
+- **Continuous Improvement**: Regular UI and performance enhancements based on playtesting
 
 ## Security Considerations
 
@@ -106,6 +113,8 @@ The primary goal is to create an engaging, visually appealing idle game that:
 - **Performance Tests**: To ensure smooth operation with large numbers of entities
 - **Balance Testing**: Simulations to verify progression curve
 - **Playtesting**: Regular sessions with real players to evaluate engagement
+- **Cross-browser Testing**: Ensure consistent experience across browsers
+- **Device Testing**: Validate responsive design on various screen sizes
 
 ## Deployment Pipeline
 
@@ -118,4 +127,13 @@ The primary goal is to create an engaging, visually appealing idle game that:
 
 - **Analytics Integration**: Event tracking for gameplay patterns
 - **Social Sharing**: Optional mechanics for sharing achievements
-- **Cloud Save**: Potential future integration for cross-device play 
+- **Cloud Save**: Potential future integration for cross-device play
+
+## UI/UX Design Principles
+
+- **Clean Interface**: Minimal UI elements that don't obstruct gameplay
+- **Responsive Design**: Adapts seamlessly to different screen sizes and orientations
+- **Visual Feedback**: Clear indicators for player actions and game events
+- **Accessibility**: Consideration for color contrast and interaction patterns
+- **Immersive Experience**: Fullscreen gameplay that utilizes available viewport space
+- **Contextual Controls**: UI elements appear when needed and stay out of the way otherwise 

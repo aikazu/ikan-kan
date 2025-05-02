@@ -1,58 +1,40 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
+
 import { useSelector, useDispatch } from 'react-redux';
+
 import { RootState } from '../store';
-import { switchLocation, feedFish, buyTank, buyUpgrade, buyLocation } from '../store/gameSlice';
-import { Tank, Upgrade, Location, GameState } from '../store/gameModels';
 import LocationBox from './LocationBox';
 import SingleLocationView from './SingleLocationView';
+import { Tank, Upgrade, Location, GameState } from '../store/gameModels';
+import { switchLocation, feedFish, buyTank, buyUpgrade, buyLocation } from '../store/gameSlice';
 import './Aquarium.css';
 
 /**
- * Main Aquarium component that manages the fish tank display and interactions
+ * Hook to manage feedback popups for fish feeding
  */
-const Aquarium: React.FC = () => {
-  const dispatch = useDispatch();
-  const [controlsVisible] = useState(true);
-  
-  const { 
-    fishPoints, 
-    locations, 
-    tanks, 
-    upgrades,
-    breedingEvent, 
-    capacityReached, 
-    currentLocationId, 
-    clickPower 
-  } = useSelector((state: RootState) => state.game as GameState);
-  
-  // State for feedback popups when clicking tank
+const useFeedbackPopups = () => {
   const [feedbackPopups, setFeedbackPopups] = useState<Array<{id: number, x: number, y: number, opacity: number, timestamp: number}>>([]);
   const [popupCounter, setPopupCounter] = useState(0);
   
-  // Handle click on tank to feed fish
-  const handleTankClick = (e: React.MouseEvent<HTMLCanvasElement>, locationId: string) => {
-    if (locationId === currentLocationId) {
-      dispatch(feedFish());
-      
-      // Create a visual feedback popup at click position
-      const canvas = e.currentTarget;
-      const rect = canvas.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-      
-      // Add new popup
-      const newPopup = {
-        id: popupCounter,
-        x,
-        y,
-        opacity: 1,
-        timestamp: Date.now(),
-      };
-      
-      setFeedbackPopups(prev => [...prev, newPopup]);
-      setPopupCounter(prev => prev + 1);
-    }
-  };
+  // Create a new popup at click position
+  const addPopup = useCallback((e: React.MouseEvent<HTMLCanvasElement>) => {
+    const canvas = e.currentTarget;
+    const rect = canvas.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    
+    // Add new popup
+    const newPopup = {
+      id: popupCounter,
+      x,
+      y,
+      opacity: 1,
+      timestamp: Date.now(),
+    };
+    
+    setFeedbackPopups(prev => [...prev, newPopup]);
+    setPopupCounter(prev => prev + 1);
+  }, [popupCounter]);
   
   // Animation for feedback popups
   useEffect(() => {
@@ -76,22 +58,80 @@ const Aquarium: React.FC = () => {
     return () => cancelAnimationFrame(animationFrame);
   }, [feedbackPopups]);
   
-  // Control Panel action handlers
-  const handleBuyTank = (tankId: string) => {
+  return { feedbackPopups, addPopup };
+};
+
+/**
+ * Hook to handle tank and upgrade actions
+ */
+const useAquariumActions = () => {
+  const dispatch = useDispatch();
+  
+  const handleTankClick = useCallback((e: React.MouseEvent<HTMLCanvasElement>, locationId: string, currentLocationId: string) => {
+    if (locationId === currentLocationId) {
+      dispatch(feedFish());
+      return true; // Return true if we processed a feed action
+    }
+    return false; // Return false if no action taken
+  }, [dispatch]);
+  
+  const handleBuyTank = useCallback((tankId: string) => {
     dispatch(buyTank(tankId));
-  };
+  }, [dispatch]);
   
-  const handleBuyUpgrade = (upgradeId: string) => {
+  const handleBuyUpgrade = useCallback((upgradeId: string) => {
     dispatch(buyUpgrade(upgradeId));
-  };
+  }, [dispatch]);
   
-  const handleBuyLocation = (locationId: string) => {
+  const handleBuyLocation = useCallback((locationId: string) => {
     dispatch(buyLocation(locationId));
-  };
+  }, [dispatch]);
   
-  const handleLocationClick = (locationId: string) => {
-    if ((locations as Record<string, Location>)[locationId].unlocked && locationId !== currentLocationId) {
+  const handleLocationClick = useCallback((locationId: string, locations: Record<string, Location>, currentLocationId: string) => {
+    if (locations[locationId].unlocked && locationId !== currentLocationId) {
       dispatch(switchLocation(locationId));
+    }
+  }, [dispatch]);
+  
+  return { 
+    handleTankClick, 
+    handleBuyTank, 
+    handleBuyUpgrade, 
+    handleBuyLocation, 
+    handleLocationClick 
+  };
+};
+
+/**
+ * Main Aquarium component that manages the fish tank display and interactions
+ */
+const Aquarium: React.FC = () => {
+  const [controlsVisible] = useState(true);
+  const { feedbackPopups, addPopup } = useFeedbackPopups();
+  const { 
+    handleTankClick, 
+    handleBuyTank, 
+    handleBuyUpgrade, 
+    handleBuyLocation, 
+    handleLocationClick 
+  } = useAquariumActions();
+  
+  const { 
+    fishPoints, 
+    locations, 
+    tanks, 
+    upgrades,
+    breedingEvent, 
+    capacityReached, 
+    currentLocationId, 
+    clickPower 
+  } = useSelector((state: RootState) => state.game as GameState);
+  
+  // Wrapper for tank click that also triggers popup
+  const onTankClick = (e: React.MouseEvent<HTMLCanvasElement>, locationId: string) => {
+    const feedAction = handleTankClick(e, locationId, currentLocationId);
+    if (feedAction) {
+      addPopup(e);
     }
   };
   
@@ -125,6 +165,10 @@ const Aquarium: React.FC = () => {
   // Get all unlocked locations
   const unlockedLocations = Object.values(locations as Record<string, Location>).filter(location => location.unlocked);
   
+  const onLocationClick = (locationId: string) => {
+    handleLocationClick(locationId, locations, currentLocationId);
+  };
+  
   return (
     <div className="integrated-aquarium">
       {/* Full-screen tank display */}
@@ -141,8 +185,8 @@ const Aquarium: React.FC = () => {
                   location={location}
                   tank={locationTank}
                   isCurrentLocation={location.id === currentLocationId}
-                  onLocationClick={handleLocationClick}
-                  onTankClick={handleTankClick}
+                  onLocationClick={onLocationClick}
+                  onTankClick={onTankClick}
                   feedbackPopups={feedbackPopups}
                   clickPower={clickPower}
                   breedingEvent={breedingEvent}
@@ -155,7 +199,7 @@ const Aquarium: React.FC = () => {
           <SingleLocationView
             currentLocation={currentLocation}
             currentTank={currentTank}
-            handleTankClick={handleTankClick}
+            handleTankClick={onTankClick}
             feedbackPopups={feedbackPopups}
             capacityReached={capacityReached}
             fishPoints={fishPoints}

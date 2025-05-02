@@ -1,6 +1,9 @@
 import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { loadGame, gameTick } from '../store/gameSlice';
+
+import { useDispatch, useSelector } from 'react-redux';
+
+import { RootState } from '../store';
+import { loadGame, gameTick, saveGame } from '../store/gameSlice';
 import { loadGameFromStorage, saveGameToStorage } from '../utils/gameStorage';
 
 /**
@@ -9,6 +12,7 @@ import { loadGameFromStorage, saveGameToStorage } from '../utils/gameStorage';
  */
 const GameSetup: React.FC = () => {
   const dispatch = useDispatch();
+  const gameState = useSelector((state: RootState) => state.game);
   
   // Load saved game (if exists) when component mounts
   useEffect(() => {
@@ -20,12 +24,12 @@ const GameSetup: React.FC = () => {
     
     // Set up auto-save every 30 seconds
     const autoSaveInterval = setInterval(() => {
-      // Will need to get the current state here
-      // Using a thunk would be better, but for simplicity we'll handle it elsewhere
+      saveGameToStorage(gameState);
+      dispatch(saveGame());
     }, 30000);
     
     return () => clearInterval(autoSaveInterval);
-  }, [dispatch]);
+  }, [dispatch, gameState]);
   
   // Start the game loop
   useEffect(() => {

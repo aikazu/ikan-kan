@@ -6,6 +6,7 @@
   height: 100%;
   position: relative;
   overflow: hidden;
+  max-width: 100%;
 }
 
 .aquarium-container {
@@ -16,9 +17,10 @@
   height: 100%;
   background-size: cover;
   background-position: center;
-  background-color: #f0f7f9;
+  background-color: #80c5ff;
   overflow: hidden;
   border-radius: 0px;
+  max-width: 100%;
 }
 
 /* Canvas and tank display */
@@ -27,6 +29,7 @@
   flex: 1;
   height: 100%;
   overflow: hidden;
+  width: 100%;
 }
 
 .canvas-container canvas {
@@ -36,11 +39,20 @@
   object-fit: cover;
   background-color: transparent;
   transition: filter 0.3s ease;
+  cursor: pointer;
 }
 
 .tank-with-controls {
   display: flex;
   flex: 1;
+  height: 100%;
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+}
+
+.single-location {
+  width: 100%;
   height: 100%;
   position: relative;
 }
@@ -237,47 +249,24 @@
   }
 }
 
-/* Controls panel and UI elements */
-.integrated-controls {
+/* Instruction tooltip */
+.instruction-tooltip {
   position: absolute;
-  right: 15px;
-  top: 15px;
-  z-index: 10;
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  width: auto;
-  max-width: 320px;
-  pointer-events: auto;
-}
-
-.control-section {
-  padding: 16px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.control-section h2 {
-  font-size: 1rem;
-  margin: 0 0 12px 0;
-  color: #0077be;
-  border-bottom: 1px solid rgba(234, 234, 234, 0.5);
-  padding-bottom: 8px;
-  position: relative;
-  text-align: center;
-}
-
-.control-section h2::after {
-  content: '';
-  position: absolute;
-  bottom: -1px;
+  top: 50%;
   left: 50%;
-  transform: translateX(-50%);
-  width: 60px;
-  height: 2px;
-  background: linear-gradient(to right, #0077be, #00a8e8);
-  border-radius: 2px;
+  transform: translate(-50%, -50%);
+  background-color: rgba(255, 255, 255, 0.8);
+  color: #0077be;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(4px);
+  z-index: 150;
+  pointer-events: none;
+  opacity: 0.8;
+  transition: opacity 0.3s ease;
 }
 
 /* Upgrade and purchase UI */

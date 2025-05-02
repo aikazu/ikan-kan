@@ -1,7 +1,8 @@
 import React, { useRef, useEffect } from 'react';
-import { Location, Tank, Fish } from '../store/gameModels';
-import { drawTankBackground } from './TankRenderer';
+
 import { drawFish, BreedingEvent } from './FishRenderer';
+import { drawTankBackground } from './TankRenderer';
+import { Location, Tank, Fish } from '../store/gameModels';
 import './LocationBox.css';
 
 interface LocationBoxProps {

@@ -1,8 +1,9 @@
-import React, { useRef, useEffect } from 'react';
-import StatsDisplay from './StatsDisplay';
-import GameControls from './GameControls';
-import { drawTankBackground } from './TankRenderer';
+import React, { useRef, useEffect, useState } from 'react';
+
 import { drawFish, BreedingEvent } from './FishRenderer';
+import GameControls from './GameControls';
+import StatsDisplay from './StatsDisplay';
+import { drawTankBackground } from './TankRenderer';
 import { Location, Tank, Upgrade, Fish } from '../store/gameModels';
 
 interface SingleLocationViewProps {
@@ -47,6 +48,8 @@ const SingleLocationView: React.FC<SingleLocationViewProps> = ({
   // Add ref for the canvas
   const singleCanvasRef = useRef<HTMLCanvasElement>(null);
   const animationFrameIdRef = useRef<number | null>(null);
+  // Add state to track if user has clicked
+  const [hasClicked, setHasClicked] = useState(false);
   
   // Set up animation
   useEffect(() => {
@@ -99,6 +102,14 @@ const SingleLocationView: React.FC<SingleLocationViewProps> = ({
       window.removeEventListener('resize', resizeCanvas);
     };
   }, [currentLocation, breedingEvent, currentLocationId]);
+
+  // Custom click handler to track first click
+  const handleClick = (e: React.MouseEvent<HTMLCanvasElement>) => {
+    if (!hasClicked) {
+      setHasClicked(true);
+    }
+    handleTankClick(e, currentLocationId);
+  };
   
   return (
     <div className="single-location">
@@ -113,8 +124,7 @@ const SingleLocationView: React.FC<SingleLocationViewProps> = ({
         <div className="canvas-container">
           <canvas 
             ref={singleCanvasRef}
-            onClick={(e) => handleTankClick(e, currentLocationId)} 
-            style={{ cursor: 'pointer', width: '100%', height: '100%' }}
+            onClick={handleClick} 
           />
           
           {/* Render feedback popups */}
@@ -132,10 +142,12 @@ const SingleLocationView: React.FC<SingleLocationViewProps> = ({
             </div>
           ))}
           
-          {/* Instruction tooltip */}
-          <div className="instruction-tooltip">
-            Click tank to feed fish
-          </div>
+          {/* Instruction tooltip - only show if user hasn't clicked */}
+          {!hasClicked && (
+            <div className="instruction-tooltip">
+              Click tank to feed fish
+            </div>
+          )}
         </div>
         
         {/* Game controls */}
@@ -150,7 +162,10 @@ const SingleLocationView: React.FC<SingleLocationViewProps> = ({
           onBuyLocation={handleBuyLocation}
           onBuyUpgrade={handleBuyUpgrade}
           controlsVisible={controlsVisible}
-          onToggleControls={() => {}}
+          onToggleControls={() => {
+            // Controls visibility is managed by parent component
+            // This is a required prop but not needed in this view
+          }}
         />
       </div>
     </div>

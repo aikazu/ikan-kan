@@ -5,6 +5,43 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.6] - 2023-05-31
+
+### Changed
+- Centered the footer watermark for better visual balance
+- Refactored large functions in tankDecorations.ts to improve code maintainability
+- Reduced function complexity by breaking down large arrow functions into smaller utility functions
+
+## [0.3.5] - 2023-05-30
+
+### Added
+- Comprehensive ESLint configuration with better import resolution
+- Linting scripts in package.json for consistent code quality checks
+
+### Changed
+- Refactored components to improve code organization and maintainability
+- Extracted smaller components from large files to improve readability
+- Updated React component patterns to use hooks more effectively
+- Improved type safety with better TypeScript practices
+
+### Fixed
+- Fixed critical ESLint errors preventing successful builds
+- Addressed unescaped HTML entities in JSX
+- Fixed empty arrow function in SingleLocationView
+
+## [0.3.4] - 2023-05-26
+
+### Fixed
+- Addressed ESLint warnings for unused imports in `GameSetup.tsx` and `gameSlice.ts`.
+- Fixed layout issue causing the right side of the screen to be cut off by adjusting component and global CSS.
+- Resolved visual distraction by removing the gravel rendering from the bottom of the tank.
+- Corrected CSS positioning to ensure game elements utilize the full screen width.
+
+### Changed
+- Implemented auto-save functionality in `GameSetup.tsx` to utilize `saveGameToStorage`.
+- Iteratively refined footer styling, removing distracting animations and settling on a clean corner watermark.
+- Improved tank bubble rendering for a more subtle and natural appearance.
+
 ## [0.3.3] - 2023-05-22
 
 ### Changed

@@ -1,20 +1,17 @@
-import { Fish } from './gameModels';
+import { Fish, FishSpecies } from './gameModels';
 
 // Helper function to generate a random fish with location
-export const createRandomFish = (id: string, type: string = 'guppy', isNew: boolean = true, locationId: string = 'location-1'): Fish => {
-  // Generate random color based on type
-  let color = '#ff7700'; // Default orange
-  if (type === 'guppy') {
-    // Random orange to red hue
-    const r = 220 + Math.floor(Math.random() * 35);
-    const g = 100 + Math.floor(Math.random() * 50);
-    const b = Math.floor(Math.random() * 50);
-    color = `rgb(${r}, ${g}, ${b})`;
-  }
+export const createRandomFish = (
+  id: string, 
+  speciesId: string, // Now using speciesId
+  isNew = true, 
+  locationId = 'location-1',
+  speciesData: FishSpecies // Pass species data
+): Fish => {
   
   return {
     id,
-    type,
+    speciesId,
     position: {
       x: 10 + Math.random() * 80, // Keep away from edges (10%-90% of container)
       y: 10 + Math.random() * 80,
@@ -22,9 +19,10 @@ export const createRandomFish = (id: string, type: string = 'guppy', isNew: bool
     velocity: {
       x: (Math.random() - 0.5) * 5, // Random direction, speed between -2.5 and 2.5
       y: (Math.random() - 0.5) * 3,
+      // TODO: Adjust velocity based on speciesData later (e.g., for 'speedy')
     },
     size: 0.8 + Math.random() * 0.4, // Size multiplier between 0.8 and 1.2
-    color,
+    color: speciesData.color, // Use color from species data
     lastUpdate: Date.now(),
     isNew,
     locationId

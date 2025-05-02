@@ -1,5 +1,6 @@
-import { GameState } from '../gameModels';
 import { PayloadAction } from '@reduxjs/toolkit';
+
+import { GameState } from '../gameModels';
 
 // Buy a tank upgrade
 export const buyTankReducer = (state: GameState, action: PayloadAction<string>) => {

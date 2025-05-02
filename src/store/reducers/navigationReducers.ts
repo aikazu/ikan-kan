@@ -1,5 +1,6 @@
-import { GameState } from '../gameModels';
 import { PayloadAction } from '@reduxjs/toolkit';
+
+import { GameState } from '../gameModels';
 
 // Switch to a different location
 export const switchLocationReducer = (state: GameState, action: PayloadAction<string>) => {

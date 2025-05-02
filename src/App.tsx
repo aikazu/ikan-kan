@@ -1,5 +1,7 @@
 import React from 'react';
+
 import { useSelector } from 'react-redux';
+
 import './App.css';
 import Aquarium from './components/Aquarium';
 import GameSetup from './game/GameSetup';
