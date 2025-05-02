@@ -1,0 +1,42 @@
+.app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  max-width: 100%;
+  width: 100%;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #f0f8ff;
+}
+
+.app-main {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+  background-color: transparent;
+}
+
+.app-footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+  padding: 5px 0;
+  color: rgba(102, 102, 102, 0.6);
+  font-size: 0.7rem;
+  z-index: 10;
+  pointer-events: none;
+}
+
+@media (max-width: 768px) {
+  .app {
+    padding: 5px;
+  }
+  
+  .app-header {
+    flex-direction: column;
+    text-align: center;
+  }
+} 

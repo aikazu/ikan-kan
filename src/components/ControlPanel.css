@@ -1,0 +1,216 @@
+/* Modern control panel styling */
+.control-panel {
+  background-color: #ffffff;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+  flex: 1;
+  min-width: 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.control-section {
+  background-color: #f8f9fa;
+  border-radius: 10px;
+  padding: 15px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+}
+
+.control-section:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.control-section h2 {
+  font-size: 1.1rem;
+  margin-bottom: 12px;
+  color: #333;
+  border-bottom: 1px solid #eaeaea;
+  padding-bottom: 8px;
+  position: relative;
+}
+
+.control-section h2::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 50px;
+  height: 3px;
+  background: linear-gradient(to right, #0077be, #00a8e8);
+  border-radius: 3px;
+}
+
+.feed-button-container {
+  position: relative;
+  width: 100%;
+}
+
+.feed-button {
+  background-color: #0077be;
+  color: white;
+  padding: 15px 25px;
+  font-size: 1.2rem;
+  border-radius: 50px;
+  transition: all 0.2s;
+  box-shadow: 0 4px 6px rgba(0, 119, 190, 0.2);
+  width: 100%;
+}
+
+.feed-button:hover {
+  background-color: #0066a2;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 8px rgba(0, 119, 190, 0.3);
+}
+
+.feed-button:active {
+  transform: translateY(1px);
+  box-shadow: 0 2px 4px rgba(0, 119, 190, 0.2);
+}
+
+.feedback-popup {
+  position: absolute;
+  color: #4CAF50;
+  font-weight: bold;
+  font-size: 1.1rem;
+  pointer-events: none;
+  text-shadow: 0 0 3px rgba(255, 255, 255, 0.7);
+  z-index: 10;
+  transition: top 0.2s, opacity 0.2s;
+  animation: pop-up 0.3s ease-out;
+}
+
+@keyframes pop-up {
+  0% {
+    transform: scale(0.5);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Upgrade hint styling */
+.upgrade-hint {
+  font-style: italic;
+  color: #ff6b6b;
+  margin: 5px 0 15px;
+  font-size: 0.9rem;
+  text-align: center;
+  background-color: rgba(255, 107, 107, 0.1);
+  padding: 8px 12px;
+  border-radius: 6px;
+  border-left: 3px solid #ff6b6b;
+}
+
+.upgrade-section {
+  border-left: 3px solid #ff6b6b;
+  animation: pulse-border 1.5s infinite alternate;
+  background-color: #fff9f9;
+}
+
+@keyframes pulse-border {
+  from {
+    border-left-color: #ff6b6b;
+  }
+  to {
+    border-left-color: #ffb5b5;
+  }
+}
+
+/* Purchase items styling */
+.purchase-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+  margin-bottom: 10px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  transition: all 0.2s ease;
+  border-left: 3px solid transparent;
+}
+
+.purchase-item:hover {
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+  border-left-color: #4caf50;
+  transform: translateX(3px);
+}
+
+.purchase-info {
+  flex: 1;
+  padding-right: 10px;
+}
+
+.purchase-name {
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: #333;
+}
+
+.purchase-description {
+  font-size: 0.85rem;
+  color: #666;
+  line-height: 1.4;
+}
+
+.purchase-button {
+  background: linear-gradient(to bottom, #4caf50, #45a049);
+  color: white;
+  padding: 8px 15px;
+  border-radius: 6px;
+  min-width: 80px;
+  font-weight: bold;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease;
+  border: none;
+  cursor: pointer;
+}
+
+.purchase-button:hover:not(:disabled) {
+  background: linear-gradient(to bottom, #45a049, #3d8b40);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  transform: translateY(-2px);
+}
+
+.purchase-button:active:not(:disabled) {
+  transform: translateY(1px);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.purchase-button:disabled {
+  background: linear-gradient(to bottom, #cccccc, #bbbbbb);
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* Instruction text */
+.instruction-text {
+  color: #0088cc;
+  font-style: italic;
+  text-align: center;
+  margin: 10px 0;
+  padding: 8px;
+  background-color: rgba(0, 136, 204, 0.1);
+  border-radius: 6px;
+}
+
+.select-button {
+  background-color: #0077be;
+}
+
+.select-button:hover {
+  background-color: #005f95;
+}
+
+@media (max-width: 768px) {
+  .control-panel {
+    min-width: 100%;
+  }
+} 

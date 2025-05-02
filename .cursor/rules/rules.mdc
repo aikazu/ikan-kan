@@ -1,0 +1,148 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+Initialize with creating PLANNING.md TASK.md CHANGELOG.md and README.md if its missing.
+
+PLANNING.md
+
+- Purpose: Define the high-level vision, architecture, and technical foundations
+- Include:
+  - Project vision and goals (what problem does it solve?)
+  - Architectural overview with key components and their interactions
+  - Non-Functional Requirements (NFRs)
+  - Performance requirements
+  - Complete tech stack details (languages, frameworks, libraries)
+  - Development approach and methodology
+  - Security considerations
+  - Testing strategy
+  - Deployment pipeline
+  - Integration points with other systems
+- Style:
+  - Organize with clear headings and subheadings
+  - Include diagrams when explaining architecture (as links or descriptions)
+  - Separate sections for different architectural concerns
+  - Document trade-offs and reasoning behind technical choices
+- Constraints:
+  - Focus on "what" and "why", leave implementation details to code
+  - Keep updated when architectural decisions change
+  - Highlight dependencies between components
+  - This document describes the _intended_ architecture. The codebase is the ultimate source of truth for implementation details.
+
+TASK.md
+
+- Purpose: Track current tasks, backlog items, and progress
+- Include:
+  - Active tasks table with columns:
+    - Task ID (unique identifier like T001)
+    - Description (clear, actionable statement)
+    - Priority (High/Medium/Low)
+    - Status (To Do/In Progress/Done)
+    - Dependencies (other task IDs this depends on)
+    - Notes (blockers, challenges, discoveries)
+  - Backlog tasks table with similar structure but for future work
+  - Completed tasks section with completion dates
+  - Current sprint or milestone information
+  - No need to set timestamp
+  - Known blockers or impediments
+- Style:
+  - Use markdown tables for structured data
+  - Keep task descriptions concise but specific
+  - Include enough detail that tasks can be worked on independently
+  - Prefix task IDs with "T" for better reference
+- Constraints:
+  - Update task statuses regularly
+  - Move completed tasks to the completed section
+  - Break large tasks into smaller subtasks
+  - Include context but avoid unnecessarily verbose descriptions
+  - Ensure Task IDs are unique and consistently used in commit messages or PRs for traceability.
+
+CHANGELOG.md
+
+- Purpose: Document version history and significant changes
+- Include:
+  - Version number (semantic versioning: MAJOR.MINOR.PATCH)
+  - Release date
+  - Changes categorized as:
+    - Added (new features)
+    - Changed (changes to existing functionality)
+    - Deprecated (features to be removed in upcoming releases)
+    - Removed (features removed in this release)
+    - Fixed (bug fixes)
+    - Security (security vulnerabilities fixed)
+  - Migration instructions for breaking changes
+  - Contributors for each release (optional)
+- Style:
+  - Reverse chronological order (newest first)
+  - Link to relevant issues or pull requests when applicable
+  - Clear headings for each version
+  - Group changes by type within each version
+- Constraints:
+  - Be specific about changes (avoid "various improvements")
+  - Write for humans, not machines
+  - Focus on user-impacting changes
+  - Maintain consistent formatting between versions
+  - Update the changelog _before_ tagging a new release.
+
+README.md
+
+- Purpose: Serve as the entry point and overview for the project
+- Include:
+  - Project name and concise description (1-2 sentences)
+  - Problem the project solves
+  - Key features (3-5 bullet points)
+  - Installation instructions
+  - Basic usage examples with code snippets
+  - Technology stack
+  - Project structure overview
+  - Links to other documentation files
+  - License information
+  - Contact/contributor information
+  - Clarify that the "Technology Stack" listed here is a high-level overview, while `PLANNING.md` might contain more detailed justifications.
+- Style:
+  - Clear and concise language
+  - Code blocks for all commands and examples
+  - Proper markdown formatting with headings, lists, and emphasis
+  - Screenshots or diagrams if relevant (with alt text)
+- Constraints:
+  - Keep under 500 lines
+  - Avoid jargon without explanation
+  - Focus on helping new users get started quickly
+
+## 📚 Project Context Management
+
+- **Initialize with project scan**: Begin by reviewing `PLANNING.md`, `TASK.md`, `CHANGELOG.md`, `README.md` and project structure before any work
+- **Maintain mental model**: Create and update a mental map of the codebase architecture during the session
+- **Track contextual changes**: Note modifications to architecture or design patterns as the session progresses
+- **Check for recent updates**: Verify if any files have been modified since last interaction
+- **Efficient work**: Clear task one by one, max 2 task at same coversation
+
+## 🔍 Code Quality & Structure
+
+- **Enforce modular design**: Limit files to max 300 lines of code; split by responsibility when approaching this limit
+- **Follow consistent patterns**: Match existing code style, naming conventions, and architecture patterns
+- **Manage code complexity**: Keep functions under 50 lines and limit nesting to 3 levels
+- **Optimize imports**: Organize imports by standard library → third-party → local modules with appropriate spacing
+
+## 🧩 Implementation Strategy
+
+- **Plan before coding**: Outline approach before writing implementation code
+- **Incremental development**: Build functionality in small, testable increments
+- **Explicit error handling**: Add comprehensive error cases with informative messages
+
+## 🤖 AI Assistant Behavior
+
+- **Prioritize understanding**: Ask clarifying questions before proceeding with ambiguous tasks
+- **Expose assumptions**: Explicitly state assumptions when making implementation decisions
+- **Verify dependencies**: Confirm all libraries exist and are compatible before suggesting them
+- **Maintain project history**: Reference past decisions and discussions when relevant
+- **Show alternatives**: Present multiple approaches for complex problems with pros/cons
+- **Admit limitations**: Be transparent when a task exceeds current capabilities or context
+
+## 🔄 Continuous Improvement
+
+- **Review refactoring opportunities**: Suggest code improvements as patterns emerge
+- **Track technical debt**: Document shortcuts or temporary solutions in a dedicated section
+- **Learn from feedback**: Adapt assistance style based on user interactions and preferences
+- **Balance pragmatism and idealism**: Consider both quick solutions and long-term code health
