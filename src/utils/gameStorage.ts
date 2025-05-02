@@ -1,3 +1,5 @@
+// Local imports
+import { logInfo, logError } from './logging';
 import { GameState } from '../store/gameModels';
 
 // Local storage key
@@ -10,9 +12,9 @@ export const saveGameToStorage = (state: GameState): void => {
   try {
     const serializedState = JSON.stringify(state);
     localStorage.setItem(STORAGE_KEY, serializedState);
-    console.log('Game saved successfully');
+    logInfo('Game saved successfully');
   } catch (error) {
-    console.error('Failed to save game:', error);
+    logError('Failed to save game:', error);
   }
 };
 
@@ -25,10 +27,10 @@ export const loadGameFromStorage = (): GameState | null => {
     if (!serializedState) return null;
     
     const parsedState = JSON.parse(serializedState) as GameState;
-    console.log('Game loaded successfully');
+    logInfo('Game loaded successfully');
     return parsedState;
   } catch (error) {
-    console.error('Failed to load game:', error);
+    logError('Failed to load game:', error);
     return null;
   }
 };
@@ -39,8 +41,8 @@ export const loadGameFromStorage = (): GameState | null => {
 export const clearSavedGame = (): void => {
   try {
     localStorage.removeItem(STORAGE_KEY);
-    console.log('Saved game cleared');
+    logInfo('Saved game cleared');
   } catch (error) {
-    console.error('Failed to clear saved game:', error);
+    logError('Failed to clear saved game:', error);
   }
 }; 

@@ -4,30 +4,30 @@ import { Tank, Location, Upgrade } from '../store/gameModels';
 import './GameControls.css';
 
 interface GameControlsProps {
-  capacityReached: boolean;
+  _capacityReached: boolean;
   fishPoints: number;
   availableTanks: Tank[];
   availableLocations: Location[];
   availableUpgrades: Upgrade[];
-  isMaxTankLevel: boolean;
+  _isMaxTankLevel: boolean;
   onBuyTank: (tankId: string) => void;
   onBuyLocation: (locationId: string) => void;
   onBuyUpgrade: (upgradeId: string) => void;
-  controlsVisible: boolean;
+  _controlsVisible: boolean;
   onToggleControls: () => void;
 }
 
 const GameControls: React.FC<GameControlsProps> = ({
-  capacityReached,
+  _capacityReached,
   fishPoints,
   availableTanks,
   availableLocations,
   availableUpgrades,
-  isMaxTankLevel,
+  _isMaxTankLevel,
   onBuyTank,
   onBuyLocation,
   onBuyUpgrade,
-  controlsVisible
+  _controlsVisible
 }) => {
   const showNoUpgradesMessage = 
     availableTanks.length === 0 && 

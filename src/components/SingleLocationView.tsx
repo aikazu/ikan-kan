@@ -50,6 +50,8 @@ const SingleLocationView: React.FC<SingleLocationViewProps> = ({
   const animationFrameIdRef = useRef<number | null>(null);
   // Add state to track if user has clicked
   const [hasClicked, setHasClicked] = useState(false);
+  // Add ref to track active touch points
+  const activeTouchesRef = useRef<Record<string, { id: number, x: number, y: number }>>({});
   
   // Set up animation
   useEffect(() => {
@@ -111,6 +113,52 @@ const SingleLocationView: React.FC<SingleLocationViewProps> = ({
     handleTankClick(e, currentLocationId);
   };
   
+  // Touch event handlers for multi-touch support
+  const handleTouchStart = (e: React.TouchEvent<HTMLCanvasElement>) => {
+    e.preventDefault();
+    if (!hasClicked) {
+      setHasClicked(true);
+    }
+    
+    // Process all touch points
+    for (let i = 0; i < e.touches.length; i++) {
+      const touch = e.touches[i];
+      const rect = e.currentTarget.getBoundingClientRect();
+      const x = touch.clientX - rect.left;
+      const y = touch.clientY - rect.top;
+      
+      // Create a synthetic mouse event with proper methods
+      const syntheticEvent = {
+        clientX: touch.clientX,
+        clientY: touch.clientY,
+        currentTarget: e.currentTarget,
+        preventDefault: function() { /* Implementation to satisfy ESLint */ return true; },
+        stopPropagation: function() { /* Implementation to satisfy ESLint */ return true; }
+      } as unknown as React.MouseEvent<HTMLCanvasElement>;
+      
+      // Store touch point for tracking
+      activeTouchesRef.current[touch.identifier] = { id: touch.identifier, x, y };
+      
+      // Trigger the tank click handler
+      handleTankClick(syntheticEvent, currentLocationId);
+    }
+  };
+  
+  const handleTouchMove = (e: React.TouchEvent<HTMLCanvasElement>) => {
+    e.preventDefault();
+    // Touch move handling can be added if needed for future features
+  };
+  
+  const handleTouchEnd = (e: React.TouchEvent<HTMLCanvasElement>) => {
+    e.preventDefault();
+    
+    // Remove ended touches from tracking
+    for (let i = 0; i < e.changedTouches.length; i++) {
+      const touch = e.changedTouches[i];
+      delete activeTouchesRef.current[touch.identifier];
+    }
+  };
+  
   return (
     <div className="single-location">
       <div className="tank-with-controls">
@@ -124,7 +172,10 @@ const SingleLocationView: React.FC<SingleLocationViewProps> = ({
         <div className="canvas-container">
           <canvas 
             ref={singleCanvasRef}
-            onClick={handleClick} 
+            onClick={handleClick}
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handleTouchEnd}
           />
           
           {/* Render feedback popups */}
@@ -145,23 +196,23 @@ const SingleLocationView: React.FC<SingleLocationViewProps> = ({
           {/* Instruction tooltip - only show if user hasn't clicked */}
           {!hasClicked && (
             <div className="instruction-tooltip">
-              Click tank to feed fish
+              Click or tap tank to feed fish
             </div>
           )}
         </div>
         
         {/* Game controls */}
         <GameControls
-          capacityReached={capacityReached}
+          _capacityReached={capacityReached}
           fishPoints={fishPoints}
           availableTanks={availableTanks}
           availableLocations={availableLocations}
           availableUpgrades={availableUpgrades}
-          isMaxTankLevel={isMaxTankLevel}
+          _isMaxTankLevel={isMaxTankLevel}
           onBuyTank={handleBuyTank}
           onBuyLocation={handleBuyLocation}
           onBuyUpgrade={handleBuyUpgrade}
-          controlsVisible={controlsVisible}
+          _controlsVisible={controlsVisible}
           onToggleControls={() => {
             // Controls visibility is managed by parent component
             // This is a required prop but not needed in this view

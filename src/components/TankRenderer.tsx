@@ -42,7 +42,7 @@ const drawWaterBackground = (
   const now = Date.now();
   
   // Create gradient based on tank type
-  let gradient;
+  const gradient = ctx.createLinearGradient(0, 0, 0, height);
   
   // Get water colors based on tank type
   let topColor;
@@ -96,7 +96,6 @@ const drawWaterBackground = (
   bottomColor = adjustColor(bottomColor, 1 + pulse * 0.5);
   
   // Create a more complex gradient with subtle movement
-  gradient = ctx.createLinearGradient(0, 0, 0, height);
   gradient.addColorStop(0, topColor);
   gradient.addColorStop(0.4 + Math.sin(now / 5000) * 0.05, midColor); // Subtle stop movement
   gradient.addColorStop(1, bottomColor);

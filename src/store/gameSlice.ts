@@ -1,7 +1,8 @@
+// External imports
 import { createSlice } from '@reduxjs/toolkit';
 
+// Local imports
 import { initialState } from './initialData';
-
 // Import reducers from separate files
 import { 
   feedFishReducer, 

@@ -57,4 +57,30 @@
     bottom: 5px;
     font-size: 0.7rem;
   }
+}
+
+/* Portrait mode specific styles */
+@media (max-width: 576px) and (orientation: portrait) {
+  .app {
+    height: 100%;
+    overflow: hidden;
+  }
+  
+  .app-main {
+    height: 100%;
+    overflow: hidden;
+  }
+  
+  .app-footer {
+    bottom: 2px;
+    font-size: 0.65rem;
+    padding: 3px 8px;
+    opacity: 0.7;
+    z-index: 500;
+  }
+  
+  /* Make sure the footer doesn't overlap with game controls */
+  .app-footer:hover {
+    opacity: 0.9;
+  }
 } 

@@ -169,6 +169,31 @@ const Aquarium: React.FC = () => {
     handleLocationClick(locationId, locations, currentLocationId);
   };
   
+  useEffect(() => {
+    // Enable and configure touch events for better mobile experience
+    const touchStartHandler = (e: TouchEvent) => {
+      // Only prevent default if the touch is on an aquarium element
+      if (e.target instanceof Element && 
+          (e.target.tagName === 'CANVAS' || 
+           e.target.closest('.canvas-container') || 
+           e.target.closest('.location-box'))) {
+        e.preventDefault();
+      }
+    };
+    
+    // Set touch-action to manipulation for smoother touch handling
+    document.body.style.touchAction = 'manipulation';
+    
+    // Add event listener
+    document.addEventListener('touchstart', touchStartHandler, { passive: false });
+    
+    // Cleanup function
+    return () => {
+      document.body.style.touchAction = '';
+      document.removeEventListener('touchstart', touchStartHandler);
+    };
+  }, []);
+  
   return (
     <div className="integrated-aquarium">
       {/* Full-screen tank display */}

@@ -18,8 +18,6 @@ export const switchLocationReducer = (state: GameState, action: PayloadAction<st
     // Update capacity reached flag for the new location
     const currentTank = state.tanks[location.tankId];
     state.capacityReached = location.fishCount >= currentTank.capacity;
-    
-    console.log(`Switched to location: ${locationId}`);
   }
 };
 

@@ -19,7 +19,6 @@ const GameSetup: React.FC = () => {
     const savedGame = loadGameFromStorage();
     if (savedGame) {
       dispatch(loadGame(savedGame));
-      console.log('Loaded saved game');
     }
     
     // Set up auto-save every 30 seconds

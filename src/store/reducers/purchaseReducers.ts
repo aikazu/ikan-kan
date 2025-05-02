@@ -19,20 +19,15 @@ export const buyTankReducer = (state: GameState, action: PayloadAction<string>) 
     // Reset capacity reached flag when buying a new tank
     state.capacityReached = currentLocation.fishCount >= tank.capacity;
     
-    // Unlock next tank if available
+    // Check if there's a next tank available
     const tankIds = Object.keys(state.tanks).sort((a, b) => 
       state.tanks[a].level - state.tanks[b].level
     );
     const currentIndex = tankIds.indexOf(tankId);
+    // Confirm there is a next tank, but don't mark it as unlocked yet
     if (currentIndex < tankIds.length - 1) {
-      const nextTankId = tankIds[currentIndex + 1];
-      if (nextTankId) {
-        // Just ensure it exists but don't mark as unlocked yet
-        console.log(`Next tank ${nextTankId} will be available for purchase`);
-      }
+      // Next tank will be available for purchase
     }
-    
-    console.log(`Upgraded to tank: ${tankId}, capacity: ${tank.capacity}`);
   }
 };
 
@@ -45,8 +40,6 @@ export const buyLocationReducer = (state: GameState, action: PayloadAction<strin
     // Purchase the new location
     state.fishPoints -= location.cost;
     state.locations[locationId].unlocked = true;
-    
-    console.log(`Purchased new location: ${locationId}`);
   }
 };
 

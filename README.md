@@ -45,12 +45,34 @@ npm start
 - **v0.1.0**: Basic clicking mechanics, first upgrades, and tank visualization
 - **v0.2.0**: Improved fish visualization, breeding system, and tank capacity management
 - **v0.3.0**: Full-screen responsive design, in-tank indicators, and enhanced UI/UX
-- **v0.3.4** (Current): Improved fullscreen layout, enhanced visuals, and UI refinements
-- **v0.4.0**: Fish variety system, Lucky Bubbles events, and achievements
+- **v0.3.7** (Current): Improved mobile support, multi-touch, and portrait mode
+- **v0.4.0** (Planned): Code quality improvements, fish variety system, and Lucky Bubbles events
 - **v0.5.0**: Multiple locations, visitor/tourism mechanics, and settings menu
 - **v0.6.0**: Expeditions system, fish encyclopedia, and achievement tracking
 - **v1.0.0**: Complete core gameplay loop with prestige system
 - **Post-Launch**: Late-game content, scientific breakthroughs, ocean colonization, space aquatics
+
+## Development Guidelines
+
+### Code Quality
+
+The project maintains high code quality standards through:
+- ESLint configuration for consistent code style
+- Maximum function length of 50 lines for better readability 
+- Nested component depth limited to 3 levels
+- Modular architecture with files under 300 lines
+- Consistent import ordering pattern
+- TypeScript for type safety
+
+Run the linter to check code quality:
+```bash
+npm run lint
+```
+
+Fix automatically fixable issues:
+```bash
+npm run lint:fix
+```
 
 ## Usage
 
@@ -98,6 +120,7 @@ ikan-kan/
 ├── PLANNING.md          # Project planning document
 ├── TASK.md              # Task tracking
 ├── CHANGELOG.md         # Version history
+├── ESLINT_FIXES.md      # Implementation plan for code quality improvements
 └── README.md            # This file
 ```
 

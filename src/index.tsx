@@ -1,13 +1,15 @@
+// External imports
 import React from 'react';
 
-import ReactDOM from 'react-dom/client';
+import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux';
 
-import { store } from './store';
-import './index.css';
+// Local imports
 import App from './App';
+import './index.css';
+import { store } from './store';
 
-const root = ReactDOM.createRoot(
+const root = createRoot(
   document.getElementById('root') as HTMLElement
 );
 

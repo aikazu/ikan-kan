@@ -1,4 +1,4 @@
-import { GameState, FishSpecies } from '../gameModels';
+import { GameState } from '../gameModels';
 import { createRandomFish } from '../gameUtils';
 
 // Reducer for feeding fish manually (clicking)

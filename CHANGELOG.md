@@ -5,6 +5,52 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Added
+- Created logging utility to provide consistent logging throughout the application
+
+### Changed
+- Updated task tracking documentation to reflect current project status
+- Fixed ESLint warnings:
+  - Addressed import order issues across multiple files
+  - Removed or properly marked unused variables
+  - Replaced direct console statements with logging utility
+  - Refactored all functions in tankDecorations.ts to comply with the 50-line limit
+  - Improved code documentation and modularity
+- Restructured tankDecorations.ts (900+ lines) into a modular directory with separate files for each decoration type:
+  - plantDecorations.ts: Plant and lily pad related functions
+  - coralDecorations.ts: Coral drawing functions
+  - gravelDecorations.ts: Gravel and pebble related functions
+  - castleDecorations.ts: Castle and stone texture functions
+  - bubbleEffects.ts: Bubble animation utilities
+  - index.ts: Unified export of all decoration functions
+- Fixed TypeScript errors in GameControls component:
+  - Resolved property name mismatch between interface and component usage
+  - Added proper TypeScript patterns for unused parameters with underscore prefix
+
+### Removed
+- Deleted duplicate README.md file from build directory
+- Removed unnecessary console statements throughout the codebase
+
+## [0.3.7] - 2023-06-01
+
+### Added
+- Multi-touch support for mobile devices to enable faster feeding
+- Portrait mode specific styling for better mobile experience
+- Enhanced touch event handling to prevent unwanted scrolling
+
+### Changed
+- Redesigned stats display for portrait orientation to be more compact
+- Adjusted control panel layout and sizing for better usability on mobile
+- Updated instruction tooltip to mention tapping in addition to clicking
+- Improved canvas container sizing in portrait mode
+
+### Fixed
+- Fixed ESLint error in TankRenderer component by replacing mutable 'let gradient' with 'const' declaration
+- Resolved build error by addressing variable reassignment issue
+- Fixed oversized stat indicators in mobile portrait mode
+
 ## [0.3.6] - 2023-05-31
 
 ### Changed

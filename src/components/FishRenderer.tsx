@@ -9,7 +9,7 @@ export type { BreedingEvent };
  * Interface representing a breeding event in the game
  */
 interface FishRendererProps {
-  breedingEvent: BreedingEvent;
+  _breedingEvent: BreedingEvent;
   fishSpeciesData: Record<string, FishSpecies>; // Pass all species data
 }
 
@@ -309,7 +309,7 @@ export const drawBreedingEffect = (
 /**
  * Utility component for fish rendering
  */
-const FishRenderer: React.FC<FishRendererProps> = ({ breedingEvent }) => {
+const FishRenderer: React.FC<FishRendererProps> = ({ _breedingEvent }) => {
   return null; // This is a utility component that doesn't render anything itself
 };
 
