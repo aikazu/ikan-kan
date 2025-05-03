@@ -1,0 +1,83 @@
+.lucky-bubble-container {
+  position: fixed;
+  top: 50%;
+  right: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  z-index: 1000;
+  max-width: 300px;
+  transform: translateY(-50%);
+}
+
+.lucky-bubble {
+  display: flex;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 8px;
+  padding: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  animation: popIn 0.3s ease-out;
+  border-left: 4px solid var(--primary);
+}
+
+@keyframes popIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.8) translateY(-10px);
+  }
+  70% {
+    transform: scale(1.05) translateY(0);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.lucky-bubble-icon {
+  font-size: 2rem;
+  margin-right: 12px;
+  opacity: 0.8;
+}
+
+.lucky-bubble-info {
+  flex: 1;
+}
+
+.lucky-bubble-name {
+  font-weight: bold;
+  color: var(--primary);
+  margin-bottom: 2px;
+}
+
+.lucky-bubble-description {
+  font-size: 0.9rem;
+  color: #666;
+  margin-bottom: 6px;
+}
+
+.lucky-bubble-timer {
+  height: 6px;
+  background-color: #eee;
+  border-radius: 3px;
+  position: relative;
+  overflow: hidden;
+}
+
+.lucky-bubble-progress {
+  position: absolute;
+  height: 100%;
+  background-color: var(--secondary);
+  left: 0;
+  top: 0;
+  transition: width 1s linear;
+}
+
+.lucky-bubble-time {
+  position: absolute;
+  right: 0;
+  top: -18px;
+  font-size: 0.8rem;
+  color: #888;
+} 

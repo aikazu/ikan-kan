@@ -1,26 +1,16 @@
-import React from 'react';
-
-import { useSelector } from 'react-redux';
-
 import './App.css';
-import Aquarium from './components/Aquarium';
-import GameSetup from './game/GameSetup';
-import { RootState } from './store';
+import GameContainer from './components/GameContainer';
+import AnimatedFeedback from './components/AnimatedFeedback';
 
-const App: React.FC = () => {
-  const gameState = useSelector((state: RootState) => state.game);
-
+function App() {
   return (
     <div className="app">
-      <GameSetup />
-      <main className="app-main">
-        <Aquarium />
+      <main>
+        <GameContainer />
+        <AnimatedFeedback />
       </main>
-      <footer className="app-footer">
-        <p>Ikan-kan v{gameState.version}</p>
-      </footer>
     </div>
   );
-};
+}
 
 export default App; 

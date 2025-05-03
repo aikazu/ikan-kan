@@ -1,0 +1,73 @@
+.game-container {
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  background-color: var(--background);
+  overflow: hidden;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+.game-controls {
+  position: fixed;
+  top: 15px;
+  right: 15px;
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  z-index: 100;
+}
+
+.control-button {
+  background-color: var(--primary);
+  color: white;
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  line-height: 1.2;
+}
+
+.control-button:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+.control-button.danger {
+  background-color: var(--accent);
+}
+
+@media (max-width: 768px) {
+  .control-button {
+    padding: 6px 10px;
+    font-size: 0.9rem;
+  }
+  
+  .game-controls {
+    top: 15px;
+    right: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .control-button {
+    padding: 5px 10px;
+    font-size: 0.8rem;
+  }
+  
+  .game-controls {
+    top: 15px;
+    right: 10px;
+  }
+} 

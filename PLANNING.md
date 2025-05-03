@@ -1,139 +1,148 @@
-# Ikan-kan: Planning Document
+# Ikan-kan Project Planning
 
 ## Project Vision and Goals
+Ikan-kan is an incremental/idle game that aims to create an addictive gameplay loop around building and managing an ever-expanding aquatic ecosystem. Starting with a single fish in a bowl, players will expand to global oceans and even extraterrestrial waters.
 
-Ikan-kan is an incremental game where players start with a single fish in a tiny bowl and gradually build a vast aquatic empire. The game aims to provide a satisfying progression experience through simple mechanics that evolve into complex systems, creating an addictive gameplay loop that keeps players engaged over long periods.
-
-The primary goal is to create an engaging, visually appealing idle game that:
-- Provides immediate feedback and satisfaction
-- Offers meaningful choices and multiple progression paths
-- Scales smoothly from simple clicking to complex management
-- Maintains player interest through varied visual and gameplay elements
-- Creates an immersive, fullscreen experience with minimal UI distractions
+Key goals:
+- Create a satisfying progression curve with balanced timings and resource costs
+- Provide multiple interlocking systems that create meaningful choices
+- Implement engaging visual feedback to reward player actions
+- Develop a sense of accomplishment through collection and expansion
+- Balance active gameplay with idle progression
+- Maintain a clean, intuitive UI that works across device sizes
+- Ensure clear onboarding with contextual help that disappears after use
 
 ## Architectural Overview
 
 ### Core Components
+1. **Game Engine**
+   - Core game loop and update cycle
+   - Time management (real-time tracking, offline progression)
+   - Save/load system with data persistence
 
-1. **Game State Manager**
-   - Maintains the central state of the game
-   - Handles save/load functionality
-   - Manages game loop and tick updates
+2. **Resource Management System**
+   - Fish Points (FP) accumulation and spending
+   - Secondary currencies (Tickets, Research Points, etc.)
+   - Resource production and consumption rates
 
-2. **Economy System**
-   - Tracks all resources (Fish Points, fish population, etc.)
-   - Calculates production rates and costs
-   - Handles transactions and upgrades
+3. **Entity System**
+   - Fish entities with attributes (species, age, productivity)
+   - Tank/environment entities with capacity and bonuses
+   - Location management for multi-site gameplay
 
-3. **UI Manager**
-   - Renders the game interface
-   - Handles user interactions
-   - Updates visual elements based on game state
-   - Provides responsive, fullscreen experience across devices
+4. **Upgrade System**
+   - Progressive upgrades with scaling costs
+   - Unlockable features tied to progression milestones
+   - Prestige mechanics for long-term engagement
 
-4. **Entity System**
-   - Manages fish instances and their properties
-   - Handles fish breeding and lifecycle events
-   - Controls tank environments and capacity limits
-
-5. **Upgrade System**
-   - Manages available and purchased upgrades
-   - Applies upgrade effects to game mechanics
-   - Controls unlock progression
+5. **UI Components**
+   - Main game display with visual fish representation
+   - Control panels for actions and upgrades positioned for optimal flow
+   - Statistics and achievement tracking
+   - Centralized "Click to feed" tutorial that teaches core gameplay
+   - Consistent button styling and positioning across the interface
+   - Adaptive layout that reorganizes based on screen size
 
 6. **Event System**
-   - Generates random events (Lucky Bubbles)
-   - Handles time-based occurrences
-   - Manages special mechanics (expeditions, visitors)
-
-7. **Achievement System**
-   - Tracks player progress milestones
-   - Provides rewards for achievements
-   - Maintains encyclopedia of discovered content
+   - Random events (Lucky Bubbles)
+   - Timed events (special breeding opportunities)
+   - Challenge scenarios
 
 ### Component Interactions
+- Game Engine maintains the state and processes updates from user interactions
+- Resource System feeds into Upgrade System to enable progression
+- Entity System visualizes game state and provides feedback
+- UI Components handle user input and display game state
+- Event System introduces variety and strategic opportunities
 
-- **Game State Manager** acts as the central hub, coordinating all other components
-- **UI Manager** receives input and communicates actions to Game State Manager
-- **Economy System** is updated by Entity System activities and player actions
-- **Entity System** operates within constraints defined by the player's upgrades
-- **Upgrade System** modifies the behavior of other systems when purchases are made
-- **Event System** injects randomness and special opportunities into the gameplay
-- **Achievement System** passively monitors actions across all systems
+## Non-Functional Requirements
 
-## Technical Constraints and Limitations
+### Performance Requirements
+- Game must run smoothly on mobile devices with minimal battery usage
+- Offline progress calculations must be efficient and accurate
+- Animation system should gracefully handle hundreds of fish entities
+- Memory footprint should remain reasonable even in late-game scenarios
+- UI updates should be responsive with no perceptible lag
 
-- **Browser Compatibility**: Must work on modern browsers (Chrome, Firefox, Safari, Edge)
-- **Mobile Support**: Responsive design for mobile play with touch controls
-- **Performance Optimization**: Efficient handling of potentially thousands of entities
-- **Storage Limits**: Local storage constraints for save data
-- **Animation Performance**: Balance between visual appeal and performance
-- **Canvas Rendering**: Optimized drawing for smooth fish animations
-- **Viewport Utilization**: Properly fill available screen space on all devices
+### Scalability
+- Number system must handle exponential growth (from single digits to quintillions)
+- UI must adapt to display large numbers clearly
+- Performance should degrade gracefully with increased game complexity
+- Interface must reorganize effectively across various screen sizes
 
-## Performance Requirements
+### Reliability
+- Save system must be robust with automatic backups
+- Game state should recover gracefully from interruptions
+- Browser refreshes should not result in progress loss
+- UI interactions should remain consistent across sessions
 
-- **Frame Rate**: Maintain 60 FPS even with hundreds of fish displayed
-- **Memory Usage**: Keep memory footprint below 100MB for browser environments
-- **Save Data Size**: Compress save data to stay within local storage limits (5-10MB)
-- **Load Time**: Initial game load under 3 seconds on average connections
-- **Tick Rate**: Game logic updates at minimum 30 ticks per second
-- **Responsive Layout**: UI adaptations for different screen sizes without performance impact
+## Technology Stack
 
-## Tech Stack
+### Frontend
+- **HTML5/CSS3**: Foundation for the UI
+- **JavaScript/TypeScript**: For game logic
+- **React**: Component-based UI management
+- **CSS Flexbox/Grid**: For responsive, adaptive layouts
 
-- **Frontend Framework**: React for UI components and state management
-- **State Management**: Redux for global state management
-- **Rendering**: HTML5 Canvas for fish animations and environments
-- **Styling**: CSS with advanced features like backdrop-filter
-- **Build Tools**: Webpack for bundling and optimization
-- **Testing**: Jest for unit and integration tests
-- **Storage**: LocalStorage for saving game progress
-- **Animations**: GreenSock Animation Platform (GSAP) for smooth animations
-- **TypeScript**: For type safety and better code quality
+### Animation & Graphics
+- **CSS Animations**: For subtle UI feedback and transitions
+- **SVG Icons**: For scalable UI elements that work across screen sizes
 
-## Development Approach and Methodology
+### State Management
+- **Redux**: For game state (fish count, upgrades, etc.)
+- **localStorage/IndexedDB**: For saving progress
 
-- **Incremental Development**: Build core mechanics first, then expand to more complex systems
-- **Feature-Based Iterations**: Complete one gameplay feature fully before moving to the next
-- **Playtest-Driven Design**: Regular playtesting to ensure balance and engagement
-- **Modular Architecture**: Components designed for reusability and clear separation of concerns
-- **Continuous Improvement**: Regular UI and performance enhancements based on playtesting
+### Build Tools
+- **Vite**: Fast modern bundler for development and production
+- **ESLint/Prettier**: Code quality and formatting
+
+### Performance Optimization
+- **Web Workers**: For complex calculations off the main thread
+- **RequestAnimationFrame**: For smooth animation loops
+- **Object pooling**: For fish entity management to minimize garbage collection
+- **Virtualized rendering**: To handle large numbers of UI elements
+
+## Type Safety Enhancements
+- **Strong TypeScript typing**: Enforced throughout the codebase to catch errors at compile time
+- **Enum-based state management**: For consistent state handling across components
+- **Type guards**: To ensure runtime type safety when handling user data or API responses
+- **Interface segregation**: Clear separation between different parts of the game state
+- **Strict null checking**: To prevent null reference errors in-game
+
+## Development Approach
+- **Incremental Development**: Build core loop first, then add features
+- **Component-Based**: Develop isolated components that can be composed
+- **State-Driven**: UI reflects game state, with clear update patterns
+- **Mobile-First**: Design for mobile constraints, then enhance for desktop
+- **Progressive Enhancement**: Core functionality works everywhere, with enhancements for more capable browsers
 
 ## Security Considerations
-
-- **Save Data Integrity**: Checksum verification to prevent save editing
-- **Input Validation**: Sanitize all user inputs for customization features
-- **Offline Protection**: Mechanics to discourage time manipulation
+- Save file validation to prevent tampering
+- Rate limiting for actions to prevent automation/botting
+- Safe parsing of imported save files
+- Protection against time manipulation (for time-based mechanics)
 
 ## Testing Strategy
-
-- **Unit Tests**: For core game mechanics and calculations
-- **Integration Tests**: For component interactions
-- **Performance Tests**: To ensure smooth operation with large numbers of entities
-- **Balance Testing**: Simulations to verify progression curve
-- **Playtesting**: Regular sessions with real players to evaluate engagement
-- **Cross-browser Testing**: Ensure consistent experience across browsers
-- **Device Testing**: Validate responsive design on various screen sizes
+- Unit tests for core game mechanics and calculations
+- Component tests for UI elements
+- Integration tests for interaction between systems
+- Playtest sessions to validate progression curve and engagement
+- Cross-device testing to ensure responsive design works on all targets
 
 ## Deployment Pipeline
-
-- **Development Environment**: Local development with hot reloading
-- **Staging Environment**: Web-based testing environment for internal review
-- **Production Deployment**: Static site hosting (GitHub Pages, Netlify, or Vercel)
-- **CI/CD**: Automated testing and deployment on commit to main branch
+- GitHub Actions for CI/CD
+- Automated testing before deployment
+- Staging environment for final verification
+- Production deployment to GitHub Pages or similar static hosting
 
 ## Integration Points
+- Browser localStorage/IndexedDB for saves
+- Optional cloud save functionality
+- Potential for community features (leaderboards, sharing)
 
-- **Analytics Integration**: Event tracking for gameplay patterns
-- **Social Sharing**: Optional mechanics for sharing achievements
-- **Cloud Save**: Potential future integration for cross-device play
-
-## UI/UX Design Principles
-
-- **Clean Interface**: Minimal UI elements that don't obstruct gameplay
-- **Responsive Design**: Adapts seamlessly to different screen sizes and orientations
-- **Visual Feedback**: Clear indicators for player actions and game events
-- **Accessibility**: Consideration for color contrast and interaction patterns
-- **Immersive Experience**: Fullscreen gameplay that utilizes available viewport space
-- **Contextual Controls**: UI elements appear when needed and stay out of the way otherwise 
+## Technical Debt Considerations
+- Avoid hard-coding game constants; use configuration objects
+- Plan for localization from the beginning
+- Document core algorithms and game balance formulas
+- Establish conventions for handling large numbers and precision
+- Maintain clear UI component organization with minimal coupling 

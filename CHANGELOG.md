@@ -1,4 +1,4 @@
-# Ikan-kan Changelog
+# Changelog
 
 All notable changes to this project will be documented in this file.
 
@@ -8,196 +8,98 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
-- Created logging utility to provide consistent logging throughout the application
-
-### Changed
-- Updated task tracking documentation to reflect current project status
-- Fixed ESLint warnings:
-  - Addressed import order issues across multiple files
-  - Removed or properly marked unused variables
-  - Replaced direct console statements with logging utility
-  - Refactored all functions in tankDecorations.ts to comply with the 50-line limit
-  - Improved code documentation and modularity
-- Restructured tankDecorations.ts (900+ lines) into a modular directory with separate files for each decoration type:
-  - plantDecorations.ts: Plant and lily pad related functions
-  - coralDecorations.ts: Coral drawing functions
-  - gravelDecorations.ts: Gravel and pebble related functions
-  - castleDecorations.ts: Castle and stone texture functions
-  - bubbleEffects.ts: Bubble animation utilities
-  - index.ts: Unified export of all decoration functions
-- Fixed TypeScript errors in GameControls component:
-  - Resolved property name mismatch between interface and component usage
-  - Added proper TypeScript patterns for unused parameters with underscore prefix
-
-### Removed
-- Deleted duplicate README.md file from build directory
-- Removed unnecessary console statements throughout the codebase
-
-## [0.3.7] - 2023-06-01
-
-### Added
-- Multi-touch support for mobile devices to enable faster feeding
-- Portrait mode specific styling for better mobile experience
-- Enhanced touch event handling to prevent unwanted scrolling
-
-### Changed
-- Redesigned stats display for portrait orientation to be more compact
-- Adjusted control panel layout and sizing for better usability on mobile
-- Updated instruction tooltip to mention tapping in addition to clicking
-- Improved canvas container sizing in portrait mode
-
-### Fixed
-- Fixed ESLint error in TankRenderer component by replacing mutable 'let gradient' with 'const' declaration
-- Resolved build error by addressing variable reassignment issue
-- Fixed oversized stat indicators in mobile portrait mode
-
-## [0.3.6] - 2023-05-31
-
-### Changed
-- Centered the footer watermark for better visual balance
-- Refactored large functions in tankDecorations.ts to improve code maintainability
-- Reduced function complexity by breaking down large arrow functions into smaller utility functions
-
-## [0.3.5] - 2023-05-30
-
-### Added
-- Comprehensive ESLint configuration with better import resolution
-- Linting scripts in package.json for consistent code quality checks
-
-### Changed
-- Refactored components to improve code organization and maintainability
-- Extracted smaller components from large files to improve readability
-- Updated React component patterns to use hooks more effectively
-- Improved type safety with better TypeScript practices
-
-### Fixed
-- Fixed critical ESLint errors preventing successful builds
-- Addressed unescaped HTML entities in JSX
-- Fixed empty arrow function in SingleLocationView
-
-## [0.3.4] - 2023-05-26
-
-### Fixed
-- Addressed ESLint warnings for unused imports in `GameSetup.tsx` and `gameSlice.ts`.
-- Fixed layout issue causing the right side of the screen to be cut off by adjusting component and global CSS.
-- Resolved visual distraction by removing the gravel rendering from the bottom of the tank.
-- Corrected CSS positioning to ensure game elements utilize the full screen width.
-
-### Changed
-- Implemented auto-save functionality in `GameSetup.tsx` to utilize `saveGameToStorage`.
-- Iteratively refined footer styling, removing distracting animations and settling on a clean corner watermark.
-- Improved tank bubble rendering for a more subtle and natural appearance.
-
-## [0.3.3] - 2023-05-22
-
-### Changed
-- Removed tank full warning visual indicators
-- Tank upgrades now display regardless of tank capacity status
-- Improved user experience by making upgrade options more consistently visible
-- Simplified GameControls component logic
-
-## [0.3.2] - 2023-05-21
-
-### Changed
-- Further refactored gameSlice.ts into domain-specific reducer files:
-  - breedingReducers.ts: Contains feeding and breeding-related logic
-  - purchaseReducers.ts: Contains functionality for buying upgrades, tanks and locations
-  - navigationReducers.ts: Contains location switching and save/load functionality
-  - gameLoopReducers.ts: Contains game tick and fish simulation logic
-- Improved project structure with a dedicated reducers directory
-- Enhanced code organization by grouping related functionality
-- Ensured all files adhere to the 300-line limit for better maintainability
-
-### Fixed
-- Updated import paths in all components to reference models from gameModels.ts instead of gameSlice.ts
-- Fixed type errors resulting from the refactoring of the Redux store
-- Properly re-exported the BreedingEvent interface to maintain API compatibility
-
-## [0.3.1] - 2023-05-20
-
-### Changed
-- Improved code organization by splitting large components into smaller modules
-- Refactored Aquarium.tsx to extract SingleLocationView component
-- Separated TankRenderer.tsx into core renderer and decoration utilities
-- Split Aquarium.css into core styles and responsive styles
-- Exported and standardized interface types for better type safety
-- Improved CSS organization with better section comments and structure
-- Refactored gameSlice.ts into multiple files for better maintainability:
-  - gameModels.ts: Contains all interfaces and type definitions
-  - gameUtils.ts: Contains utility functions for fish creation and movement
-  - initialData.ts: Contains initial state data for tanks, locations, and upgrades
-  - gameSlice.ts: Now focused only on Redux slice and reducers
-- All files now follow the 300-line code limit for better readability
-
-## [0.3.0] - 2023-05-17
-
-### Added
-- Full-screen responsive design with immersive gameplay
-- In-tank indicators for Fish Points, fish count, and tank type
-- Collapsible side panel for upgrades that can be toggled with a button
-- Semi-transparent overlays with backdrop filters for modern UI look
-- Enhanced visual feedback with floating indicators and animations
-- Responsive layout that adapts to different screen sizes
-
-### Changed
-- Removed top header for a cleaner, more immersive experience
-- Integrated all UI elements directly into the game view
-- Improved mobile experience with bottom-sliding panel on smaller screens
-- Enhanced overall visual styling with better contrasts and animations
-
-## [0.2.0] - 2023-05-16
-
-### Added
-- Complete fish breeding system with visual effects
-- Breeding animation with heart particles
-- New "Breeding Supplements" upgrade to increase breeding chance
-- Visual feedback for breeding events
-- Enhanced fish animations with realistic swimming patterns
-- Glowing effects for breeding fish
-- Growing animation for newly spawned fish
-- Improved tank visualizations with decorations
-- Added gravel, plants, and castle decorations to larger tanks
-- Ambient bubble animations in the aquarium
-- Tank capacity management system with visual warnings
-- Animated capacity alert message when tank is full
-- Visual indicators for breeding and new fish
-
-### Changed
-- Improved breeding mechanics to show parent fish
-- Enhanced fish appearance with better proportions and colors
-- Optimized game loop for smoother animations
-- Refined fish movement patterns for more natural behavior
-- Updated UI to provide better feedback on tank capacity status
-- Improved CSS styling for visual elements
-
-## [0.1.0] - 2023-05-15
-
-### Added
-- Initial project setup and structure
-- Core game management system with Redux
-- Basic UI components (Aquarium, ControlPanel, StatsPanel)
+- Project setup with React, TypeScript, Redux, and Vite
+- Basic game loop implementation
+- Visual fish representation with individual fish icons filling the tank
+- Click-to-feed mechanic with visual feedback (points indicator)
 - Fish entity system with basic properties
-- Game loop with tick mechanics
-- Click-based feeding system
-- Auto-feeder upgrade
-- Tank upgrade system with capacity limits
-- Fish point (FP) economy system
-- Local storage save/load functionality
-- Canvas-based fish tank visualization
-- Management documents (README, PLANNING, TASK, CHANGELOG)
-- Basic project configuration
+- Resource panel showing game stats
+- Upgrade panel for tank and feeder enhancements
+- First tier of upgrades (tank sizes and feeders)
+- Local storage save/load system with offline progression
+- Responsive layout for mobile and desktop
+- Lucky Bubbles system with random bonus events (Feeding Frenzy, Breeding Boom, etc.)
+- Visual notifications for active bonuses and timers
+- Full-screen responsive layout for all device sizes
+- Detailed welcome back modal showing offline earnings and progress
+- Enhanced offline progression with fish breeding during absence
+- Comprehensive visual feedback system with animated indicators for:
+  - Points earned from clicking
+  - New fish being added to the tank
+  - Purchasing upgrades and feeders
+  - Multiple animations for bonus events like Feeding Frenzy
+- Advanced fish entity system with different properties:
+  - Various fish types with unique stats and appearances
+  - Fish rarity system (Common, Uncommon, Rare, Epic, Legendary)
+  - Special abilities that enhance gameplay mechanics
+  - Breeding rates that vary by fish type
+  - Points per second generation based on fish type and level
+- Fish collection UI showing:
+  - All discovered and undiscovered fish types
+  - Detailed fish stats and abilities
+  - Rarity indicators and counts of owned fish
+- Enhanced breeding system with discovery chance for new fish types
+- Fish special abilities that affect gameplay:
+  - Breeding boost abilities
+  - Lucky bubble chance increasers
+  - Point multipliers for clicks
+  - Feeder efficiency enhancers
+  - And more...
+- Comprehensive statistics tracking system with:
+  - Detailed gameplay metrics (clicks, fish bred, points earned)
+  - Fish collection statistics by type and rarity
+  - Time tracking (play time, active bubble time)
+  - Visual statistics interface with formatted numbers
+  - Offline progress tracking for statistics
+- New auto-feeder speed upgrade system:
+  - Five upgrade levels for each auto-feeder
+  - Exponential speed increases (3x, 9x, 27x, 81x)
+  - Visual indicator of current speed level
+  - "MAX" badge for fully upgraded feeders
+- Centered "Click to feed!" indicator that disappears after first interaction
+- More compact and streamlined UI design with better spacing
+- Fixed TypeScript type errors in auto-feeder speed level handling
+- Removed unused imports to improve code quality
+- Enhanced project configuration with comprehensive .gitignore file
 
 ### Changed
-- N/A
-
-### Deprecated
-- N/A
+- Ultra-compressed game progression to fit within 2-hour max timeframe
+- Accelerated initial experience with first automation within 30 seconds
+- Reduced first automation cost from 15 FP to 10 FP
+- Lowered early game upgrade costs across the board
+- Replaced animated fish with individual fish icons that fill the tank based on count
+- Simplified user interface with cleaner visual representation
+- Improved offline progression calculations with capped timeframes
+- Enhanced feedback for user actions with diverse animation types
+- Updated game state model to support fish with unique properties and abilities
+- Improved passive income calculation based on individual fish properties
+- Enhanced localStorage system with support for statistics tracking
+- Completely reworked the feeder upgrade system:
+  - Unified FP gain from clicking and automation (2 FP per click/feed)
+  - Removed different feeder types in favor of speed upgrades
+  - All feeders now start at the same base rate with upgradeable speed
+  - Added clear progression path for upgrading feeders
+- Repositioned UI buttons for better layout and to avoid overlap
+- Moved game controls to top of screen for better visibility
+- Made buttons more consistent in style and appearance
+- Improved fish count display by moving it from bottom-right tank indicator to Fish Collection button
+- Enhanced tooltips and hover states for better user feedback
+- Repositioned event notifications to middle right to prevent overlap with UI elements
+- Adjusted tank capacities to follow a steeper progression: 5 → 30 → 150 → 600 → 1800 → 3200
 
 ### Removed
-- N/A
+- Canvas-based fish animation system
+- PixiJS dependency to reduce bundle size
+- Bubble animation effects
+- Complex fish rendering code for better performance
+- Simple click indicators in favor of comprehensive animation system
+- Efficiency multipliers on different feeder types
+- Distinct feeder tiers with unique rates (replaced with speed upgrades)
+- Redundant fish capacity indicator from tank display
 
-### Fixed
-- N/A
+## [0.1.0] - 2024-05-02
 
-### Security
-- N/A 
+### Added
+- Initial project structure
+- Core game concept documentation
+- Planning and task organization 

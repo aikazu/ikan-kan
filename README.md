@@ -1,137 +1,90 @@
 # Ikan-kan
 
-Ikan-kan is an incremental game where you start with a single fish in a tiny bowl and build your way to a vast aquatic empire spanning multiple locations, species, and even planets.
-
-## Problem
-
-Many incremental games follow the same pattern and quickly become repetitive. Ikan-kan aims to solve this by providing a visually engaging experience with multiple progression paths and a theme that naturally aligns with growth mechanics.
+An addictive idle game where you start with a single fish in a bowl and build your way to a galactic aquatic empire.
 
 ## Key Features
-
-- **Evolving Gameplay**: Transitions from simple clicking to complex management of a vast aquatic ecosystem
-- **Multiple Progression Paths**: Tank upgrades, automation, species diversity, and location expansion
-- **Visually Engaging**: Watch your fish swim and your aquarium environments grow with your progress
-- **Special Events**: Lucky Bubbles, Expeditions, and Tourism systems add variety and surprise
-- **Deep Progression System**: Prestige mechanic ("Conservation Grants") for long-term gameplay
-- **Immersive Experience**: Fullscreen aquarium view with clean, intuitive UI and minimal distractions
-
-## Game Phases
-
-1. **Clicking Phase**: Start by clicking to feed your fish, earning Fish Points and occasionally triggering breeding
-2. **Expansion Phase**: Upgrade tanks to house more fish and increase passive production
-3. **Automation Phase**: Purchase auto-feeders and upgrades to reduce manual clicking
-4. **Multi-Location Phase**: Expand to additional tanks and locations for parallel progression
-5. **Species Diversification**: Collect different fish species with unique benefits
-6. **Late-Game Content**: Scientific breakthroughs, ocean colonization, and space aquatics
+- Start small with a single fish and expand to multiple aquariums, lakes, and eventually oceans
+- Balance resource management and strategic upgrades to optimize your progress
+- Discover and collect various fish species with unique abilities and benefits
+- Automated systems that continue producing while you're away
+- Multiple progression paths with different expansion opportunities
+- Clean, responsive UI that works on mobile and desktop devices
+- Ultra-fast progression designed for casual gameplay sessions
 
 ## Installation
-
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/ikan-kan.git
-
-# Navigate to project directory
+git clone https://github.com/aikazu/ikan-kan.git
 cd ikan-kan
 
 # Install dependencies
-npm install --legacy-peer-deps
+npm install
 
-# Start development server
-npm start
-```
-
-## Development Roadmap
-
-- **v0.1.0**: Basic clicking mechanics, first upgrades, and tank visualization
-- **v0.2.0**: Improved fish visualization, breeding system, and tank capacity management
-- **v0.3.0**: Full-screen responsive design, in-tank indicators, and enhanced UI/UX
-- **v0.3.7** (Current): Improved mobile support, multi-touch, and portrait mode
-- **v0.4.0** (Planned): Code quality improvements, fish variety system, and Lucky Bubbles events
-- **v0.5.0**: Multiple locations, visitor/tourism mechanics, and settings menu
-- **v0.6.0**: Expeditions system, fish encyclopedia, and achievement tracking
-- **v1.0.0**: Complete core gameplay loop with prestige system
-- **Post-Launch**: Late-game content, scientific breakthroughs, ocean colonization, space aquatics
-
-## Development Guidelines
-
-### Code Quality
-
-The project maintains high code quality standards through:
-- ESLint configuration for consistent code style
-- Maximum function length of 50 lines for better readability 
-- Nested component depth limited to 3 levels
-- Modular architecture with files under 300 lines
-- Consistent import ordering pattern
-- TypeScript for type safety
-
-Run the linter to check code quality:
-```bash
-npm run lint
-```
-
-Fix automatically fixable issues:
-```bash
-npm run lint:fix
+# Start the development server
+npm run dev
 ```
 
 ## Usage
+```bash
+# Start the development server
+npm run dev
 
-```javascript
-// Example code for basic game interaction
-import { IkanKan } from './src/game';
+# Build for production
+npm run build
 
-// Initialize game
-const game = new IkanKan();
-
-// Feed fish manually
-game.feedFish();
-
-// Purchase upgrade
-game.purchaseUpgrade('autoFeeder');
-
-// Save game
-game.saveGame();
+# Preview production build
+npm run preview
 ```
 
 ## Technology Stack
+- **Frontend**: React with TypeScript
+- **State Management**: Redux Toolkit with localStorage persistence
+- **Styling**: CSS with Flexbox/Grid for responsive layouts
+- **Build Tools**: Vite with ESLint/Prettier
 
-- React for UI components
-- Redux for state management
-- HTML5 Canvas for fish animations
-- GSAP for fluid animations
-- LocalStorage for save data
-- CSS for styling with advanced features like backdrop-filter
+See `PLANNING.md` for detailed technical architecture and decisions.
 
 ## Project Structure
-
 ```
 ikan-kan/
-├── public/              # Static files
-├── src/                 # Source code
-│   ├── components/      # UI components
-│   ├── game/            # Game logic
-│   │   ├── entities/    # Fish and environment entities
-│   │   ├── systems/     # Game systems (economy, upgrades, etc.)
-│   │   └── events/      # Special events logic
-│   ├── store/           # Redux store configuration
-│   │   └── reducers/    # Domain-specific reducers
-│   ├── utils/           # Utility functions
-│   └── App.tsx          # Main application component
-├── PLANNING.md          # Project planning document
-├── TASK.md              # Task tracking
-├── CHANGELOG.md         # Version history
-├── ESLINT_FIXES.md      # Implementation plan for code quality improvements
-└── README.md            # This file
+├── public/         # Static assets
+├── src/            # Source code
+│   ├── components/ # UI components
+│   │   ├── FishTank.tsx       # Main gameplay area
+│   │   ├── FishCollection.tsx # Discovered fish display
+│   │   ├── GameStatistics.tsx # Stats and metrics
+│   │   ├── FloatingUpgrades.tsx # Upgrade buttons
+│   │   └── ResourcePanel.tsx  # Resource counters
+│   ├── store/      # Redux store configuration
+│   │   └── gameSlice.ts       # Game state management
+│   ├── hooks/      # Custom React hooks
+│   ├── types/      # TypeScript type definitions
+│   └── utils/      # Utility functions
+└── docs/           # Documentation
 ```
 
-## Contributing
+## Current Status
+The project is in active development with these features implemented:
+- Visual fish tank with individual fish icons
+- Click-to-feed mechanics with disappearing tutorial indicator
+- Fish collection with various fish types and special abilities
+- Tank upgrades and auto-feeder system
+- Streamlined UI optimized for both desktop and mobile
+- Lucky Bubbles system for random gameplay bonuses
+- Save/load system with offline progression
+- Statistics tracking and detailed fish collection
+- Enhanced type safety with strict TypeScript typing
+- Improved development environment with comprehensive .gitignore
 
-See [PLANNING.md](PLANNING.md) for project architecture and vision. Check [TASK.md](TASK.md) for current tasks and backlog.
+See `TASK.md` for current tasks and development status.
+
+## Documentation
+- [PLANNING.md](PLANNING.md) - Technical architecture and planning
+- [TASK.md](TASK.md) - Current tasks and backlog
+- [CHANGELOG.md](CHANGELOG.md) - Version history and changes
 
 ## License
-
 MIT
 
 ## Contact
-
-For questions or contributions, please open an issue on the GitHub repository. 
+Your Name - [@Vystkailash](https://twitter.com/vystkailash) 

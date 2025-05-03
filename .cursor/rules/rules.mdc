@@ -110,13 +110,21 @@ README.md
   - Avoid jargon without explanation
   - Focus on helping new users get started quickly
 
+## Development Environment
+- Operating System is Windows
+- Terminal PowerShell
+- Windows Subsystem Linux with Ubuntu 24.04
+- Docker Desktop for Windows
+- IDE Using Visual Studio Code
+- Utilize this environment for dev and testing
+
 ## 📚 Project Context Management
 
 - **Initialize with project scan**: Begin by reviewing `PLANNING.md`, `TASK.md`, `CHANGELOG.md`, `README.md` and project structure before any work
 - **Maintain mental model**: Create and update a mental map of the codebase architecture during the session
 - **Track contextual changes**: Note modifications to architecture or design patterns as the session progresses
 - **Check for recent updates**: Verify if any files have been modified since last interaction
-- **Efficient work**: Clear task one by one, max 2 task at same coversation
+- **Efficient work**: Clear task one by one, max 2 task at same conversation
 
 ## 🔍 Code Quality & Structure
 
