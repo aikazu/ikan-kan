@@ -1,7 +1,8 @@
 import React, { useCallback, useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../store';
-import { feedFish, LuckyBubbleType } from '../store/gameSlice';
+import { feedFish } from '../store/utils/gameActions';
+import { LuckyBubbleType } from '../store/slices/luckyBubbleSlice';
 import { TankType, FishType } from '../types/game';
 import useAnimatedFeedback from '../hooks/useAnimatedFeedback';
 import './FishTank.css';
@@ -18,7 +19,9 @@ const tankBackgrounds: Record<TankType, string> = {
 
 const FishTank: React.FC = () => {
   const dispatch = useDispatch();
-  const { currentTank, activeLuckyBubbles } = useSelector((state: RootState) => state.game);
+  const currentTank = useSelector((state: RootState) => state.tank.currentTank);
+  const firstClickPerformed = useSelector((state: RootState) => state.tank.firstClickPerformed);
+  const activeLuckyBubbles = useSelector((state: RootState) => state.luckyBubble.activeLuckyBubbles);
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
   const [prevFishCount, setPrevFishCount] = useState(currentTank.fish.length);
   const [showFeedIndicator, setShowFeedIndicator] = useState(true);
@@ -61,7 +64,7 @@ const FishTank: React.FC = () => {
     setShowFeedIndicator(false);
     
     // Dispatch the feedFish action
-    dispatch(feedFish());
+    dispatch(feedFish() as any);
     
     // Check for feeding frenzy lucky bubble
     const feedingFrenzy = activeLuckyBubbles.find(
@@ -148,8 +151,15 @@ const FishTank: React.FC = () => {
           ))}
         </div>
         
-        {/* Center feed indicator that disappears after first click */}
-        {showFeedIndicator && (
+        {/* Enhanced first-click indicator */}
+        {!firstClickPerformed && (
+          <div className="start-game-indicator">
+            Click to start the game!
+          </div>
+        )}
+        
+        {/* Standard feeding indicator that appears after first click */}
+        {firstClickPerformed && showFeedIndicator && (
           <div className="center-feed-indicator">
             Click to feed!
           </div>

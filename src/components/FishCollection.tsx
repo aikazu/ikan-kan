@@ -118,7 +118,8 @@ const FishDetails: React.FC<FishDetailsProps> = ({ fishType, onClose }) => {
 
 // Main component to display the collection of discovered fish
 const FishCollection: React.FC = () => {
-  const { discoveredFishTypes, currentTank } = useSelector((state: RootState) => state.game);
+  const discoveredFishTypes = useSelector((state: RootState) => state.fish.discoveredFishTypes);
+  const currentTank = useSelector((state: RootState) => state.tank.currentTank);
   const [selectedFish, setSelectedFish] = useState<FishType | null>(null);
   const [isOpen, setIsOpen] = useState(false);
   

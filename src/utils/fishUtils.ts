@@ -183,19 +183,30 @@ export function calculateBreedingBoost(fish: Fish[]): number {
  * @returns Feeder efficiency multiplier
  */
 export function calculateFeederBoost(fish: Fish[]): number {
-  let feederBoost = 1;
-  
-  // Count feeder efficiency fish
-  const feederFish = fish.filter(
-    f => f.specialAbility === SpecialAbility.FEEDER_EFFICIENCY
-  );
-  
-  // Each feeder efficiency fish adds 15% boost
-  if (feederFish.length > 0) {
-    feederBoost += feederFish.length * 0.15;
+  if (!Array.isArray(fish)) {
+    console.warn('Invalid fish array passed to calculateFeederBoost');
+    return 1;
   }
   
-  return feederBoost;
+  let feederBoost = 1;
+  
+  try {
+    // Count feeder efficiency fish
+    const feederFish = fish.filter(
+      f => f.specialAbility === SpecialAbility.FEEDER_EFFICIENCY
+    );
+    
+    // Each feeder efficiency fish adds 15% boost
+    if (feederFish.length > 0) {
+      feederBoost += Math.min(feederFish.length, 20) * 0.15; // Cap at 20 fish (4x multiplier)
+    }
+  } catch (error) {
+    console.error('Error calculating feeder boost:', error);
+    return 1;
+  }
+  
+  // Sanity check to prevent extreme values
+  return Math.min(feederBoost, 10);
 }
 
 /**
@@ -205,19 +216,30 @@ export function calculateFeederBoost(fish: Fish[]): number {
  * @returns Lucky bubble chance multiplier
  */
 export function calculateLuckyCharmBoost(fish: Fish[]): number {
-  let luckyBoost = 1;
-  
-  // Count lucky charm fish
-  const luckyFish = fish.filter(
-    f => f.specialAbility === SpecialAbility.LUCKY_CHARM
-  );
-  
-  // Each lucky charm fish adds 25% boost
-  if (luckyFish.length > 0) {
-    luckyBoost += luckyFish.length * 0.25;
+  if (!Array.isArray(fish)) {
+    console.warn('Invalid fish array passed to calculateLuckyCharmBoost');
+    return 1;
   }
   
-  return luckyBoost;
+  let luckyBoost = 1;
+  
+  try {
+    // Count lucky charm fish
+    const luckyFish = fish.filter(
+      f => f.specialAbility === SpecialAbility.LUCKY_CHARM
+    );
+    
+    // Each lucky charm fish adds 25% boost
+    if (luckyFish.length > 0) {
+      luckyBoost += Math.min(luckyFish.length, 16) * 0.25; // Cap at 16 fish (5x multiplier)
+    }
+  } catch (error) {
+    console.error('Error calculating lucky charm boost:', error);
+    return 1;
+  }
+  
+  // Sanity check to prevent extreme values
+  return Math.min(luckyBoost, 10);
 }
 
 /**
@@ -227,19 +249,30 @@ export function calculateLuckyCharmBoost(fish: Fish[]): number {
  * @returns Feeding frenzy chance multiplier
  */
 export function calculateFeedingBoost(fish: Fish[]): number {
-  let feedingBoost = 1;
-  
-  // Count feeding boost fish
-  const feedingFish = fish.filter(
-    f => f.specialAbility === SpecialAbility.FEEDING_BOOST
-  );
-  
-  // Each feeding boost fish adds 30% boost
-  if (feedingFish.length > 0) {
-    feedingBoost += feedingFish.length * 0.3;
+  if (!Array.isArray(fish)) {
+    console.warn('Invalid fish array passed to calculateFeedingBoost');
+    return 1;
   }
   
-  return feedingBoost;
+  let feedingBoost = 1;
+  
+  try {
+    // Count feeding boost fish
+    const feedingFish = fish.filter(
+      f => f.specialAbility === SpecialAbility.FEEDING_BOOST
+    );
+    
+    // Each feeding boost fish adds 30% boost
+    if (feedingFish.length > 0) {
+      feedingBoost += Math.min(feedingFish.length, 13) * 0.3; // Cap at 13 fish (4.9x multiplier)
+    }
+  } catch (error) {
+    console.error('Error calculating feeding boost:', error);
+    return 1;
+  }
+  
+  // Sanity check to prevent extreme values
+  return Math.min(feedingBoost, 10);
 }
 
 /**
@@ -249,19 +282,30 @@ export function calculateFeedingBoost(fish: Fish[]): number {
  * @returns Points earned multiplier
  */
 export function calculatePointMultiplier(fish: Fish[]): number {
-  let pointMultiplier = 1;
-  
-  // Count point multiplier fish
-  const multiplierFish = fish.filter(
-    f => f.specialAbility === SpecialAbility.POINT_MULTIPLIER
-  );
-  
-  // Each point multiplier fish adds 10% boost
-  if (multiplierFish.length > 0) {
-    pointMultiplier += multiplierFish.length * 0.1;
+  if (!Array.isArray(fish)) {
+    console.warn('Invalid fish array passed to calculatePointMultiplier');
+    return 1;
   }
   
-  return pointMultiplier;
+  let pointMultiplier = 1;
+  
+  try {
+    // Count point multiplier fish
+    const multiplierFish = fish.filter(
+      f => f.specialAbility === SpecialAbility.POINT_MULTIPLIER
+    );
+    
+    // Each point multiplier fish adds 25% boost
+    if (multiplierFish.length > 0) {
+      pointMultiplier += Math.min(multiplierFish.length, 16) * 0.25; // Cap at 16 fish (5x multiplier)
+    }
+  } catch (error) {
+    console.error('Error calculating point multiplier:', error);
+    return 1;
+  }
+  
+  // Sanity check to prevent extreme values
+  return Math.min(pointMultiplier, 10);
 }
 
 /**

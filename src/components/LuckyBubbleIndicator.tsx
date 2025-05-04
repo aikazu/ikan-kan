@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../store';
-import { LuckyBubbleType, removeLuckyBubble } from '../store/gameSlice';
+import { LuckyBubbleType, removeLuckyBubble } from '../store/slices/luckyBubbleSlice';
 import './LuckyBubbleIndicator.css';
 
 // Display names and descriptions for lucky bubble types
@@ -35,7 +35,7 @@ const luckyBubbleInfo = {
 
 const LuckyBubbleIndicator: React.FC = () => {
   const dispatch = useDispatch();
-  const { activeLuckyBubbles } = useSelector((state: RootState) => state.game);
+  const { activeLuckyBubbles } = useSelector((state: RootState) => state.luckyBubble);
   const [timeLeft, setTimeLeft] = useState<Record<string, number>>({});
 
   // Update timers every second

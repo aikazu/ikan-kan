@@ -1,13 +1,13 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../store';
-import { acknowledgeAchievement } from '../store/gameSlice';
+import { acknowledgeAchievement } from '../store/slices/achievementSlice';
 import { AchievementTier } from '../types/game';
 import './AchievementNotification.css';
 
 const AchievementNotification: React.FC = () => {
   const dispatch = useDispatch();
-  const recentAchievements = useSelector((state: RootState) => state.game.recentlyCompletedAchievements);
+  const recentAchievements = useSelector((state: RootState) => state.achievement.recentlyCompletedAchievements);
   
   // Display only the most recent achievement if there are any
   const achievement = recentAchievements.length > 0 ? recentAchievements[0] : null;

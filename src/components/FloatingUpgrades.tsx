@@ -1,7 +1,8 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../store';
-import { upgradeTank, purchaseFeeder, spendFishPoints } from '../store/gameSlice';
+import { upgradeTank, spendFishPoints } from '../store/slices/tankSlice';
+import { purchaseFeeder } from '../store/slices/feederSlice';
 import { TankType, FeederType } from '../types/game';
 import useAnimatedFeedback from '../hooks/useAnimatedFeedback';
 import './FloatingUpgrades.css';
@@ -52,7 +53,9 @@ const tankInfo: Record<TankType, { name: string; capacity: number }> = {
 
 const FloatingUpgrades: React.FC = () => {
   const dispatch = useDispatch();
-  const { fishPoints, currentTank, feeders } = useSelector((state: RootState) => state.game);
+  const fishPoints = useSelector((state: RootState) => state.tank.fishPoints);
+  const currentTank = useSelector((state: RootState) => state.tank.currentTank);
+  const feeders = useSelector((state: RootState) => state.feeder.feeders);
   const { showUpgrade } = useAnimatedFeedback();
 
   // Calculate the actual feeder level based on the feed rate
@@ -106,7 +109,7 @@ const FloatingUpgrades: React.FC = () => {
       const { x, y } = getButtonPosition(event);
       
       // Purchase new feeder (the game logic replaces existing feeders)
-      dispatch(purchaseFeeder(FeederType.BASIC));
+      dispatch(purchaseFeeder({ feederType: FeederType.BASIC, currentLevel }));
       dispatch(spendFishPoints(cost));
       
       // Calculate new level and rate for display

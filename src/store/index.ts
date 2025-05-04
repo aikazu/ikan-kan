@@ -1,9 +1,19 @@
 import { configureStore } from '@reduxjs/toolkit';
-import gameReducer from './gameSlice';
+import fishReducer from './slices/fishSlice';
+import tankReducer from './slices/tankSlice';
+import feederReducer from './slices/feederSlice';
+import luckyBubbleReducer from './slices/luckyBubbleSlice';
+import statisticsReducer from './slices/statisticsSlice';
+import achievementReducer from './slices/achievementSlice';
 
 export const store = configureStore({
   reducer: {
-    game: gameReducer,
+    fish: fishReducer,
+    tank: tankReducer,
+    feeder: feederReducer,
+    luckyBubble: luckyBubbleReducer,
+    statistics: statisticsReducer,
+    achievement: achievementReducer
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

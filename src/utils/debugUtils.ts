@@ -5,7 +5,7 @@
  */
 
 import { store } from '../store';
-import { purchaseFeeder } from '../store/gameSlice';
+import { purchaseFeeder } from '../store/slices/feederSlice';
 
 /**
  * Helper function to fix auto-feed level if stuck
@@ -13,15 +13,15 @@ import { purchaseFeeder } from '../store/gameSlice';
  */
 export const fixAutoFeedLevel = () => {
   try {
-    const state = store.getState().game;
+    const state = store.getState();
     
-    if (state.feeders.length === 0) {
+    if (state.feeder.feeders.length === 0) {
       console.log('No feeders found. You need to purchase your first auto-feeder.');
       return false;
     }
     
     // Calculate actual level based on feed rate
-    const feeder = state.feeders[0];
+    const feeder = state.feeder.feeders[0];
     const feedRate = feeder.feedRate;
     const calculatedLevel = Math.max(1, Math.round(Math.log2(feedRate / 4) + 1));
     
@@ -30,11 +30,11 @@ export const fixAutoFeedLevel = () => {
     console.log(`Current speedLevel: ${feeder.speedLevel}`);
     
     // Force-replace the feeder with a corrected one to fix level problems
-    store.dispatch(purchaseFeeder(feeder.type));
+    store.dispatch(purchaseFeeder({ feederType: feeder.type, currentLevel: Math.max(0, calculatedLevel - 1) }));
     
     // Get the updated state
-    const updatedState = store.getState().game;
-    const updatedFeeder = updatedState.feeders[0];
+    const updatedState = store.getState();
+    const updatedFeeder = updatedState.feeder.feeders[0];
     const newCalculatedLevel = Math.max(1, Math.round(Math.log2(updatedFeeder.feedRate / 4) + 1));
     
     console.log(`Fixed! New feed rate: ${updatedFeeder.feedRate}`);

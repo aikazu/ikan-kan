@@ -1,67 +1,51 @@
 import { useEffect, useRef } from 'react';
-import { useDispatch } from 'react-redux';
-import { processAutomation } from '../store/gameSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../store';
+import { processGameLoop } from '../store/utils/gameLoop';
 
-// Hook to run the game loop at a fixed interval
-export const useGameLoop = (fps: number = 10) => {
+/**
+ * Custom hook that handles the game loop
+ * @param frameRate Optional target frame rate for updates (defaults to 30)
+ */
+const useGameLoop = (frameRate: number = 30) => {
   const dispatch = useDispatch();
-  const frameTime = 1000 / fps; // Time between frames in ms
-  const lastUpdateTimeRef = useRef<number>(Date.now());
-  const requestRef = useRef<number | null>(null);
-  const fpsIntervalRef = useRef<number | null>(null);
-
-  // Track accumulated time to handle situations where frames are skipped
-  const accumulatedTimeRef = useRef<number>(0);
-
-  const gameLoop = () => {
-    // Calculate time since last frame
-    const currentTime = Date.now();
-    const deltaTime = currentTime - lastUpdateTimeRef.current;
-    
-    // Add to accumulated time
-    accumulatedTimeRef.current += deltaTime;
-    
-    // Process game updates based on accumulated time
-    while (accumulatedTimeRef.current >= frameTime) {
-      // Process automation at the specified frame rate
-      dispatch(processAutomation());
-      accumulatedTimeRef.current -= frameTime;
-    }
-    
-    // Update last time
-    lastUpdateTimeRef.current = currentTime;
-    
-    // Continue the loop
-    requestRef.current = requestAnimationFrame(gameLoop);
-  };
-
+  const lastUpdateTimeRef = useRef(Date.now());
+  
+  // Calculate interval based on frame rate (e.g., 30 FPS = 33.33ms interval)
+  const interval = 1000 / frameRate;
+  
   useEffect(() => {
-    // Start the game loop using both requestAnimationFrame for smooth animation
-    // and a backup interval timer to ensure updates even if animations are throttled
-    requestRef.current = requestAnimationFrame(gameLoop);
+    // Game loop function
+    let animationFrameId: number;
     
-    // Backup interval to ensure processing happens even if animations are throttled
-    fpsIntervalRef.current = window.setInterval(() => {
-      const currentTime = Date.now();
-      const deltaTime = currentTime - lastUpdateTimeRef.current;
+    const gameLoop = () => {
+      const now = Date.now();
+      const elapsed = now - lastUpdateTimeRef.current;
       
-      // Only update if animationFrame hasn't run recently
-      if (deltaTime > frameTime * 2) {
-        dispatch(processAutomation());
-        lastUpdateTimeRef.current = currentTime;
+      // Only update if enough time has passed
+      if (elapsed >= interval) {
+        // Get the latest state inside the loop
+        const currentState = dispatch((_, getState) => getState()) as RootState;
+        
+        // Process the game loop and get the updated timestamp
+        const newTime = processGameLoop(currentState, lastUpdateTimeRef.current, dispatch);
+        
+        // Update the reference time
+        lastUpdateTimeRef.current = newTime;
       }
-    }, frameTime * 2); // Slightly longer interval for backup
-    
-    // Clean up both animation loops on unmount
-    return () => {
-      if (requestRef.current) {
-        cancelAnimationFrame(requestRef.current);
-      }
-      if (fpsIntervalRef.current) {
-        clearInterval(fpsIntervalRef.current);
-      }
+      
+      // Schedule next frame
+      animationFrameId = requestAnimationFrame(gameLoop);
     };
-  }, [dispatch, frameTime]);
+    
+    // Start game loop
+    animationFrameId = requestAnimationFrame(gameLoop);
+    
+    // Clean up when component unmounts
+    return () => {
+      cancelAnimationFrame(animationFrameId);
+    };
+  }, [dispatch, interval]);
 };
 
 export default useGameLoop; 

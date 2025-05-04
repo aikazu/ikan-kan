@@ -7,7 +7,8 @@ import './AchievementsPanel.css';
 
 const AchievementsPanel: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const { achievements, statistics } = useSelector((state: RootState) => state.game);
+  const achievements = useSelector((state: RootState) => state.achievement.achievements);
+  const statistics = useSelector((state: RootState) => state.statistics.statistics);
   const [activeFilter, setActiveFilter] = useState<AchievementTier | 'all'>('all');
   
   // Calculate completion percentage

@@ -2,22 +2,21 @@ import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../store';
 import { formatNumber } from '../utils/numberUtils';
+import { LuckyBubbleType } from '../store/slices/luckyBubbleSlice';
 import './ResourcePanel.css';
 
 const ResourcePanel: React.FC = () => {
-  const { 
-    fishPoints, 
-    currentTank, 
-    feeders, 
-    activeLuckyBubbles
-  } = useSelector((state: RootState) => state.game);
+  const fishPoints = useSelector((state: RootState) => state.tank.fishPoints);
+  const currentTank = useSelector((state: RootState) => state.tank.currentTank);
+  const feeders = useSelector((state: RootState) => state.feeder.feeders);
+  const activeLuckyBubbles = useSelector((state: RootState) => state.luckyBubble.activeLuckyBubbles);
   
   // Calculate FP per second from fish
   let fishPointsPerSecond = 0;
   
   // Check for active 'School's In' bubble for bonus fish production
   const schoolsInBubble = activeLuckyBubbles.find(
-    bubble => bubble.type === 'schoolsIn' &&
+    bubble => bubble.type === LuckyBubbleType.SCHOOLS_IN &&
     Date.now() < bubble.startTime + bubble.duration
   );
   const schoolsMultiplier = schoolsInBubble ? 2 : 1;

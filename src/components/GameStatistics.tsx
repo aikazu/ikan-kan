@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../store';
 import { FishType, FishRarity, TankType } from '../types/game';
 import { formatNumber } from '../utils/numberUtils';
+import { LuckyBubbleType } from '../store/slices/luckyBubbleSlice';
 import './GameStatistics.css';
 
 // Tank display names
@@ -16,14 +17,12 @@ const tankDisplayNames: Record<TankType, string> = {
 };
 
 const GameStatistics: React.FC = () => {
-  const { 
-    statistics, 
-    currentTank, 
-    feeders, 
-    totalFishPointsEarned,
-    fishPoints,
-    activeLuckyBubbles
-  } = useSelector((state: RootState) => state.game);
+  const statistics = useSelector((state: RootState) => state.statistics.statistics);
+  const currentTank = useSelector((state: RootState) => state.tank.currentTank);
+  const feeders = useSelector((state: RootState) => state.feeder.feeders);
+  const totalFishPointsEarned = useSelector((state: RootState) => state.fish.totalFishPointsEarned);
+  const fishPoints = useSelector((state: RootState) => state.tank.fishPoints);
+  const activeLuckyBubbles = useSelector((state: RootState) => state.luckyBubble.activeLuckyBubbles);
   const [isOpen, setIsOpen] = useState(false);
 
   const formatDate = (timestamp: number): string => {
@@ -51,7 +50,7 @@ const GameStatistics: React.FC = () => {
   
   // Check for active 'School's In' bubble for bonus fish production
   const schoolsInBubble = activeLuckyBubbles.find(
-    bubble => bubble.type === 'schoolsIn' &&
+    bubble => bubble.type === LuckyBubbleType.SCHOOLS_IN &&
     Date.now() < bubble.startTime + bubble.duration
   );
   const schoolsMultiplier = schoolsInBubble ? 2 : 1;

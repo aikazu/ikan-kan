@@ -74,18 +74,46 @@
   animation: pulse 2s infinite;
 }
 
+/* Start game indicator - more prominent and eye-catching */
+.start-game-indicator {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(41, 128, 185, 0.9); /* Vibrant blue with transparency */
+  color: white;
+  padding: 16px 28px;
+  border-radius: 12px;
+  font-size: 1.6rem;
+  font-weight: 700;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4), 0 0 0 4px rgba(255, 255, 255, 0.2);
+  z-index: 50; /* Higher z-index to ensure visibility */
+  animation: pulse 1.5s infinite;
+  text-align: center;
+  border: 2px solid rgba(255, 255, 255, 0.6);
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+  cursor: pointer;
+  transition: transform 0.2s, background-color 0.2s;
+}
+
+.start-game-indicator:hover {
+  background-color: rgba(52, 152, 219, 0.95); /* Slightly brighter on hover */
+  transform: translate(-50%, -50%) scale(1.05);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5), 0 0 0 4px rgba(255, 255, 255, 0.3);
+}
+
 @keyframes pulse {
   0% {
     transform: translate(-50%, -50%) scale(1);
-    opacity: 0.9;
+    opacity: 1;
   }
   50% {
-    transform: translate(-50%, -50%) scale(1.1);
-    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.05);
+    opacity: 0.9;
   }
   100% {
     transform: translate(-50%, -50%) scale(1);
-    opacity: 0.9;
+    opacity: 1;
   }
 }
 
