@@ -3,19 +3,21 @@ import { useSelector, useDispatch } from 'react-redux';
 import { 
   Box, 
   Button, 
-  Card, 
   CardContent, 
   Typography, 
   Tab, 
   Tabs, 
-  Divider, 
   Tooltip,
   Chip,
   Grid,
   Alert,
-  CircularProgress
+  CircularProgress,
+  Paper,
+  Stack,
+  LinearProgress
 } from '@mui/material';
 import { motion, AnimatePresence } from 'framer-motion';
+import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 
 import { selectFish, selectUpgrades, purchaseUpgrade } from '../store/gameSlice';
 import { isUpgradeAvailable, getUpgradesByCategory, getAllUpgrades } from '../data/upgrades';
@@ -43,18 +45,19 @@ const UpgradeEffectDescription = ({ upgrade }) => {
   };
 
   return (
-    <Typography variant="body2" color="primary.main" sx={{ 
-      fontWeight: 'medium',
-      fontSize: '0.7rem',
-      mb: 0.3,
-      bgcolor: 'rgba(25, 118, 210, 0.08)',
-      px: 0.8,
-      py: 0.2,
-      borderRadius: 1,
-      display: 'inline-block'
-    }}>
-      {getEffectDescription()}
-    </Typography>
+    <Chip
+      label={getEffectDescription()}
+      size="small"
+      sx={{ 
+        fontWeight: 500,
+        fontSize: '0.7rem',
+        height: 20,
+        bgcolor: 'rgba(33, 150, 243, 0.08)',
+        color: '#1976d2',
+        '& .MuiChip-label': { px: 1 },
+        mb: 1,
+      }}
+    />
   );
 };
 
@@ -75,24 +78,29 @@ const UpgradePurchaseButton = ({ upgrade, fish, ownedLevel, maxLevel, onPurchase
             : 'Purchase upgrade'
       } 
       arrow
+      placement="top"
     >
       <div> {/* Wrapper div for disabled button tooltip */}
         <Button
           variant={isMaxLevel ? "outlined" : "contained"}
           size="small"
-          color={isMaxLevel ? "success" : canAfford ? "success" : "primary"}
+          color={isMaxLevel ? "success" : canAfford ? "primary" : "primary"}
           disabled={isDisabled}
           onClick={() => onPurchase(upgrade)}
           sx={{ 
-            minWidth: '80px',
-            py: 0.2,
-            px: 1,
-            fontWeight: 'bold',
-            fontSize: '0.75rem',
-            height: 24,
-            borderRadius: 1.5,
-            textTransform: 'none'
+            minWidth: '100px',
+            py: 0.5,
+            px: 1.5,
+            fontWeight: 600,
+            fontSize: '0.8rem',
+            borderRadius: 2,
+            textTransform: 'none',
+            boxShadow: canAfford && !isMaxLevel ? 2 : 0,
+            '&:hover': {
+              boxShadow: canAfford && !isMaxLevel ? 3 : 0,
+            }
           }}
+          endIcon={!isMaxLevel && canAfford ? <KeyboardArrowRightIcon /> : null}
         >
           {isMaxLevel ? 'Maxed' : `${formatNumber(cost)} 🐟`}
         </Button>
@@ -114,7 +122,6 @@ const UpgradeItem = ({ upgrade, fish, ownedUpgrades, onPurchase }) => {
     
     const cost = calculateUpgradePrice(upgrade.basePrice, ownedLevel, upgrade.priceGrowth);
     const canAfford = fish >= cost;
-    
     const isDisabled = isMaxLevel || !canAfford;
     
     return (
@@ -126,116 +133,140 @@ const UpgradeItem = ({ upgrade, fish, ownedUpgrades, onPurchase }) => {
         key={upgrade.id}
         layout
       >
-        <Card 
+        <Paper 
+          elevation={0}
           sx={{ 
-            mb: 1.5, 
-            borderRadius: 2,
+            mb: 2,
+            borderRadius: 3,
             overflow: 'hidden',
             position: 'relative',
-            border: canAfford && !isMaxLevel ? '1px solid #4caf50' : '1px solid rgba(0,0,0,0.12)',
+            border: canAfford && !isMaxLevel 
+              ? '1px solid rgba(25, 118, 210, 0.3)' 
+              : isMaxLevel 
+                ? '1px solid rgba(76, 175, 80, 0.3)' 
+                : '1px solid rgba(0,0,0,0.08)',
+            background: isMaxLevel 
+              ? 'linear-gradient(to right, rgba(76, 175, 80, 0.04), rgba(76, 175, 80, 0.08))' 
+              : canAfford 
+                ? 'linear-gradient(to right, rgba(255,255,255,0.95), rgba(240,247,255,0.95))' 
+                : 'rgba(255,255,255,0.85)',
             transition: 'all 0.2s ease',
             '&:hover': {
               transform: isDisabled ? 'none' : 'translateY(-2px)',
-              boxShadow: isDisabled ? 1 : 3
+              boxShadow: '0 4px 15px rgba(0,0,0,0.06)',
             },
-            opacity: isDisabled ? 0.8 : 1,
-            bgcolor: isMaxLevel ? 'rgba(76, 175, 80, 0.04)' : 'white',
+            backdropFilter: 'blur(8px)',
           }}
-          elevation={1}
         >
-          <CardContent sx={{ p: 1.5, '&:last-child': { pb: 1.5 } }}>
-            <Grid container spacing={1} alignItems="center">
+          <CardContent sx={{ p: 2 }}>
+            <Grid container spacing={2} alignItems="center">
               {/* Icon and name section */}
-              <Grid item xs={7} sx={{ display: 'flex', alignItems: 'center' }}>
-                <Box 
-                  sx={{ 
-                    fontSize: '1.2rem', 
-                    mr: 1.2, 
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    bgcolor: 'rgba(25, 118, 210, 0.1)',
-                    borderRadius: '50%',
-                    width: 32,
-                    height: 32,
-                    flexShrink: 0
-                  }}
-                >
-                  {upgrade.icon}
-                </Box>
-                <Box>
-                  <Box sx={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', mb: 0.3 }}>
-                    <Typography variant="subtitle1" sx={{ 
-                      fontWeight: 'bold',
-                      fontSize: '0.9rem',
-                      lineHeight: 1.2,
-                      mr: 1
-                    }}>
-                      {upgrade.name}
-                    </Typography>
-                    {ownedLevel > 0 && (
-                      <Chip 
-                        label={`Lvl ${ownedLevel}`} 
-                        size="small"
-                        color="primary"
-                        sx={{ 
-                          height: 18, 
-                          fontSize: '0.65rem', 
-                          fontWeight: 'bold',
-                          '& .MuiChip-label': { px: 0.8 } 
-                        }}
-                      />
-                    )}
+              <Grid item xs={7}>
+                <Stack direction="row" spacing={1.5} alignItems="flex-start">
+                  <Box 
+                    sx={{ 
+                      fontSize: '1.2rem', 
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      bgcolor: isMaxLevel ? 'rgba(76, 175, 80, 0.1)' : 'rgba(25, 118, 210, 0.1)',
+                      borderRadius: 2,
+                      width: 40,
+                      height: 40,
+                      flexShrink: 0,
+                      mt: 0.3
+                    }}
+                  >
+                    {upgrade.icon}
                   </Box>
-                  <Typography variant="body2" color="text.secondary" sx={{ 
-                    fontSize: '0.75rem',
-                    lineHeight: 1.2, 
-                    display: '-webkit-box',
-                    overflow: 'hidden',
-                    WebkitBoxOrient: 'vertical',
-                    WebkitLineClamp: 1,
-                  }}>
-                    {upgrade.description}
-                  </Typography>
-                </Box>
+                  <Box>
+                    <Box sx={{ display: 'flex', alignItems: 'center', mb: 0.5 }}>
+                      <Typography variant="subtitle1" sx={{ 
+                        fontWeight: 700,
+                        fontSize: '0.95rem',
+                        lineHeight: 1.2,
+                        letterSpacing: '-0.01em',
+                        mr: 1
+                      }}>
+                        {upgrade.name}
+                      </Typography>
+                      {ownedLevel > 0 && (
+                        <Chip 
+                          label={`Lvl ${ownedLevel}`} 
+                          size="small"
+                          color={isMaxLevel ? "success" : "primary"}
+                          sx={{ 
+                            height: 20, 
+                            fontSize: '0.65rem', 
+                            fontWeight: 600,
+                            '& .MuiChip-label': { px: 1 } 
+                          }}
+                        />
+                      )}
+                    </Box>
+                    <Typography variant="body2" color="text.secondary" sx={{ 
+                      fontSize: '0.78rem',
+                      lineHeight: 1.3, 
+                      display: '-webkit-box',
+                      overflow: 'hidden',
+                      WebkitBoxOrient: 'vertical',
+                      WebkitLineClamp: 2,
+                      mb: 0.5,
+                      maxWidth: '95%'
+                    }}>
+                      {upgrade.description}
+                    </Typography>
+                    <UpgradeEffectDescription upgrade={upgrade} />
+                  </Box>
+                </Stack>
               </Grid>
               
-              {/* Effect and purchase button */}
+              {/* Progress and purchase button */}
               <Grid item xs={5} sx={{ textAlign: 'right' }}>
-                {isMaxLevel ? (
-                  <Typography variant="body2" color="success.main" sx={{ 
-                    fontWeight: 'bold',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'flex-end',
-                    fontSize: '0.7rem',
-                    mb: 0.3
-                  }}>
-                    ✓ MAX
-                  </Typography>
-                ) : (
-                  canAfford && (
-                    <Chip 
-                      label="Available!" 
-                      size="small"
-                      color="success"
-                      sx={{ 
-                        height: 18, 
-                        fontSize: '0.65rem', 
-                        fontWeight: 'bold',
-                        mb: 0.3,
-                        '& .MuiChip-label': { px: 0.8 } 
-                      }}
-                    />
-                  )
-                )}
-                
-                <Box sx={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'flex-end'
-                }}>
-                  <UpgradeEffectDescription upgrade={upgrade} />
+                <Stack spacing={1} alignItems="flex-end">
+                  {isMaxLevel ? (
+                    <Box sx={{ 
+                      display: 'flex', 
+                      alignItems: 'center', 
+                      justifyContent: 'center',
+                      bgcolor: 'rgba(76, 175, 80, 0.1)',
+                      color: '#4CAF50',
+                      fontWeight: 600,
+                      fontSize: '0.75rem',
+                      borderRadius: 1,
+                      px: 1,
+                      py: 0.3,
+                      mb: 0.5
+                    }}>
+                      Max Level Reached ✓
+                    </Box>
+                  ) : (
+                    <Box sx={{ width: '100%', mb: 0.5 }}>
+                      <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 0.5 }}>
+                        <Typography variant="caption" color="text.secondary" sx={{ fontWeight: 500 }}>
+                          {`Level ${ownedLevel}/${maxLevel}`}
+                        </Typography>
+                        {canAfford && (
+                          <Typography variant="caption" color="primary" sx={{ fontWeight: 600 }}>
+                            Ready to Upgrade!
+                          </Typography>
+                        )}
+                      </Box>
+                      <LinearProgress 
+                        variant="determinate" 
+                        value={(ownedLevel / maxLevel) * 100} 
+                        sx={{ 
+                          height: 6, 
+                          borderRadius: 3,
+                          bgcolor: 'rgba(0,0,0,0.05)',
+                          '& .MuiLinearProgress-bar': {
+                            bgcolor: isMaxLevel ? '#4CAF50' : '#1976d2',
+                          }
+                        }}
+                      />
+                    </Box>
+                  )}
+                  
                   <UpgradePurchaseButton 
                     upgrade={upgrade}
                     fish={fish}
@@ -243,11 +274,11 @@ const UpgradeItem = ({ upgrade, fish, ownedUpgrades, onPurchase }) => {
                     maxLevel={maxLevel}
                     onPurchase={onPurchase}
                   />
-                </Box>
+                </Stack>
               </Grid>
             </Grid>
           </CardContent>
-        </Card>
+        </Paper>
       </motion.div>
     );
   } catch (err) {
@@ -258,14 +289,28 @@ const UpgradeItem = ({ upgrade, fish, ownedUpgrades, onPurchase }) => {
 
 // Component for category tabs
 const CategoryTabs = ({ activeTab, categoryCounts, onChange }) => {
+  const tabCategories = [
+    { value: 'clickPower', label: 'CLICK', count: categoryCounts.clickPower || 0 },
+    { value: 'fishingRod', label: 'RODS', count: categoryCounts.fishingRod || 0 },
+    { value: 'autoFishing', label: 'AUTO', count: categoryCounts.autoFishing || 0 },
+    { value: 'pond', label: 'POND', count: categoryCounts.pond || 0 },
+    { value: 'staff', label: 'STAFF', count: categoryCounts.staff || 0 },
+    { value: 'special', label: 'SPEC', count: categoryCounts.special || 0 }
+  ];
+
   return (
-    <Box sx={{ 
-      bgcolor: '#f5f9ff', 
-      position: 'sticky', 
-      top: 0, 
-      zIndex: 10,
-      boxShadow: '0 2px 4px rgba(0,0,0,0.05)'
-    }}>
+    <Paper 
+      elevation={0} 
+      sx={{ 
+        borderRadius: 0,
+        borderBottom: '1px solid rgba(0,0,0,0.08)',
+        background: 'linear-gradient(to bottom, rgba(255,255,255,0.95), rgba(245,249,255,0.95))',
+        backdropFilter: 'blur(8px)',
+        position: 'sticky', 
+        top: 0, 
+        zIndex: 10,
+      }}
+    >
       <Tabs 
         value={activeTab} 
         onChange={onChange} 
@@ -273,51 +318,64 @@ const CategoryTabs = ({ activeTab, categoryCounts, onChange }) => {
         scrollButtons="auto"
         allowScrollButtonsMobile
         sx={{ 
-          px: 1,
+          px: 2,
           pt: 1,
-          pb: 0.5,
+          pb: 1,
+          minHeight: 48,
           '& .MuiTab-root': {
-            fontWeight: 'bold',
+            fontWeight: 600,
             minWidth: '60px',
-            px: 1,
-            py: 0.5,
-            fontSize: '0.7rem'
+            px: 1.5,
+            py: 1,
+            fontSize: '0.8rem',
+            minHeight: 36,
+            borderRadius: 2,
+            mx: 0.3,
+            transition: 'all 0.2s ease',
+            color: 'rgba(0, 0, 0, 0.6)',
           },
           '& .Mui-selected': {
             color: '#1976d2',
+            bgcolor: 'rgba(25, 118, 210, 0.08)',
           },
-          '& .MuiTabs-scrollButtons': {
-            color: '#1976d2',
+          '& .MuiTabs-indicator': {
+            display: 'none',
           }
         }}
       >
-        <Tab 
-          label={`CLICK${categoryCounts.clickPower ? ` (${categoryCounts.clickPower})` : ''}`} 
-          value="clickPower" 
-        />
-        <Tab 
-          label={`RODS${categoryCounts.fishingRod ? ` (${categoryCounts.fishingRod})` : ''}`} 
-          value="fishingRod" 
-        />
-        <Tab 
-          label={`AUTO${categoryCounts.autoFishing ? ` (${categoryCounts.autoFishing})` : ''}`} 
-          value="autoFishing" 
-        />
-        <Tab 
-          label={`POND${categoryCounts.pond ? ` (${categoryCounts.pond})` : ''}`} 
-          value="pond" 
-        />
-        <Tab 
-          label={`STAFF${categoryCounts.staff ? ` (${categoryCounts.staff})` : ''}`} 
-          value="staff" 
-        />
-        <Tab 
-          label={`SPEC${categoryCounts.special ? ` (${categoryCounts.special})` : ''}`} 
-          value="special" 
-        />
+        {tabCategories.map(tab => (
+          <Tab 
+            key={tab.value}
+            label={
+              <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                <span>{tab.label}</span>
+                {tab.count > 0 && (
+                  <Box 
+                    component="span" 
+                    sx={{ 
+                      ml: 0.7,
+                      bgcolor: activeTab === tab.value ? 'primary.main' : 'rgba(0, 0, 0, 0.12)',
+                      color: activeTab === tab.value ? 'white' : 'text.secondary',
+                      borderRadius: '50%',
+                      width: 18,
+                      height: 18,
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      fontSize: '0.65rem',
+                      fontWeight: 700,
+                    }}
+                  >
+                    {tab.count}
+                  </Box>
+                )}
+              </Box>
+            }
+            value={tab.value}
+          />
+        ))}
       </Tabs>
-      <Divider />
-    </Box>
+    </Paper>
   );
 };
 
@@ -336,22 +394,43 @@ const NoUpgradesMessage = () => {
         alignItems: 'center', 
         justifyContent: 'center',
         height: '100%',
-        p: 2
+        p: 3
       }}>
-        <Typography variant="body2" color="text.secondary" sx={{ 
-          p: 2, 
-          textAlign: 'center',
-          bgcolor: 'rgba(0,0,0,0.03)',
-          borderRadius: 2,
-          width: '100%',
-          fontSize: '0.85rem'
-        }}>
-          <Box sx={{ fontSize: '2rem', mb: 1 }}>🔍</Box>
-          No upgrades available in this category yet.
-          <Box component="p" sx={{ mt: 1, fontWeight: 'bold' }}>
-            Keep fishing to unlock more!
+        <Paper
+          elevation={0}
+          sx={{ 
+            p: 3, 
+            textAlign: 'center',
+            borderRadius: 3,
+            width: '100%',
+            background: 'linear-gradient(to right, rgba(255,255,255,0.9), rgba(245,249,255,0.9))',
+            backdropFilter: 'blur(8px)',
+            border: '1px solid rgba(0,0,0,0.06)',
+          }}
+        >
+          <Box 
+            sx={{ 
+              fontSize: '3rem', 
+              mb: 2,
+              bgcolor: 'rgba(25, 118, 210, 0.08)',
+              width: 80,
+              height: 80,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              borderRadius: '50%',
+              mx: 'auto'
+            }}
+          >
+            🔍
           </Box>
-        </Typography>
+          <Typography variant="h6" sx={{ fontWeight: 600, mb: 1 }}>
+            No Upgrades Available
+          </Typography>
+          <Typography variant="body2" color="text.secondary" sx={{ fontSize: '0.9rem' }}>
+            Keep fishing to discover and unlock more upgrades in this category!
+          </Typography>
+        </Paper>
       </Box>
     </motion.div>
   );
@@ -466,14 +545,15 @@ const UpgradePanel = () => {
       width: '100%', 
       height: '100%', 
       display: 'flex', 
-      flexDirection: 'column'
+      flexDirection: 'column',
+      bgcolor: 'rgba(245, 249, 255, 0.5)',
     }}>
       {/* Error alert */}
       {error && (
         <Alert 
           severity="error" 
           onClose={() => setError(null)}
-          sx={{ m: 1, mt: 0, py: 0.5 }}
+          sx={{ m: 2, mt: 1, py: 0.5 }}
         >
           {error}
         </Alert>
@@ -489,14 +569,14 @@ const UpgradePanel = () => {
       {/* Upgrade list */}
       <Box sx={{ 
         overflowY: 'auto', 
-        px: 1,
-        py: 1,
+        px: 2,
+        py: 2,
         flexGrow: 1,
         display: 'flex',
         flexDirection: 'column'
       }}>
         {isLoading ? (
-          <Box sx={{ display: 'flex', justifyContent: 'center', py: 3 }}>
+          <Box sx={{ display: 'flex', justifyContent: 'center', py: 5 }}>
             <CircularProgress size={30} />
           </Box>
         ) : (

@@ -271,23 +271,13 @@ const GameScreen = () => {
               left: 20,
               zIndex: 5,
             }}>
-              <Paper
-                elevation={3}
-                sx={{
-                  bgcolor: 'rgba(255, 255, 255, 0.7)',
-                  borderRadius: 2,
-                  py: 1,
-                }}
-              >
-                <ResourceDisplay 
+              <ResourceDisplay 
                   fish={fish}
                   scales={scales}
                   knowledge={knowledge}
                   fishPerSecond={fishPerSecond}
-                  clickPower={clickPower}
-                  sx={{ bgcolor: 'transparent' }}
-                />
-              </Paper>
+                                    clickPower={clickPower}
+                  />
             </Box>
           </Paper>
         </Box>
@@ -650,21 +640,25 @@ const GameScreen = () => {
         sx={{ 
           color: '#fff', 
           zIndex: 1500,
-          backdropFilter: 'blur(3px)'
+          backdropFilter: 'blur(4px)'
         }}
         open={showUpgradePanel}
         onClick={() => setShowUpgradePanel(false)}
       >
         <Paper
-          elevation={5}
+          elevation={0}
           sx={{
             width: '90%',
             maxWidth: '800px',
-            maxHeight: '80vh',
+            maxHeight: '85vh',
             borderRadius: 3,
-            overflow: 'auto',
+            overflow: 'hidden',
             position: 'relative',
-            p: 0
+            p: 0,
+            boxShadow: '0 10px 40px rgba(0,0,0,0.15)',
+            border: '1px solid rgba(255,255,255,0.2)',
+            background: 'rgba(255,255,255,0.95)',
+            backdropFilter: 'blur(16px)'
           }}
           onClick={(e) => e.stopPropagation()}
         >
@@ -672,22 +666,39 @@ const GameScreen = () => {
             display: 'flex', 
             justifyContent: 'space-between', 
             alignItems: 'center', 
-            p: 2, 
-            borderBottom: '2px solid #eee',
+            p: 2.5, 
+            borderBottom: '1px solid rgba(0,0,0,0.08)',
             position: 'sticky',
             top: 0,
             bgcolor: 'rgba(255, 255, 255, 0.98)',
+            backdropFilter: 'blur(10px)',
             zIndex: 10
           }}>
-            <Typography variant="h5" sx={{ fontWeight: 'bold', color: '#1976d2', pl: 1 }}>
+            <Typography variant="h5" sx={{ 
+              fontWeight: 700, 
+              color: '#1976d2',
+              letterSpacing: '-0.02em',
+              fontSize: { xs: '1.4rem', sm: '1.5rem' }
+            }}>
               Upgrades
             </Typography>
-            <IconButton onClick={toggleUpgradePanel} size="small" sx={{ bgcolor: '#f5f5f5' }}>
-              <CloseIcon />
+            <IconButton 
+              onClick={toggleUpgradePanel} 
+              size="small" 
+              sx={{ 
+                bgcolor: 'rgba(0,0,0,0.03)',
+                '&:hover': {
+                  bgcolor: 'rgba(0,0,0,0.06)',
+                },
+                width: 36,
+                height: 36
+              }}
+            >
+              <CloseIcon fontSize="small" />
             </IconButton>
           </Box>
           <Box sx={{ 
-            maxHeight: 'calc(80vh - 60px)',
+            height: 'calc(85vh - 70px)',
             overflow: 'auto'
           }}>
             <UpgradePanel />
