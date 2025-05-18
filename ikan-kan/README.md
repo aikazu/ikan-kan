@@ -1,32 +1,37 @@
-# Ikan-Kan: Fish Clicker Game
+# Ikan Kan: Mancing Mania
 
-A relaxing incremental clicker game where you catch fish, upgrade your equipment, and become a fishing master!
+An incremental idle fishing game where you build your fishing empire from a small pond to ocean mastery.
 
 ![Ikan Kan: Mancing Mania](https://github.com/aikazu/ikan-kan/raw/master/public/assets/main.png)
 
-## Overview
+## Problem Solved
 
-Ikan-Kan is a browser-based idle clicker game built with React and Redux. Players click to catch fish, which can be spent on various upgrades to increase production rate, click power, and unlock special features.
+Provides an engaging, relaxing experience combining idle gameplay with strategic depth and educational elements about marine ecosystems.
 
 ## Key Features
 
-- **Simple clicking mechanics** with satisfying feedback and animations
-- **Upgradeable equipment** to increase fish-catching efficiency
-- **Automatic fish collection** from upgrades like fishing rods and staff
-- **Attractive water-themed UI** with animations and visual effects
-- **Offline progress** that continues even when you're not playing
+- **Deep Progression System**: Advance from a small pond to ruling the oceans
+- **Rich Economy System**: Multiple currencies and upgrade paths
+- **Fish Collection**: Discover and collect hundreds of unique fish species
+- **Ecosystem Management**: Balance fishing with sustainability
+- **Educational Elements**: Learn about marine life through gameplay
 
 ## Visuals
 
 The game features a calming water-based environment where players can:
-- Click on colorful animated fish to earn resources
+- Click on colorful animated fish to catch them
 - Progress through various fishing locations from backyard ponds to deep seas
 - Collect and upgrade different types of equipment
 - Experience visual feedback with ripple effects and bubble animations
 
-![Game Screenshot](https://github.com/aikazu/ikan-kan/raw/master/public/assets/main.png)
-
 ## Installation
+
+### Prerequisites
+
+- Node.js (v14.0 or higher)
+- NPM (v6.0 or higher)
+
+### Setup
 
 ```bash
 # Clone the repository
@@ -38,54 +43,51 @@ cd ikan-kan
 # Install dependencies
 npm install
 
-# Start the development server
-npm start
+# Start development server
+npm run dev
 ```
 
-## Usage
+## Basic Usage
 
 ```javascript
-// Game usage is simple:
-// 1. Click the fish button to catch fish
-// 2. Use earned fish to purchase upgrades
-// 3. Upgrades increase click power or auto-fishing rate
-// 4. Unlock special abilities as you progress
+// Example code to add fish to your inventory
+game.catchFish(1);
+
+// Example code to purchase an upgrade
+game.purchaseUpgrade('fishing_rod_1');
 ```
 
 ## Technology Stack
 
-- **Frontend Framework**: React 19.1.0
-- **State Management**: Redux/Redux Toolkit
-- **UI Components**: Material UI 7.1.0
-- **Animations**: Framer Motion
-- **Styling**: CSS-in-JS with Emotion
-- **Build/Deployment**: Create React App, GitHub Pages
+- **Frontend**: HTML5, CSS3, JavaScript, React
+- **State Management**: Redux
+- **Build Tools**: Webpack, Babel
+- **Testing**: Jest, React Testing Library
+- **Storage**: LocalStorage, optional Firebase for cloud saves
 
 ## Project Structure
 
-```
+```bash
 ikan-kan/
-├── public/            # Static assets and HTML template
-│   └── assets/        # Game images and visual assets
-├── src/
-│   ├── components/    # React components for UI elements
-│   ├── store/         # Redux store and slices for state management
-│   ├── game/          # Core game mechanics and logic
-│   ├── data/          # Game data, upgrades, and configuration
-│   └── utils/         # Helper utilities and functions
-├── PLANNING.md        # Project vision and roadmap
-├── TASK.md            # Current tasks and project progress
-└── CHANGELOG.md       # Version history and changes
+├── public/             # Static assets
+│   └── assets/         # Game images and visual elements
+├── src/                # Source code
+│   ├── components/     # React components
+│   ├── store/          # Redux store
+│   ├── game/           # Game logic
+│   ├── screens/        # Game screens
+│   └── utils/          # Utility functions
+├── docs/               # Documentation
+└── tests/              # Test files
 ```
 
-## Live Demo
+## Documentation
 
-Play the game at [https://aikazu.github.io/ikan-kan/](https://aikazu.github.io/ikan-kan/)
+For more detailed documentation, please see:
+- [Planning Document](PLANNING.md) - Project vision and roadmap
+- [Architecture Document](ARCHITECTURE.md) - Technical architecture details
+- [Tech Stack](TECH-STACK.md) - Detailed technology choices
 
 ## License
 
 MIT License
-
-## Contact
-
-Project maintained by [aikazu](https://github.com/aikazu)
