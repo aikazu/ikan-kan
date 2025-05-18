@@ -1,33 +1,19 @@
 import React, { useEffect } from 'react';
 import { Provider, useDispatch } from 'react-redux';
-import { CssBaseline, ThemeProvider, createTheme } from '@mui/material';
+import { CssBaseline } from '@mui/material';
 import { loadGame } from './store/gameSlice';
 import { store } from './store';
 import { startGameLoop, stopGameLoop } from './game/core';
 import { loadGameState, calculateOfflineProgress } from './utils/storage';
 import GameScreen from './components/GameScreen';
-
-// Create a theme
-const theme = createTheme({
-  palette: {
-    mode: 'light',
-    primary: {
-      main: '#1976d2',
-    },
-    secondary: {
-      main: '#dc004e',
-    },
-  },
-});
+import WaterBackground from './components/WaterBackground';
 
 // Main App component wrapper
 function App() {
   return (
     <Provider store={store}>
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <GameApp />
-      </ThemeProvider>
+      <CssBaseline />
+      <GameApp />
     </Provider>
   );
 }
@@ -75,6 +61,7 @@ function GameApp() {
   
   return (
     <div className="App">
+      <WaterBackground />
       <GameScreen />
     </div>
   );
