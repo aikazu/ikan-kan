@@ -2,6 +2,8 @@
 
 A relaxing incremental clicker game where you catch fish, upgrade your equipment, and become a fishing master!
 
+![Ikan Kan: Mancing Mania](https://github.com/aikazu/ikan-kan/raw/master/public/assets/main.png)
+
 ## Overview
 
 Ikan-Kan is a browser-based idle clicker game built with React and Redux. Players click to catch fish, which can be spent on various upgrades to increase production rate, click power, and unlock special features.
@@ -13,6 +15,16 @@ Ikan-Kan is a browser-based idle clicker game built with React and Redux. Player
 - **Automatic fish collection** from upgrades like fishing rods and staff
 - **Attractive water-themed UI** with animations and visual effects
 - **Offline progress** that continues even when you're not playing
+
+## Visuals
+
+The game features a calming water-based environment where players can:
+- Click on colorful animated fish to earn resources
+- Progress through various fishing locations from backyard ponds to deep seas
+- Collect and upgrade different types of equipment
+- Experience visual feedback with ripple effects and bubble animations
+
+![Game Screenshot](https://github.com/aikazu/ikan-kan/raw/master/public/assets/main.png)
 
 ## Installation
 
@@ -54,6 +66,7 @@ npm start
 ```
 ikan-kan/
 ├── public/            # Static assets and HTML template
+│   └── assets/        # Game images and visual assets
 ├── src/
 │   ├── components/    # React components for UI elements
 │   ├── store/         # Redux store and slices for state management
