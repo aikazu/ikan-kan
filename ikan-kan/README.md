@@ -1,70 +1,78 @@
-# Getting Started with Create React App
+# Ikan-Kan: Fish Clicker Game
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A relaxing incremental clicker game where you catch fish, upgrade your equipment, and become a fishing master!
 
-## Available Scripts
+## Overview
 
-In the project directory, you can run:
+Ikan-Kan is a browser-based idle clicker game built with React and Redux. Players click to catch fish, which can be spent on various upgrades to increase production rate, click power, and unlock special features.
 
-### `npm start`
+## Key Features
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- **Simple clicking mechanics** with satisfying feedback and animations
+- **Upgradeable equipment** to increase fish-catching efficiency
+- **Automatic fish collection** from upgrades like fishing rods and staff
+- **Attractive water-themed UI** with animations and visual effects
+- **Offline progress** that continues even when you're not playing
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Installation
 
-### `npm test`
+```bash
+# Clone the repository
+git clone https://github.com/aikazu/ikan-kan.git
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+# Navigate to project directory
+cd ikan-kan
 
-### `npm run build`
+# Install dependencies
+npm install
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+# Start the development server
+npm start
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Usage
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```javascript
+// Game usage is simple:
+// 1. Click the fish button to catch fish
+// 2. Use earned fish to purchase upgrades
+// 3. Upgrades increase click power or auto-fishing rate
+// 4. Unlock special abilities as you progress
+```
 
-### `npm run eject`
+## Technology Stack
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+- **Frontend Framework**: React 19.1.0
+- **State Management**: Redux/Redux Toolkit
+- **UI Components**: Material UI 7.1.0
+- **Animations**: Framer Motion
+- **Styling**: CSS-in-JS with Emotion
+- **Build/Deployment**: Create React App, GitHub Pages
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Project Structure
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+```
+ikan-kan/
+├── public/            # Static assets and HTML template
+├── src/
+│   ├── components/    # React components for UI elements
+│   ├── store/         # Redux store and slices for state management
+│   ├── game/          # Core game mechanics and logic
+│   ├── data/          # Game data, upgrades, and configuration
+│   └── utils/         # Helper utilities and functions
+├── PLANNING.md        # Project vision and roadmap
+├── TASK.md            # Current tasks and project progress
+└── CHANGELOG.md       # Version history and changes
+```
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## Live Demo
 
-## Learn More
+Play the game at [https://aikazu.github.io/ikan-kan/](https://aikazu.github.io/ikan-kan/)
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## License
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+MIT License
 
-### Code Splitting
+## Contact
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Project maintained by [aikazu](https://github.com/aikazu)
