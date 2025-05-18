@@ -5,18 +5,21 @@ This document outlines the complete technology stack used in the Ikan Kan: Manci
 ## Languages
 
 ### JavaScript (ES2020+)
+
 - **Version**: ECMAScript 2020+
 - **Usage**: Primary programming language for game logic and UI components
 - **Justification**: Wide browser support, strong ecosystem, and familiarity among developers
 - **Alternatives Considered**: TypeScript
 
 ### HTML5
+
 - **Version**: HTML5
 - **Usage**: Document structure and Canvas API
 - **Justification**: Standard for web development with universal support
 - **Alternatives Considered**: None (industry standard)
 
 ### CSS3
+
 - **Version**: CSS3
 - **Usage**: Styling and animations
 - **Justification**: Industry standard for web styling
@@ -25,6 +28,7 @@ This document outlines the complete technology stack used in the Ikan Kan: Manci
 ## Frontend Framework
 
 ### React
+
 - **Version**: 18.x
 - **Usage**: UI component management and rendering
 - **Justification**: Component-based architecture ideal for game UI, excellent performance with virtual DOM, large ecosystem
@@ -34,6 +38,7 @@ This document outlines the complete technology stack used in the Ikan Kan: Manci
 ## State Management
 
 ### Redux
+
 - **Version**: 4.x
 - **Usage**: Global state management for game state
 - **Justification**: Predictable state container with excellent debugging tools, ideal for complex game state
@@ -41,6 +46,7 @@ This document outlines the complete technology stack used in the Ikan Kan: Manci
 - **Documentation**: [Redux Documentation](https://redux.js.org/)
 
 ### Redux Toolkit
+
 - **Version**: 1.9.x
 - **Usage**: Simplify Redux usage with utilities
 - **Justification**: Reduces boilerplate code and enforces best practices
@@ -50,6 +56,7 @@ This document outlines the complete technology stack used in the Ikan Kan: Manci
 ## UI Components
 
 ### Material-UI
+
 - **Version**: 5.x
 - **Usage**: Base UI components and theming
 - **Justification**: Comprehensive component library with customization options
@@ -57,6 +64,7 @@ This document outlines the complete technology stack used in the Ikan Kan: Manci
 - **Documentation**: [Material-UI Documentation](https://mui.com/getting-started/usage/)
 
 ### Framer Motion
+
 - **Version**: 6.x
 - **Usage**: Animation library for UI components
 - **Justification**: Powerful animation capabilities with React integration
@@ -66,11 +74,13 @@ This document outlines the complete technology stack used in the Ikan Kan: Manci
 ## Game Engine Components
 
 ### Canvas API
+
 - **Usage**: Rendering game elements
 - **Justification**: Browser-native API for efficient 2D graphics
 - **Alternatives Considered**: SVG (less performant for many elements), WebGL (overkill for 2D)
 
 ### requestAnimationFrame
+
 - **Usage**: Game loop management
 - **Justification**: Browser-native way to optimize animations
 - **Alternatives Considered**: setInterval (less efficient)
@@ -78,6 +88,7 @@ This document outlines the complete technology stack used in the Ikan Kan: Manci
 ## Build Tools
 
 ### Webpack
+
 - **Version**: 5.x
 - **Usage**: Module bundling and asset management
 - **Justification**: Powerful bundling capabilities with extensive plugin ecosystem
@@ -85,6 +96,7 @@ This document outlines the complete technology stack used in the Ikan Kan: Manci
 - **Documentation**: [Webpack Documentation](https://webpack.js.org/)
 
 ### Babel
+
 - **Version**: 7.x
 - **Usage**: JavaScript transpilation
 - **Justification**: Allows use of modern JavaScript features with backward compatibility
@@ -92,6 +104,7 @@ This document outlines the complete technology stack used in the Ikan Kan: Manci
 - **Documentation**: [Babel Documentation](https://babeljs.io/docs/en/)
 
 ### ESLint
+
 - **Version**: 8.x
 - **Usage**: Code linting
 - **Justification**: Enforces code quality and consistency
@@ -99,6 +112,7 @@ This document outlines the complete technology stack used in the Ikan Kan: Manci
 - **Documentation**: [ESLint Documentation](https://eslint.org/)
 
 ### Prettier
+
 - **Version**: 2.x
 - **Usage**: Code formatting
 - **Justification**: Ensures consistent code style
@@ -108,6 +122,7 @@ This document outlines the complete technology stack used in the Ikan Kan: Manci
 ## Testing
 
 ### Jest
+
 - **Version**: 28.x
 - **Usage**: Unit and integration testing
 - **Justification**: Comprehensive testing framework with React integration
@@ -115,6 +130,7 @@ This document outlines the complete technology stack used in the Ikan Kan: Manci
 - **Documentation**: [Jest Documentation](https://jestjs.io/docs/getting-started)
 
 ### React Testing Library
+
 - **Version**: 13.x
 - **Usage**: Component testing
 - **Justification**: Encourages testing from user perspective
@@ -124,11 +140,13 @@ This document outlines the complete technology stack used in the Ikan Kan: Manci
 ## Storage
 
 ### LocalStorage
+
 - **Usage**: Primary client-side storage for game saves
 - **Justification**: Simple API, widely supported
 - **Alternatives Considered**: IndexedDB (more complex but higher storage limits)
 
 ### Firebase (Optional)
+
 - **Version**: 9.x
 - **Usage**: Optional cloud storage for save data
 - **Justification**: Easy to integrate backend-as-a-service
@@ -138,6 +156,7 @@ This document outlines the complete technology stack used in the Ikan Kan: Manci
 ## Package Management
 
 ### npm
+
 - **Version**: 8.x
 - **Usage**: Dependency management
 - **Justification**: Standard package manager for Node.js ecosystem
@@ -147,6 +166,7 @@ This document outlines the complete technology stack used in the Ikan Kan: Manci
 ## Development Tools
 
 ### Create React App
+
 - **Version**: 5.x
 - **Usage**: Project bootstrapping and configuration
 - **Justification**: Official React toolchain with sensible defaults
@@ -154,11 +174,13 @@ This document outlines the complete technology stack used in the Ikan Kan: Manci
 - **Documentation**: [Create React App Documentation](https://create-react-app.dev/docs/getting-started/)
 
 ### Chrome DevTools
+
 - **Usage**: Debugging and performance profiling
 - **Justification**: Comprehensive browser-based development tools
 - **Alternatives Considered**: Firefox Developer Tools (comparable features)
 
 ### Visual Studio Code
+
 - **Usage**: Recommended IDE
 - **Justification**: Excellent JavaScript/React support, free and powerful
 - **Alternatives Considered**: WebStorm (more features but paid)
@@ -166,11 +188,13 @@ This document outlines the complete technology stack used in the Ikan Kan: Manci
 ## Deployment
 
 ### GitHub Pages
+
 - **Usage**: Initial hosting platform
 - **Justification**: Free, easy to integrate with CI/CD
 - **Alternatives Considered**: Netlify, Vercel (more features but may have costs at scale)
 
 ### GitHub Actions
+
 - **Usage**: CI/CD pipeline
 - **Justification**: Integrated with GitHub, free for public repositories
 - **Alternatives Considered**: Travis CI, CircleCI (separate services)
@@ -178,6 +202,7 @@ This document outlines the complete technology stack used in the Ikan Kan: Manci
 ## Performance Monitoring
 
 ### Lighthouse
+
 - **Usage**: Performance, accessibility, and SEO auditing
 - **Justification**: Integrated with Chrome DevTools, comprehensive metrics
 - **Alternatives Considered**: WebPageTest (more detailed but external service)
@@ -185,6 +210,7 @@ This document outlines the complete technology stack used in the Ikan Kan: Manci
 ## Third-party Services
 
 ### Google Analytics (Optional)
+
 - **Usage**: User analytics
 - **Justification**: Comprehensive analytics platform, easy to integrate
 - **Alternatives Considered**: Matomo (more privacy-focused but requires setup)
@@ -192,11 +218,13 @@ This document outlines the complete technology stack used in the Ikan Kan: Manci
 ## Version Control
 
 ### Git
+
 - **Usage**: Source code management
 - **Justification**: Industry standard version control system
 - **Alternatives Considered**: None (industry standard)
 
 ### GitHub
+
 - **Usage**: Remote repository hosting
 - **Justification**: Popular platform with good integration options
-- **Alternatives Considered**: GitLab, Bitbucket (similar features) 
+- **Alternatives Considered**: GitLab, Bitbucket (similar features)
