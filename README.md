@@ -2,6 +2,8 @@
 
 An incremental idle fishing game where you build your fishing empire from a small pond to ocean mastery.
 
+![Ikan Kan: Mancing Mania](images/main.png)
+
 ## Problem Solved
 
 Provides an engaging, relaxing experience combining idle gameplay with strategic depth and educational elements about marine ecosystems.
@@ -13,6 +15,14 @@ Provides an engaging, relaxing experience combining idle gameplay with strategic
 - **Fish Collection**: Discover and collect hundreds of unique fish species
 - **Ecosystem Management**: Balance fishing with sustainability
 - **Educational Elements**: Learn about marine life through gameplay
+
+## Visuals
+
+The game features a calming water-based environment where players can:
+- Click on colorful animated fish to catch them
+- Progress through various fishing locations from backyard ponds to deep seas
+- Collect and upgrade different types of equipment
+- Experience visual feedback with ripple effects and bubble animations
 
 ## Installation
 
@@ -60,8 +70,8 @@ game.purchaseUpgrade('fishing_rod_1');
 ```bash
 ikan-kan/
 ├── public/             # Static assets
+│   └── assets/         # Game images and visual elements
 ├── src/                # Source code
-│   ├── assets/         # Game assets (images, sounds)
 │   ├── components/     # React components
 │   ├── store/          # Redux store
 │   ├── game/           # Game logic
@@ -73,6 +83,7 @@ ikan-kan/
 
 ## Documentation
 
+For more detailed documentation, please see:
 - [Planning Document](PLANNING.md) - Project vision and roadmap
 - [Architecture Document](ARCHITECTURE.md) - Technical architecture details
 - [Tech Stack](TECH-STACK.md) - Detailed technology choices

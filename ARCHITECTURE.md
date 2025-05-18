@@ -1,180 +1,161 @@
-# Ikan Kan: Mancing Mania - Architecture Document
+# Architecture Documentation
 
-## Architectural Overview
+## 1. System Overview
 
-Ikan Kan: Mancing Mania follows a component-based architecture built on React with Redux for state management. The game is designed as a web application with a clear separation between the UI layer and game logic.
-
-## System Components
-
-### Core Game Engine
-The game engine handles the core mechanics, including:
-- Game loop management
-- Time tracking for idle progression
-- Resource calculation and management
-- Game state persistence
-- Event handling
-
-### User Interface Layer
-The UI layer is responsible for:
-- Rendering game components
-- Handling user interactions
-- Displaying animations and visual effects
-- Adapting to different screen sizes
-
-### Data Management
-The data management components handle:
-- Save/load functionality
-- Game progression tracking
-- Player statistics
-- Achievement tracking
-
-### Game Logic Units
-These units implement specific game mechanics:
-- Fish collection and management
-- Upgrade systems
-- Research and technology progression
-- Staff and facility management
-- Event and achievement systems
-
-## Component Interactions
+Ikan-Kan is built as a single-page React application with Redux for state management. The architecture follows a component-based design with clear separation between game logic, UI components, and data management.
 
 ```
-┌─────────────────────────────────────┐
-│            User Interface           │
-│  ┌───────────┐  ┌───────────────┐   │
-│  │  Game UI  │  │ Control Panel │   │
-│  └─────┬─────┘  └───────┬───────┘   │
-└────────┼────────────────┼───────────┘
-         │                │
-         ▼                ▼
-┌────────┴────────────────┴───────────┐
-│           Redux Store                │
-│  ┌─────────────┐  ┌──────────────┐  │
-│  │ Game State  │  │ UI State     │  │
-│  └──────┬──────┘  └──────────────┘  │
-└─────────┼───────────────────────────┘
-          │
-          ▼
-┌─────────┴───────────────────────────┐
-│          Game Engine                 │
-│  ┌─────────┐ ┌───────┐ ┌─────────┐  │
-│  │Resources│ │Upgrades│ │Mechanics│  │
-│  └─────────┘ └───────┘ └─────────┘  │
-└─────────────────────────────────────┘
-          │
-          ▼
-┌─────────┴───────────────────────────┐
-│          Storage Layer               │
-│  ┌────────────┐    ┌──────────────┐ │
-│  │LocalStorage│    │Cloud Storage  │ │
-│  └────────────┘    └──────────────┘ │
-└─────────────────────────────────────┘
++---------------------------+
+|          UI Layer         |
+|  (React Components, MUI)  |
++------------+----+---------+
+             |    |
+             v    v
++------------+----+---------+
+|       State Layer         |
+|     (Redux, Reducers)     |
++------------+----+---------+
+             |    |
+             v    v
++------------+----+---------+
+|      Core Game Logic      |
+|   (Game Loop, Upgrades)   |
++---------------------------+
 ```
 
-## Design Patterns
+## 2. Component Architecture <a id="component-architecture"></a>
 
-### Observer Pattern
-Used for event handling and notifications between game components. For example:
-- When resources change, UI components are notified
-- When achievements are unlocked, notification system is triggered
+The UI is structured as a hierarchy of React components:
 
-### Factory Pattern
-Used for creating different types of game objects:
-- Fish species with different properties
-- Upgrades with various effects
-- Staff with different skills and abilities
+```
+GameScreen
+├── Header
+├── ResourceDisplay
+├── FishingArea
+│   └── FishButton
+├── UpgradePanel
+│   ├── CategoryTabs
+│   ├── UpgradeItem
+│   │   ├── UpgradeEffectDescription
+│   │   └── UpgradePurchaseButton
+│   └── NoUpgradesMessage
+└── Footer
+```
 
-### Command Pattern
-Used for handling user actions and maintaining a clean separation between UI and game logic:
-- All user interactions are converted to commands
-- Commands can be serialized for undo/redo functionality
-- Simplifies testing of game logic
+Each component is responsible for a specific aspect of the UI and communicates with the Redux store for state updates.
 
-### Singleton Pattern
-Used for global managers:
-- Game engine instance
-- Save manager
-- Sound manager
+## 3. State Management <a id="state-management"></a>
 
-### Strategy Pattern
-Used for implementing different behaviors:
-- Calculation strategies for different upgrade effects
-- Different fish spawning behaviors based on environment
+The application uses Redux Toolkit for state management with the following key slices:
 
-## Data Flow
+- **gameSlice**: Core game state including resources, upgrades, and progress
+- **settingsSlice**: User preferences and configuration
+- **uiSlice**: UI-specific state like active tabs and modals
 
-1. **User Interactions** → UI Components capture clicks, selections
-2. **UI Actions** → Dispatched to Redux store
-3. **Redux Middleware** → Processes actions and updates state
-4. **Game Engine** → Processes state changes and applies game logic
-5. **State Updates** → Propagated to UI components
-6. **Persistence** → State saved to storage at checkpoints
+The game state follows this structure:
 
-## Technical Constraints
+```javascript
+{
+  resources: {
+    fish: number,
+    scales: number,
+    knowledge: number
+  },
+  production: {
+    fishPerSecond: number,
+    clickPower: number
+  },
+  upgrades: {
+    [upgradeId]: {
+      level: number,
+      purchased: boolean
+    }
+  },
+  stats: {
+    totalClicks: number,
+    totalFishCollected: number,
+    playTime: number
+  },
+  meta: {
+    lastActive: timestamp,
+    version: string
+  }
+}
+```
 
-### Browser Compatibility
-- Target modern browsers (last 2 versions)
-- Fallbacks for critical features
-- Progressive enhancement approach
+## 4. Data Flow <a id="data-flow"></a>
+
+The application follows a unidirectional data flow:
+
+1. User actions (clicks, purchases) are captured by React components
+2. Actions are dispatched to the Redux store
+3. Reducers update the state based on the actions
+4. Components react to state changes and re-render
+
+For time-based actions, a game loop is implemented:
+
+```
++----------------+     +---------------+
+| Game Loop      |---->| Update State  |
+| (setInterval)  |     | (Dispatch)    |
++----------------+     +---------------+
+        |                     |
+        v                     v
++----------------+     +---------------+
+| Save Progress  |<----| UI Updates    |
+| (localStorage) |     | (React)       |
++----------------+     +---------------+
+```
+
+## 5. Technical Constraints <a id="technical-constraints"></a>
 
 ### Performance Considerations
-- Minimize DOM updates using React's virtual DOM
-- Use requestAnimationFrame for animations
-- Throttle expensive calculations
-- Implement efficient algorithms for idle progression
 
-### Memory Management
-- Limit object creation during game loop
-- Use object pooling for frequently created/destroyed objects
-- Clean up listeners and intervals when components unmount
+- Game loop runs at 10 ticks per second (100ms intervals)
+- Heavy calculations are memoized to prevent unnecessary recalculations
+- Component rendering is optimized with `React.memo` and selective re-renders
 
-## Security Architecture
+### Browser Compatibility
 
-### Save Data Integrity
-- Checksums to detect tampering
-- Encryption for sensitive data
-- Validation of loaded save data
+- Targets modern browsers (Chrome, Firefox, Safari, Edge)
+- Uses polyfills for older browsers when necessary
+- Responsive design works on both desktop and mobile devices
 
-### Cloud Save Security (if implemented)
-- Secure authentication
-- Data encryption in transit and at rest
-- Rate limiting to prevent abuse
+### Storage Limitations
 
-## Performance Architecture
+- Game state is stored in localStorage with fallback mechanisms
+- Save data is compressed to stay within storage limits
+- Version tracking ensures backward compatibility for saved games
 
-### Rendering Optimization
-- Component memoization
-- Canvas for performance-critical rendering
-- Sprite batching for similar objects
+## 6. Security Architecture <a id="security"></a>
 
-### Calculation Optimization
-- Cached calculations where possible
-- Batched updates
-- Time-slicing for heavy calculations
+As a client-side game, security focuses on:
 
-## Section ID: ARCH-001
-## Technical Decisions
+- Input validation to prevent unexpected state manipulation
+- Anti-cheat measures for basic save data integrity
+- Safe storage practices for user preferences
 
-### Frontend Framework: React
-- **Decision**: Use React for UI components
-- **Rationale**: Component-based architecture fits game UI requirements
-- **Alternatives Considered**: Vue.js, Angular
-- **Trade-offs**: React has steeper learning curve but better performance for our needs
+## 7. Design Patterns <a id="design-patterns"></a>
 
-### State Management: Redux
-- **Decision**: Use Redux for state management
-- **Rationale**: Predictable state management for complex game state
-- **Alternatives Considered**: Context API, MobX
-- **Trade-offs**: More boilerplate but better debugging and state tracking
+The application employs several design patterns:
 
-### Storage Solution: LocalStorage + Optional Firebase
-- **Decision**: Use LocalStorage with optional Firebase
-- **Rationale**: Simple storage with optional cloud backup
-- **Alternatives Considered**: IndexedDB, Custom backend
-- **Trade-offs**: LocalStorage has size limitations but is simpler to implement
+- **Observer Pattern**: Redux store subscription for state updates
+- **Command Pattern**: Action creators for state modifications
+- **Factory Pattern**: Upgrade generation and initialization
+- **Strategy Pattern**: Different upgrade effect implementations
 
-### Rendering Approach: Mixed DOM/Canvas
-- **Decision**: Use DOM for UI, Canvas for game elements
-- **Rationale**: Leverage React for UI with Canvas performance for game elements
-- **Alternatives Considered**: Pure DOM, Pure Canvas, WebGL
-- **Trade-offs**: More complex integration but better performance/flexibility balance 
+## 8. Architecture Decisions <a id="architecture-decisions"></a>
+
+| Decision | Options Considered | Rationale |
+|----------|-------------------|-----------|
+| State Management | Context API vs Redux | Redux chosen for complex state with time-based updates and persistence requirements |
+| UI Framework | Custom CSS vs Material UI | Material UI chosen for consistent design system and component library |
+| Animation Library | CSS vs Framer Motion | Framer Motion chosen for complex animations with React integration |
+| Storage Mechanism | Cookies vs localStorage | localStorage chosen for larger storage capacity and simpler API |
+
+## 9. Future Architectural Considerations <a id="future-considerations"></a>
+
+- Potential migration to TypeScript for improved type safety
+- Consideration of offline-first PWA capabilities
+- Modularization of game mechanics for plugin-style feature expansion
+- Server-side validation for potential multiplayer features 
