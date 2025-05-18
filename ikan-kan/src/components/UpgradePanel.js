@@ -84,7 +84,7 @@ const UpgradePurchaseButton = ({ upgrade, fish, ownedLevel, maxLevel, onPurchase
         <Button
           variant={isMaxLevel ? "outlined" : "contained"}
           size="small"
-          color={isMaxLevel ? "success" : canAfford ? "primary" : "primary"}
+          color={isMaxLevel ? "success" : "primary"}
           disabled={isDisabled}
           onClick={() => onPurchase(upgrade)}
           sx={{ 
@@ -96,11 +96,17 @@ const UpgradePurchaseButton = ({ upgrade, fish, ownedLevel, maxLevel, onPurchase
             borderRadius: 2,
             textTransform: 'none',
             boxShadow: canAfford && !isMaxLevel ? 2 : 0,
+            opacity: isDisabled && !isMaxLevel ? 0.85 : 1,
             '&:hover': {
               boxShadow: canAfford && !isMaxLevel ? 3 : 0,
+            },
+            '&.Mui-disabled': {
+              bgcolor: isMaxLevel ? 'transparent' : 'primary.main',
+              color: isMaxLevel ? 'success.main' : 'white',
+              opacity: isMaxLevel ? 1 : 0.7,
             }
           }}
-          endIcon={!isMaxLevel && canAfford ? <KeyboardArrowRightIcon /> : null}
+          endIcon={!isMaxLevel ? <KeyboardArrowRightIcon /> : null}
         >
           {isMaxLevel ? 'Maxed' : `${formatNumber(cost)} 🐟`}
         </Button>
@@ -245,12 +251,21 @@ const UpgradeItem = ({ upgrade, fish, ownedUpgrades, onPurchase }) => {
                       <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 0.5 }}>
                         <Typography variant="caption" color="text.secondary" sx={{ fontWeight: 500 }}>
                           {`Level ${ownedLevel}/${maxLevel}`}
+                          {!isMaxLevel && (
+                            <Typography 
+                              component="span" 
+                              variant="caption" 
+                              color="primary" 
+                              sx={{ 
+                                fontWeight: 600,
+                                display: 'inline',
+                                ml: 0.5
+                              }}
+                            >
+                              Ready to Upgrade!
+                            </Typography>
+                          )}
                         </Typography>
-                        {canAfford && (
-                          <Typography variant="caption" color="primary" sx={{ fontWeight: 600 }}>
-                            Ready to Upgrade!
-                          </Typography>
-                        )}
                       </Box>
                       <LinearProgress 
                         variant="determinate" 
