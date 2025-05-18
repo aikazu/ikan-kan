@@ -2,7 +2,7 @@
 
 An incremental idle fishing game where you build your fishing empire from a small pond to ocean mastery.
 
-![Ikan Kan: Mancing Mania](https://github.com/aikazu/ikan-kan/raw/master/public/assets/main.png)
+![Ikan Kan: Mancing Mania](.images/main.png)
 
 ## Problem Solved
 
