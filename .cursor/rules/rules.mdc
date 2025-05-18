@@ -20,6 +20,7 @@ alwaysApply: true
 - **Implementation progress tracking**: Use percentage completed for major components
 - **Memory priming**: Begin resumed sessions with key documentation review
 - **Context restoration**: Include explicit "Context Loading" step when resuming
+- **Place**: Documentation is always in root workspace folder
 
 ## Modular Task Approach
 
