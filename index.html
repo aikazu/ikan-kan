@@ -1,1 +1,133 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"/><link rel="icon" href="/ikan-kan/favicon.ico"/><meta name="viewport" content="width=device-width,initial-scale=1"/><meta name="theme-color" content="#2196F3"/><meta name="description" content="Ikan-Kan: A relaxing fish clicker game. Catch fish, upgrade your equipment, and become a fishing master!"/><link rel="apple-touch-icon" href="/ikan-kan/logo192.png"/><link rel="manifest" href="/ikan-kan/manifest.json"/><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet"><title>Ikan-Kan | Fish Clicker Game</title><style>body{margin:0;padding:0;font-family:Nunito,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,Cantarell,'Fira Sans','Droid Sans','Helvetica Neue',sans-serif;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;background:linear-gradient(135deg,#f5f9ff 0,#e3f2fd 100%);overflow-x:hidden}#splash-screen{position:fixed;top:0;left:0;width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;background:linear-gradient(135deg,#2196f3 0,#64b5f6 100%);z-index:9999;transition:opacity .5s ease-out}#splash-logo{width:120px;height:120px;margin-bottom:20px;animation:pulse 1.5s infinite ease-in-out}#splash-title{color:#fff;font-size:24px;font-weight:700;letter-spacing:-.5px;margin-bottom:30px}.loader{width:180px;height:6px;background:rgba(255,255,255,.2);border-radius:3px;overflow:hidden}.loader-bar{width:0%;height:100%;background:#fff;border-radius:3px;animation:loading 2s ease-in-out forwards}@keyframes pulse{0%{transform:scale(1)}50%{transform:scale(1.05)}100%{transform:scale(1)}}@keyframes loading{0%{width:0%}100%{width:100%}}</style><script defer="defer" src="/ikan-kan/static/js/main.6cb807e0.js"></script><link href="/ikan-kan/static/css/main.3e79a78c.css" rel="stylesheet"></head><body><noscript>You need to enable JavaScript to run this app.</noscript><div id="splash-screen"><div id="splash-logo">🐟</div><div id="splash-title">Ikan-Kan</div><div class="loader"><div class="loader-bar"></div></div></div><div id="root"></div><script>window.addEventListener("load",(function(){setTimeout((function(){const e=document.getElementById("splash-screen");e&&(e.style.opacity="0",setTimeout((function(){e.style.display="none"}),500))}),2e3)}))</script></body></html>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="/ikan-kan/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#2196F3" />
+    <meta
+      name="description"
+      content="Ikan-Kan: A relaxing fish clicker game. Catch fish, upgrade your equipment, and become a fishing master!"
+    />
+    <link rel="apple-touch-icon" href="/ikan-kan/logo192.png" />
+    <!--
+      manifest.json provides metadata used when your web app is installed on a
+      user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
+    -->
+    <link rel="manifest" href="/ikan-kan/manifest.json" />
+    <!--
+      Notice the use of absolute paths in the tags above.
+      These files are served from the `public` directory.
+    -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <title>Ikan-Kan | Fish Clicker Game</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: 'Nunito', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+          'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        background: linear-gradient(135deg, #f5f9ff 0%, #e3f2fd 100%);
+        overflow-x: hidden;
+      }
+      
+      #splash-screen {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(135deg, #2196F3 0%, #64B5F6 100%);
+        z-index: 9999;
+        transition: opacity 0.5s ease-out;
+      }
+      
+      #splash-logo {
+        width: 120px;
+        height: 120px;
+        margin-bottom: 20px;
+        animation: pulse 1.5s infinite ease-in-out;
+      }
+      
+      #splash-title {
+        color: white;
+        font-size: 24px;
+        font-weight: 700;
+        letter-spacing: -0.5px;
+        margin-bottom: 30px;
+      }
+      
+      .loader {
+        width: 180px;
+        height: 6px;
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 3px;
+        overflow: hidden;
+      }
+      
+      .loader-bar {
+        width: 0%;
+        height: 100%;
+        background: white;
+        border-radius: 3px;
+        animation: loading 2s ease-in-out forwards;
+      }
+      
+      @keyframes pulse {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.05); }
+        100% { transform: scale(1); }
+      }
+      
+      @keyframes loading {
+        0% { width: 0%; }
+        100% { width: 100%; }
+      }
+    </style>
+    <script type="module" crossorigin src="/ikan-kan/assets/index-mKYT6eEj.js"></script>
+    <link rel="stylesheet" crossorigin href="/ikan-kan/assets/index-BtcNMATB.css">
+  </head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="splash-screen">
+      <div id="splash-logo">🐟</div>
+      <div id="splash-title">Ikan-Kan</div>
+      <div class="loader">
+        <div class="loader-bar"></div>
+      </div>
+    </div>
+    <div id="root"></div>
+    <script>
+      // Hide splash screen after app loads
+      window.addEventListener('load', function() {
+        setTimeout(function() {
+          const splash = document.getElementById('splash-screen');
+          if (splash) {
+            splash.style.opacity = '0';
+            setTimeout(function() {
+              splash.style.display = 'none';
+            }, 500);
+          }
+        }, 2000);
+      });
+    </script>
+    <!--
+      This HTML file is a template.
+      If you open it directly in the browser, you will see an empty page.
+
+      You can add webfonts, meta tags, or analytics to this file.
+      The build step will place the bundled scripts into the <body> tag.
+
+      To begin the development, run `npm start` or `yarn start`.
+      To create a production bundle, use `npm run build` or `yarn build`.
+    -->
+  </body>
+</html>
