@@ -49,7 +49,7 @@ const UpgradeItem = ({ upgrade, fish, ownedUpgrades, onPurchase }) => {
           <CardContent sx={{ p: 1.5, '&:last-child': { pb: 1.5 } }}>
             <Grid container spacing={1} alignItems="center">
               {/* Icon and name section */}
-              <Grid item xs={7} sx={{ display: 'flex', alignItems: 'center' }}>
+              <Grid sx={{ width: { xs: `${(7/12)*100}%` }, display: 'flex', alignItems: 'center' }}>
                 <Box 
                   sx={{ 
                     fontSize: '1.2rem', 
@@ -104,7 +104,7 @@ const UpgradeItem = ({ upgrade, fish, ownedUpgrades, onPurchase }) => {
               </Grid>
               
               {/* Effect and purchase button */}
-              <Grid item xs={5} sx={{ textAlign: 'right' }}>
+              <Grid sx={{ width: { xs: `${(5/12)*100}%` }, textAlign: 'right' }}>
                 {isMaxLevel ? (
                   <Typography variant="body2" color="success.main" sx={{ 
                     fontWeight: 'bold',

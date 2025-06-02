@@ -2,214 +2,31 @@ import React, { useMemo } from 'react';
 import { Box, Typography } from '@mui/material';
 import { motion } from 'framer-motion';
 
+// Import sub-components
+import EnvironmentLabel from './FishingArea/EnvironmentLabel';
+import BackgroundFish from './FishingArea/BackgroundFish';
+import MainFish from './FishingArea/MainFish';
+import ClickEffects from './FishingArea/ClickEffects';
+import UnderwaterBubbles from './FishingArea/UnderwaterBubbles';
+import WaterPlants from './FishingArea/WaterPlants';
+
 // Component for environment label
-const EnvironmentLabel = ({ name }) => {
-  return (
-    <Typography
-      variant="h5"
-      component="h3"
-      sx={{
-        position: 'absolute',
-        top: 16,
-        left: 16,
-        color: 'white',
-        textShadow: '0 0 5px rgba(0,0,0,0.7)',
-        fontWeight: 'bold',
-        zIndex: 10,
-        backgroundColor: 'rgba(0,0,0,0.2)',
-        padding: '8px 16px',
-        borderRadius: '8px',
-      }}
-    >
-      {name}
-    </Typography>
-  );
-};
+// const EnvironmentLabel = ({ name }) => { ... }; // Moved to ./FishingArea/EnvironmentLabel.js
 
 // Component for background fish
-const BackgroundFish = ({ position, fishIcon }) => {
-  return (
-    <Box sx={{ position: 'absolute', top: position.top, left: position.left, zIndex: 1 }}>
-      <motion.div
-        animate={{
-          x: ['0%', '100%', '0%'],
-          y: ['0%', '-15%', '15%', '0%'],
-        }}
-        transition={{
-          x: { duration: position.duration, repeat: Infinity, ease: 'linear' },
-          y: { duration: position.duration / 3, repeat: Infinity, ease: 'easeInOut', repeatType: 'mirror' },
-          delay: position.delay,
-        }}
-        style={{ opacity: position.opacity }}
-      >
-        <Typography sx={{ fontSize: position.size, color: 'rgba(255,255,255,0.8)' }}>
-          {fishIcon}
-        </Typography>
-      </motion.div>
-    </Box>
-  );
-};
+// const BackgroundFish = ({ position, fishIcon }) => { ... }; // Moved to ./FishingArea/BackgroundFish.js
 
 // Component for the main fish target
-const MainFish = ({ fishIcon }) => {
-  return (
-    <Box sx={{ 
-      position: 'absolute', 
-      top: '40%', 
-      left: '50%', 
-      transform: 'translate(-50%, -50%)',
-      zIndex: 5 
-    }}>
-      <motion.div
-        whileHover={{ scale: 1.1 }}
-        animate={{
-          y: [0, -15, 0, 15, 0],
-          rotate: [0, 5, 0, -5, 0],
-          scale: [1, 1.05, 1, 0.95, 1],
-        }}
-        transition={{
-          duration: 4,
-          ease: "easeInOut",
-          repeat: Infinity,
-        }}
-      >
-        <Typography variant="h1" sx={{ 
-          fontSize: '200px', 
-          color: 'rgba(255,255,255,0.95)',
-          textShadow: '0 0 20px rgba(0,0,0,0.5), 0 0 40px rgba(255,255,255,0.3)',
-          cursor: 'pointer',
-          userSelect: 'none',
-          WebkitUserSelect: 'none',
-          MozUserSelect: 'none',
-          msUserSelect: 'none',
-          WebkitTouchCallout: 'none',
-          WebkitTapHighlightColor: 'transparent',
-          pointerEvents: 'all',
-        }}>
-          {fishIcon}
-        </Typography>
-      </motion.div>
-    </Box>
-  );
-};
+// const MainFish = ({ fishIcon }) => { ... }; // Moved to ./FishingArea/MainFish.js
 
 // Component for click effects
-const ClickEffects = ({ showClickEffect, clickPosition, fishIcon }) => {
-  if (!showClickEffect) return null;
-  
-  return (
-    <>
-      {/* Fish icon effect */}
-      <motion.div
-        initial={{ scale: 0.5, opacity: 1 }}
-        animate={{ scale: 2, opacity: 0 }}
-        transition={{ duration: 0.5, ease: "easeOut" }}
-        style={{
-          position: 'absolute',
-          top: clickPosition.y,
-          left: clickPosition.x,
-          fontSize: '32px',
-          transform: 'translate(-50%, -50%)',
-          pointerEvents: 'none',
-          zIndex: 20,
-          filter: 'drop-shadow(0 0 8px rgba(255,255,255,0.8))',
-        }}
-      >
-        {fishIcon}
-      </motion.div>
-
-      {/* Ripple effect */}
-      <motion.div
-        initial={{ scale: 0, opacity: 0.8 }}
-        animate={{ scale: 2, opacity: 0 }}
-        transition={{ duration: 0.8 }}
-        style={{
-          position: 'absolute',
-          top: clickPosition.y,
-          left: clickPosition.x,
-          width: '50px',
-          height: '50px',
-          borderRadius: '50%',
-          background: 'rgba(255,255,255,0.3)',
-          transform: 'translate(-50%, -50%)',
-          pointerEvents: 'none',
-          zIndex: 15,
-        }}
-      />
-    </>
-  );
-};
+// const ClickEffects = ({ showClickEffect, clickPosition, fishIcon }) => { ... }; // Moved to ./FishingArea/ClickEffects.js
 
 // Component for underwater bubbles
-const UnderwaterBubbles = () => {
-  // Generate unique keys for each bubble
-  const bubbles = useMemo(() => {
-    return Array.from({ length: 6 }).map((_, i) => ({
-      id: `bubble-${i}`,
-      bottom: Math.floor(Math.random() * 50),
-      left: `${Math.floor(Math.random() * 90)}%`,
-      size: Math.floor(10 + Math.random() * 15),
-      opacity: 0.2 + Math.random() * 0.5,
-      duration: 3 + Math.random() * 5,
-      delay: Math.random() * 5
-    }));
-  }, []);
-
-  return (
-    <>
-      {bubbles.map(bubble => (
-        <Box 
-          key={bubble.id}
-          sx={{ 
-            position: 'absolute', 
-            bottom: bubble.bottom, 
-            left: bubble.left, 
-            zIndex: 2 
-          }}
-        >
-          <motion.div
-            initial={{ y: 0, opacity: bubble.opacity }}
-            animate={{ y: -300 - Math.random() * 200, opacity: 0 }}
-            transition={{ 
-              duration: bubble.duration,
-              repeat: Infinity,
-              delay: bubble.delay,
-              ease: "easeOut"
-            }}
-            style={{ fontSize: `${bubble.size}px` }}
-          >
-            ○
-          </motion.div>
-        </Box>
-      ))}
-    </>
-  );
-};
+// const UnderwaterBubbles = () => { ... }; // Moved to ./FishingArea/UnderwaterBubbles.js
 
 // Component for water plants
-const WaterPlants = () => {
-  return (
-    <>
-      <Box sx={{ position: 'absolute', bottom: -10, left: '5%', zIndex: 3, transform: 'rotate(5deg)' }}>
-        <motion.div
-          animate={{ rotate: [0, 5, 0, -5, 0] }}
-          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-        >
-          <Typography sx={{ fontSize: '70px', color: 'rgba(0,100,0,0.5)' }}>🌿</Typography>
-        </motion.div>
-      </Box>
-      
-      <Box sx={{ position: 'absolute', bottom: -15, right: '7%', zIndex: 3, transform: 'rotate(-10deg)' }}>
-        <motion.div
-          animate={{ rotate: [0, -7, 0, 7, 0] }}
-          transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-        >
-          <Typography sx={{ fontSize: '80px', color: 'rgba(0,100,0,0.4)' }}>🌿</Typography>
-        </motion.div>
-      </Box>
-    </>
-  );
-};
+// const WaterPlants = () => { ... }; // Moved to ./FishingArea/WaterPlants.js
 
 // Main FishingArea component
 const FishingArea = ({ gamePhase = 'pond', onFishClick, clickPosition, showClickEffect, clickPower }) => {

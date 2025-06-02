@@ -1,7 +1,12 @@
 import React, { useMemo } from 'react';
 import { Box, Typography, Paper, Button, Alert, Chip } from '@mui/material';
 import { useSelector, useDispatch } from 'react-redux';
-import { selectKnowledge, selectResearchedItems, selectGamePhase, completeResearch } from '../store/gameSlice';
+import { completeResearch /*, selectKnowledge, selectResearchedItems, selectGamePhase*/ } from '../store/gameSlice'; // Actions from gameSlice
+import { 
+  selectKnowledge, 
+  selectResearchedItems, 
+  selectGamePhase 
+} from '../store/gameSelectors'; // Selectors from gameSelectors
 import { getAllResearchItems, isResearchAvailable, getResearchItemById } from '../data/research';
 import { formatNumber } from '../game/core';
 
