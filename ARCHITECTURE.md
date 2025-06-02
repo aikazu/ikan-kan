@@ -1,161 +1,93 @@
-# Architecture Documentation
+# ARCHITECTURE.md
 
-## 1. System Overview
+## System Overview
 
-Ikan-Kan is built as a single-page React application with Redux for state management. The architecture follows a component-based design with clear separation between game logic, UI components, and data management.
+Ikan Kan: Mancing Mania is a web-based incremental idle game. The frontend is built using React and Material UI, with Redux managing the application state. The game is designed to be a Progressive Web App (PWA) for cross-platform accessibility.
 
-```
-+---------------------------+
-|          UI Layer         |
-|  (React Components, MUI)  |
-+------------+----+---------+
-             |    |
-             v    v
-+------------+----+---------+
-|       State Layer         |
-|     (Redux, Reducers)     |
-+------------+----+---------+
-             |    |
-             v    v
-+------------+----+---------+
-|      Core Game Logic      |
-|   (Game Loop, Upgrades)   |
-+---------------------------+
-```
+## Frontend Architecture
 
-## 2. Component Architecture <a id="component-architecture"></a>
-
-The UI is structured as a hierarchy of React components:
+The application follows a component-based architecture, typical of React applications.
 
 ```
-GameScreen
-├── Header
-├── ResourceDisplay
-├── FishingArea
-│   └── FishButton
-├── UpgradePanel
-│   ├── CategoryTabs
-│   ├── UpgradeItem
-│   │   ├── UpgradeEffectDescription
-│   │   └── UpgradePurchaseButton
-│   └── NoUpgradesMessage
-└── Footer
+┌─────────────────────┐     ┌─────────────────────┐     ┌─────────────────────┐
+│    React Components   │────▶│   Redux State Mgt   │────▶│ Game Logic Services │
+│ (UI & Interactions) │     │ (Global App State)  │     │  (Core Mechanics)   │
+└─────────────────────┘     └─────────────────────┘     └─────────────────────┘
+         ▲                           │                             │
+         │                           ▼                             ▼
+         └───────────────────────────┴─────────────────────────────┘
+                         User Actions & Game Events
 ```
 
-Each component is responsible for a specific aspect of the UI and communicates with the Redux store for state updates.
+### Key Directories (within `ikan-kan/src/`):
 
-## 3. State Management <a id="state-management"></a>
+-   **`components/`**: Contains reusable UI components (e.g., buttons, modals, layout elements) and composite components representing different game views or features.
+    -   Examples: `FishDisplay.js`, `UpgradePanel.js`, `PondView.js`
+-   **`game/`**: Likely to house the core game logic, including:
+    -   Game progression (Phases: Pond, Lake, etc.)
+    -   Currency management (Fish, Scales, Knowledge, Prestige)
+    -   Upgrade systems and calculations
+    -   Event handling (tournaments, disasters)
+    -   Ecosystem management logic
+-   **`store/`**: Contains Redux setup.
+    -   **`actions/`**: Action creators for dispatching changes to the state.
+    -   **`reducers/`**: Reducers to handle state updates based on actions.
+    -   **`selectors/`**: Selectors to efficiently retrieve data from the state.
+    -   `store.js` (or `index.js`): Root store configuration.
+-   **`data/`**: May contain static game data, such as:
+    -   Fish definitions (species, rarities, bonuses)
+    -   Upgrade details (costs, effects)
+    -   Event definitions
+-   **`utils/`**: Utility functions used across the application (e.g., formatting, calculations, API helpers if any).
+-   **`App.js`**: Main application component, responsible for routing (if any) and layout.
+-   **`index.js`**: Entry point of the React application, renders `App.js` and sets up the Redux Provider.
 
-The application uses Redux Toolkit for state management with the following key slices:
+### State Management (Redux)
 
-- **gameSlice**: Core game state including resources, upgrades, and progress
-- **settingsSlice**: User preferences and configuration
-- **uiSlice**: UI-specific state like active tabs and modals
+Redux will be used to manage the global game state, including:
 
-The game state follows this structure:
+-   Player's current resources (fish, scales, knowledge)
+-   Unlocked upgrades and their levels
+-   Current game phase
+-   Discovered fish species
+-   Settings and preferences
+-   Active events
 
-```javascript
-{
-  resources: {
-    fish: number,
-    scales: number,
-    knowledge: number
-  },
-  production: {
-    fishPerSecond: number,
-    clickPower: number
-  },
-  upgrades: {
-    [upgradeId]: {
-      level: number,
-      purchased: boolean
-    }
-  },
-  stats: {
-    totalClicks: number,
-    totalFishCollected: number,
-    playTime: number
-  },
-  meta: {
-    lastActive: timestamp,
-    version: string
-  }
-}
-```
+### Core Game Mechanics Implementation (Conceptual)
 
-## 4. Data Flow <a id="data-flow"></a>
+-   **Manual Clicking**: Event handlers in React components dispatch Redux actions to increment fish count.
+-   **Automation**: Game logic services, possibly driven by `setInterval` or `requestAnimationFrame`, will periodically dispatch actions to simulate automated fishing, income generation, etc. These will update the Redux store.
+-   **Upgrades**: Components display upgrade options. Purchasing an upgrade dispatches an action to update the player's resources and the state of the upgrade in Redux. The game logic services will use the new upgrade levels for calculations.
+-   **Progression**: Game state (e.g., total fish caught, specific upgrades unlocked) will trigger phase transitions, unlocking new features and UI elements.
 
-The application follows a unidirectional data flow:
+## Data Model (Conceptual - managed in Redux state)
 
-1. User actions (clicks, purchases) are captured by React components
-2. Actions are dispatched to the Redux store
-3. Reducers update the state based on the actions
-4. Components react to state changes and re-render
+-   **`player`**:
+    -   `currencies`: { `fish`, `scales`, `knowledge`, `prestige` }
+    -   `currentPhase`: `string` (e.g., "POND", "LAKE")
+    -   `statistics`: { `totalClicks`, `totalFishCaught`, etc. }
+-   **`upgrades`**: `Object` where keys are upgrade IDs.
+    -   `[upgradeId]`: { `level`, `cost`, `effectMultiplier` }
+-   **`fishSpecies`**: `Object` where keys are fish IDs.
+    -   `[fishId]`: { `name`, `description`, `rarity`, `baseValue`, `discovered` }
+-   **`facilities`**: `Object` for player-built structures.
+    -   `[facilityId]`: { `level`, `productionRate` }
+-   **`settings`**: { `soundOn`, `musicOn` }
 
-For time-based actions, a game loop is implemented:
+## Technical Considerations from `IDEA.md`
 
-```
-+----------------+     +---------------+
-| Game Loop      |---->| Update State  |
-| (setInterval)  |     | (Dispatch)    |
-+----------------+     +---------------+
-        |                     |
-        v                     v
-+----------------+     +---------------+
-| Save Progress  |<----| UI Updates    |
-| (localStorage) |     | (React)       |
-+----------------+     +---------------+
-```
+-   **Progressive Web App (PWA)**: Requires a service worker, manifest file. `create-react-app` provides a base for this.
+-   **Cloud Saves**: To be implemented. Could involve a simple backend or use services like Firebase. For now, local storage can be a placeholder.
+-   **Offline Progression**: Calculations will need to occur when the game loads, based on the time elapsed since the last session. Store timestamp of last save.
+-   **Responsive Design**: Material UI assists with this. CSS and component design should be mindful of different screen sizes.
 
-## 5. Technical Constraints <a id="technical-constraints"></a>
+## Future Expansion Areas (High-Level)
 
-### Performance Considerations
+-   **Backend Integration**: For leaderboards, cloud saves, multiplayer features.
+-   **API Layer**: If a backend is introduced, an API service layer in the frontend will manage communication.
 
-- Game loop runs at 10 ticks per second (100ms intervals)
-- Heavy calculations are memoized to prevent unnecessary recalculations
-- Component rendering is optimized with `React.memo` and selective re-renders
+## Potential Refinement Areas
 
-### Browser Compatibility
+-   **Research Effect Application**: The `gameLogicMiddleware` currently applies research-based `categoryMultiplier` effects as global multipliers to total FPS/ClickPower. For true category-specific boosts, this middleware would need refactoring to calculate and apply multipliers on a per-category basis before summing final stats. This is noted for future improvement if more granular control is needed.
 
-- Targets modern browsers (Chrome, Firefox, Safari, Edge)
-- Uses polyfills for older browsers when necessary
-- Responsive design works on both desktop and mobile devices
-
-### Storage Limitations
-
-- Game state is stored in localStorage with fallback mechanisms
-- Save data is compressed to stay within storage limits
-- Version tracking ensures backward compatibility for saved games
-
-## 6. Security Architecture <a id="security"></a>
-
-As a client-side game, security focuses on:
-
-- Input validation to prevent unexpected state manipulation
-- Anti-cheat measures for basic save data integrity
-- Safe storage practices for user preferences
-
-## 7. Design Patterns <a id="design-patterns"></a>
-
-The application employs several design patterns:
-
-- **Observer Pattern**: Redux store subscription for state updates
-- **Command Pattern**: Action creators for state modifications
-- **Factory Pattern**: Upgrade generation and initialization
-- **Strategy Pattern**: Different upgrade effect implementations
-
-## 8. Architecture Decisions <a id="architecture-decisions"></a>
-
-| Decision | Options Considered | Rationale |
-|----------|-------------------|-----------|
-| State Management | Context API vs Redux | Redux chosen for complex state with time-based updates and persistence requirements |
-| UI Framework | Custom CSS vs Material UI | Material UI chosen for consistent design system and component library |
-| Animation Library | CSS vs Framer Motion | Framer Motion chosen for complex animations with React integration |
-| Storage Mechanism | Cookies vs localStorage | localStorage chosen for larger storage capacity and simpler API |
-
-## 9. Future Architectural Considerations <a id="future-considerations"></a>
-
-- Potential migration to TypeScript for improved type safety
-- Consideration of offline-first PWA capabilities
-- Modularization of game mechanics for plugin-style feature expansion
-- Server-side validation for potential multiplayer features 
+This architecture is a starting point and will evolve as development progresses. 

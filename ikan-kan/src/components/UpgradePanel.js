@@ -19,7 +19,7 @@ import {
 import { motion, AnimatePresence } from 'framer-motion';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 
-import { selectFish, selectUpgrades, purchaseUpgrade } from '../store/gameSlice';
+import { selectFish, selectUpgrades, purchaseUpgrade, selectGamePhase } from '../store/gameSlice';
 import { isUpgradeAvailable, getUpgradesByCategory, getAllUpgrades } from '../data/upgrades';
 import { calculateUpgradePrice, formatNumber } from '../game/core';
 
@@ -33,6 +33,19 @@ const UpgradeEffectDescription = ({ upgrade }) => {
     } else if (upgrade.effect.type === 'multiplier') {
       const percent = (upgrade.effect.value - 1) * 100;
       return `+${percent}% ${upgrade.effect.target === 'fishPerSecond' ? 'fish per second' : 'fish per click'}`;
+    } else if (upgrade.effect.type === 'unlockFish') {
+      if (upgrade.effect.bonusEffect === 'pond_scale_chance' && upgrade.effect.bonusValue) {
+        return `Unlocks a new fish. Pond catches now have a ${upgrade.effect.bonusValue * 100}% chance for scales.`;
+      }
+      return `Unlocks ${upgrade.effect.speciesId || 'a new fish'}`;
+    } else if (upgrade.effect.type === 'grantKnowledge') {
+      return `Grants ${upgrade.effect.value} Knowledge points.`;
+    } else if (upgrade.effect.type === 'globalMultiplier') {
+      const boostPercent = (upgrade.effect.value - 1) * 100;
+      if (upgrade.effect.target === 'allFishIncome') {
+        return `+${boostPercent.toFixed(0)}% to all fish income (click & passive).`;
+      }
+      return `Global boost of ${boostPercent.toFixed(0)}%.`;
     } else if (upgrade.effect.type === 'special') {
       if (upgrade.effect.value === 'doubleClick') {
         return `${upgrade.effect.chance * 100}% chance to double click`;
@@ -310,6 +323,7 @@ const CategoryTabs = ({ activeTab, categoryCounts, onChange }) => {
     { value: 'autoFishing', label: 'AUTO', count: categoryCounts.autoFishing || 0 },
     { value: 'pond', label: 'POND', count: categoryCounts.pond || 0 },
     { value: 'staff', label: 'STAFF', count: categoryCounts.staff || 0 },
+    { value: 'vessels', label: 'VESSELS', count: categoryCounts.vessels || 0 },
     { value: 'special', label: 'SPEC', count: categoryCounts.special || 0 }
   ];
 
@@ -456,6 +470,7 @@ const UpgradePanel = () => {
   const dispatch = useDispatch();
   const fish = useSelector(selectFish);
   const ownedUpgrades = useSelector(selectUpgrades);
+  const gamePhase = useSelector(selectGamePhase);
   
   const [activeTab, setActiveTab] = useState('clickPower');
   const [isLoading, setIsLoading] = useState(false);
@@ -472,7 +487,7 @@ const UpgradePanel = () => {
   // Handle tab change
   const handleTabChange = (event, newValue) => {
     try {
-      const validCategories = ['clickPower', 'fishingRod', 'autoFishing', 'pond', 'staff', 'special'];
+      const validCategories = ['clickPower', 'fishingRod', 'autoFishing', 'pond', 'staff', 'vessels', 'special'];
       if (validCategories.includes(newValue)) {
         setActiveTab(newValue);
         setError(null);
@@ -510,7 +525,7 @@ const UpgradePanel = () => {
     try {
       if (!activeTab) return [];
       
-      const gameState = { fish, upgrades: ownedUpgrades };
+      const gameState = { fish, upgrades: ownedUpgrades, phase: gamePhase };
       const categoryUpgrades = getUpgradesByCategory(activeTab);
       
       if (!Array.isArray(categoryUpgrades)) {
@@ -532,16 +547,16 @@ const UpgradePanel = () => {
       setError('Error loading upgrades. Please try again.');
       return [];
     }
-  }, [activeTab, fish, ownedUpgrades]);
+  }, [activeTab, fish, ownedUpgrades, gamePhase]);
   
   // Calculate upgrade counts for each category
   const categoryCounts = useMemo(() => {
     try {
-      const gameState = { fish, upgrades: ownedUpgrades };
+      const gameState = { fish, upgrades: ownedUpgrades, phase: gamePhase };
       const allUpgrades = getAllUpgrades();
       const counts = {};
       
-      ['clickPower', 'fishingRod', 'autoFishing', 'pond', 'staff', 'special'].forEach(category => {
+      ['clickPower', 'fishingRod', 'autoFishing', 'pond', 'staff', 'vessels', 'special'].forEach(category => {
         const categoryUpgrades = Object.values(allUpgrades).filter(upgrade => 
           upgrade.category === category && isUpgradeAvailable(upgrade, gameState)
         );
@@ -553,7 +568,7 @@ const UpgradePanel = () => {
       console.error('Error calculating category counts:', err);
       return {};
     }
-  }, [fish, ownedUpgrades]);
+  }, [fish, ownedUpgrades, gamePhase]);
 
   return (
     <Box sx={{ 

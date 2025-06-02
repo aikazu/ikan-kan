@@ -24,6 +24,7 @@ import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 import EqualizerIcon from '@mui/icons-material/Equalizer';
 import ScienceIcon from '@mui/icons-material/Science';
 import ReplayIcon from '@mui/icons-material/Replay';
+import BiotechIcon from '@mui/icons-material/Biotech';
 
 import { 
   catchFish, 
@@ -56,6 +57,7 @@ const GameScreen = () => {
   const [clickPosition, setClickPosition] = useState({ x: 0, y: 0 });
   const [showInfoPanel, setShowInfoPanel] = useState(false);
   const [showUpgradePanel, setShowUpgradePanel] = useState(false);
+  const [showResearchPanel, setShowResearchPanel] = useState(false);
   const [infoTabValue, setInfoTabValue] = useState(0);
   
   // Handle fish click
@@ -83,11 +85,19 @@ const GameScreen = () => {
   const toggleInfoPanel = () => {
     setShowInfoPanel(!showInfoPanel);
     setShowUpgradePanel(false);
+    setShowResearchPanel(false);
   };
   
   const toggleUpgradePanel = () => {
     setShowUpgradePanel(!showUpgradePanel);
     setShowInfoPanel(false);
+    setShowResearchPanel(false);
+  };
+  
+  const toggleResearchPanel = () => {
+    setShowResearchPanel(!showResearchPanel);
+    setShowInfoPanel(false);
+    setShowUpgradePanel(false);
   };
   
   // Handle info tab change
@@ -187,6 +197,7 @@ const GameScreen = () => {
               zIndex: 5,
               display: 'flex',
               flexDirection: 'column',
+              gap: 1.5,
               alignItems: 'center'
             }}>
               <Paper
@@ -213,6 +224,33 @@ const GameScreen = () => {
                   color: 'primary.main'
                 }}>
                   Upgrade
+                </Typography>
+              </Paper>
+              {/* Research Button (Below Upgrade Button) */}
+              <Paper
+                elevation={4}
+                onClick={toggleResearchPanel}
+                sx={{
+                  borderRadius: 2,
+                  p: 1,
+                  cursor: 'pointer',
+                  transition: 'transform 0.2s',
+                  '&:hover': {
+                    transform: 'scale(1.05)',
+                  },
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  width: '130px',
+                  bgcolor: 'rgba(255,255,255,0.9)'
+                }}
+              >
+                <BiotechIcon sx={{ mr: 1, color: 'secondary.main' }} />
+                <Typography variant="button" sx={{ 
+                  fontWeight: 'bold', 
+                  color: 'secondary.main'
+                }}>
+                  Research
                 </Typography>
               </Paper>
             </Box>
@@ -631,6 +669,52 @@ const GameScreen = () => {
                 </Typography>
               </Box>
             )}
+          </Box>
+        </Paper>
+      </Backdrop>
+      
+      {/* Research Panel Modal (Placeholder) */}
+      <Backdrop
+        sx={{ 
+          color: '#fff', 
+          zIndex: 1500,
+          backdropFilter: 'blur(3px)'
+        }}
+        open={showResearchPanel}
+        onClick={() => setShowResearchPanel(false)}
+      >
+        <Paper
+          elevation={5}
+          sx={{
+            width: '90%',
+            maxWidth: '700px',
+            maxHeight: '80vh',
+            borderRadius: 3,
+            overflow: 'hidden',
+            position: 'relative',
+            p: 0
+          }}
+          onClick={(e) => e.stopPropagation()}
+        >
+          <Box sx={{ 
+            display: 'flex', 
+            justifyContent: 'space-between', 
+            alignItems: 'center', 
+            p: 2.5, 
+            borderBottom: '1px solid rgba(0,0,0,0.08)',
+            bgcolor: 'rgba(255, 255, 255, 0.98)',
+            zIndex: 10
+          }}>
+            <Typography variant="h5" sx={{ fontWeight: 700, color: 'secondary.main' }}>
+              Research & Development
+            </Typography>
+            <IconButton onClick={toggleResearchPanel} size="small" sx={{ bgcolor: 'rgba(0,0,0,0.03)' }}>
+              <CloseIcon />
+            </IconButton>
+          </Box>
+          <Box sx={{ p: 3, textAlign: 'center' }}>
+            <Typography variant="h6">Research Panel Coming Soon!</Typography>
+            <Typography color="text.secondary">Unlock new technologies and boosts here.</Typography>
           </Box>
         </Paper>
       </Backdrop>

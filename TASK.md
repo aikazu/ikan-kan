@@ -1,75 +1,38 @@
-# Ikan Kan: Mancing Mania - Task Tracking
+| ID   | Description                                       | Priority | Status      | Dependencies | Progress |
+|------|---------------------------------------------------|----------|-------------|--------------|----------|
+| T001 | Project Setup, Documentation & Code Review        | HIGH     | COMPLETED   | -            | 100%     |
+| T002 | Implement Phase 1: The Pond - Manual Clicking      | HIGH     | COMPLETED   | T001         | 100%     |
+| T003 | Implement Phase 1: The Pond - Basic Automation     | HIGH     | COMPLETED   | T002         | 100%     |
+| T004 | Implement Phase 1: Pond Upgrades for Fish Diversity | MEDIUM   | COMPLETED   | T003         | 100%     |
+| T005 | Implement Game Phase Transition to Lake             | HIGH     | COMPLETED   | T004         | 100%     |
+| T006 | Introduce "Knowledge" Currency & Research Mechanic  | HIGH     | COMPLETED   | T005         | 100%     |
+| T007 | Implement Boat Mechanic for Lake Fishing            | MEDIUM   | COMPLETED   | T006         | 100%     |
+| T008 | Design and Implement Rare Lake Fish Species         | MEDIUM   | COMPLETED   | T006         | 100%     |
+| T009 | Basic Fish Market Mechanic (Passive Boost)          | LOW      | COMPLETED   | T006         | 100%     |
+| T010 | Implement Game Phase Transition to Coastal Waters   | HIGH     | COMPLETED   | T009         | 100%     |
+| T011 | Commercial Fishing Fleet Mechanic                   | HIGH     | COMPLETED   | T010         | 100%     |
+| T012 | Marine Biology Research & Basic Fish Breeding Intro | MEDIUM   | TODO        | T010         | 0%       |
+| T013 | Basic Sustainable Fishing Practices Mechanic        | LOW      | TODO        | T012         | 0%       |
+| T014 | Basic Fish Processing Facilities Mechanic           | MEDIUM   | TODO        | T011         | 0%       |
 
-## Active Tasks
+## Active Session Focus
+Session S001: Initial codebase analysis complete. Preparing for T012.
+Currently working on: T012 - Marine Biology Research & Basic Fish Breeding Intro.
+- [x] Define new research items in `data/research.js` for marine biology.
+- [x] Determine effects (e.g., unlock new coastal fish, passive bonuses related to fish populations).
+- [x] Update `gameLogicMiddleware` or related systems if new effect types are introduced.
 
-| Task ID | Description | Priority | Complexity | Status | Dependencies | Files/Modules | Expected Outcome | Progress | Notes |
-|---------|-------------|----------|------------|--------|--------------|--------------|------------------|----------|-------|
-| T001 | Set up project boilerplate with Create React App | High | Simple | Done | None | `/` | Project structure with React, Redux, and basic dependencies | 100% | Completed using Create React App |
-| T002 | Create basic game UI layout | High | Medium | Done | T001 | `src/components/` | Main game screen with clicking area and panels | 100% | Created GameScreen, FishingArea, ResourceDisplay, and UpgradePanel components |
-| T003 | Implement core game loop with click mechanics | High | Medium | Done | T001 | `src/game/core.js` | Working click mechanics with basic resource generation | 100% | Implemented startGameLoop() and handleFishClick() functions |
-| T004 | Implement save/load functionality | High | Medium | Done | T003 | `src/utils/storage.js` | Game state persistence using localStorage | 100% | Implemented saveGameState() and loadGameState() functions |
-| T005 | Create fish collection system | Medium | Medium | Done | T003 | `src/data/fish.js` | Fish catalog with basic properties and display | 100% | Created fish data structure and getRandomFish() function |
-| T006 | Implement basic upgrade system | Medium | Medium | Done | T003 | `src/store/gameSlice.js` | Purchase and apply upgrades that affect resource generation | 100% | Implemented purchaseUpgrade action in Redux |
-| T007 | Add initial set of buyable upgrades | Medium | Medium | Done | T006 | `src/data/upgrades.js` | At least 10 different upgrades with scaling costs | 100% | Created 15 different upgrades across multiple categories |
-| T008 | Implement basic achievements | Low | Medium | To Do | T003 | `src/game/achievements.js` | Achievement tracking and notification system | 0% | Enhances player engagement |
-| T009 | Add offline progression calculation | Medium | Complex | Done | T003, T004 | `src/utils/storage.js` | Calculate resources gained while away | 100% | Implemented calculateOfflineProgress() function |
-| T010 | Create pond environment visual | Medium | Simple | Done | T002 | `src/components/FishingArea.js` | Basic pond visualization with ambient animations | 100% | Implemented FishingArea component with water effects |
-| T026 | Improve UI layout and consistency | Medium | Simple | Done | T002 | `src/components/GameScreen.js`, `src/components/ResourceDisplay.js` | More intuitive UI with consistent button positioning | 100% | Relocated Info button within game area, added transparent background to ResourceDisplay |
-| T027 | Configure version control system | High | Medium | Done | None | `.gitignore`, `.git` | Properly configured git repository with GitHub integration | 100% | Set up git repository with appropriate .gitignore and remote configuration |
-
-## Backlog Tasks
-
-| Task ID | Description | Priority | Complexity | Dependencies | Notes |
-|---------|-------------|----------|------------|--------------|-------|
-| T011 | Implement phase progression (Pond to Lake) | Medium | Complex | T003, T006, T007 | Requires unlock conditions and new environment |
-| T012 | Add sound effects and background music | Low | Medium | T001 | Enhance player experience |
-| T013 | Create staff hiring mechanics | Medium | Complex | T003, T006 | Automated resource generation |
-| T014 | Implement research system | Medium | Complex | T003, T006 | Unlock new features and upgrades |
-| T015 | Add diverse fish species with different properties | Medium | Complex | T005 | At least 30 different fish species |
-| T016 | Create statistics dashboard | Low | Medium | T003 | Track player progress and achievements |
-| T017 | Implement optional cloud saves | Low | Complex | T004 | Firebase integration for cross-device play |
-| T018 | Add events system | Low | Complex | T003, T005 | Random events to keep gameplay interesting |
-| T019 | Create visual effects for clicking and upgrades | Low | Medium | T002, T003 | Enhance visual feedback |
-| T020 | Implement prestige mechanics | Low | Complex | T003, T011 | Late-game progression mechanic |
-| T021 | Add ecosystem management mechanics | Low | Complex | T011, T015 | Balance fish populations and environment |
-| T022 | Create tutorial system | Medium | Medium | T002, T003 | Help new players understand mechanics |
-| T023 | Implement settings menu | Low | Simple | T001 | Allow players to adjust game settings |
-| T024 | Add social media sharing | Low | Simple | T001 | Allow players to share progress |
-| T025 | Create leaderboard system | Low | Complex | T017 | Compare progress with other players |
-
-## Completed Tasks
-
-| Task ID | Description | Completion | Notes |
-|---------|-------------|------------|-------|
-| T001 | Set up project boilerplate with Create React App | Phase 1 | Created project with React, Redux, and Material-UI |
-| T002 | Create basic game UI layout | Phase 1 | Implemented main game screens and panels |
-| T003 | Implement core game loop with click mechanics | Phase 1 | Created game loop with ticking and click handling |
-| T004 | Implement save/load functionality | Phase 1 | Added localStorage persistence |
-| T005 | Create fish collection system | Phase 1 | Created fish data structures and logic |
-| T006 | Implement basic upgrade system | Phase 1 | Added upgrade purchase mechanics |
-| T007 | Add initial set of buyable upgrades | Phase 1 | Created 15 different upgrades |
-| T009 | Add offline progression calculation | Phase 1 | Implemented offline gains calculation |
-| T010 | Create pond environment visual | Phase 1 | Created fishing area with visual effects |
-| T026 | Improve UI layout and consistency | Phase 1 | Relocated Info button within game area, added transparent background to ResourceDisplay |
-| T027 | Configure version control system | Phase 1 | Set up git repository with appropriate .gitignore and GitHub integration |
-
-## Current Sprint: Foundation (Week 1)
-
-**Goal**: Set up project and implement core gameplay loop
-
-**Focus Areas**:
-
-- Project setup and configuration
-- Basic UI components
-- Core game mechanics (clicking, resource generation)
-- Save/load functionality
-- UI refinement and consistency
-- Version control setup
-
-**Blockers**: None identified yet
-
-## Session Boundaries
-
-**Current Session**: Phase 1 Foundation
-**Session Focus**: Repository configuration and documentation update
-**Progress**: Complete version control setup with GitHub integration
+## Completed Tasks:
+| ID   | Description                                       | Completed | Notes                                                              |
+|------|---------------------------------------------------|-----------|--------------------------------------------------------------------|
+| T001 | Project Setup, Documentation & Code Review        | ✓         | Core docs created, codebase reviewed.                              |
+| T002 | Implement Phase 1: The Pond - Manual Clicking      | ✓         | Existing codebase covers manual click mechanic.                    |
+| T003 | Implement Phase 1: The Pond - Basic Automation     | ✓         | Existing codebase and `upgrades.js` cover this.                    |
+| T004 | Implement Phase 1: Pond Upgrades for Fish Diversity | ✓         | Added `attract_new_fish` upgrade and logic.                        |
+| T005 | Implement Game Phase Transition to Lake             | ✓         | Added logic to `upgradeMiddleware` to transition to Lake phase.    |
+| T006 | Introduce "Knowledge" Currency & Research Mechanic  | ✓         | Knowledge, research data, state, middleware, and panel UI implemented. |
+| T007 | Implement Boat Mechanic for Lake Fishing            | ✓         | Boat upgrades added to data and UpgradePanel; effects handled by middleware. |
+| T008 | Design and Implement Rare Lake Fish Species         | ✓         | Lake fish defined, unlock paths set, bonus logic in `catchFish` added. |
+| T009 | Basic Fish Market Mechanic (Passive Boost)          | ✓         | `market_stall` upgrade added, `globalMultiplier` effect handled.     |
+| T010 | Implement Game Phase Transition to Coastal Waters   | ✓         | Logic for phase change and default coastal fish discovery added.   |
+| T011 | Commercial Fishing Fleet Mechanic                   | ✓         | Commercial vessel upgrades added to data; effects handled by existing logic. |

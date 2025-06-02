@@ -16,19 +16,11 @@ Provides an engaging, relaxing experience combining idle gameplay with strategic
 - **Ecosystem Management**: Balance fishing with sustainability
 - **Educational Elements**: Learn about marine life through gameplay
 
-## Visuals
-
-The game features a calming water-based environment where players can:
-- Click on colorful animated fish to catch them
-- Progress through various fishing locations from backyard ponds to deep seas
-- Collect and upgrade different types of equipment
-- Experience visual feedback with ripple effects and bubble animations
-
-## Installation
+## Quick Start
 
 ### Prerequisites
 
-- Node.js (v14.0 or higher)
+- Node.js (v14.0 or higher recommended, project uses v20.x compatibility via react-scripts)
 - NPM (v6.0 or higher)
 
 ### Setup
@@ -44,18 +36,20 @@ cd ikan-kan
 npm install
 
 # Start development server
-npm run dev
+npm start
 ```
 
 ## Basic Usage
 
-```javascript
-// Example code to add fish to your inventory
-game.catchFish(1);
+Once the development server is running, open your browser to the specified local address (usually `http://localhost:3000`).
+Interact with the game elements on the screen to:
+- Catch fish
+- Purchase upgrades
+- Explore different game areas as you progress
 
-// Example code to purchase an upgrade
-game.purchaseUpgrade('fishing_rod_1');
-```
+## Architecture Overview
+
+For a detailed system design and component overview, please see [@Architecture](ARCHITECTURE.md).
 
 ## Technology Stack
 
@@ -69,24 +63,33 @@ game.purchaseUpgrade('fishing_rod_1');
 
 ```bash
 ikan-kan/
-├── public/             # Static assets
-│   └── assets/         # Game images and visual elements
+├── public/             # Static assets, PWA manifest
 ├── src/                # Source code
-│   ├── components/     # React components
-│   ├── store/          # Redux store
-│   ├── game/           # Game logic
-│   ├── screens/        # Game screens
-│   └── utils/          # Utility functions
-├── docs/               # Documentation
-└── tests/              # Test files
+│   ├── components/     # React UI components
+│   ├── store/          # Redux state management (actions, reducers, store)
+│   ├── game/           # Core game logic, progression, mechanics
+│   ├── data/           # Static game data (fish types, upgrades)
+│   ├── utils/          # Utility functions
+│   ├── App.js          # Main application component
+│   └── index.js        # Application entry point
+├── .gitignore          # Specifies intentionally untracked files
+├── package.json        # Project metadata and dependencies
+└── README.md           # This file
 ```
+(Note: `docs/` and `tests/` directories from the original README are not yet present or have been integrated elsewhere by `create-react-app`)
 
-## Documentation
+## Documentation Map
 
-For more detailed documentation, please see:
-- [Planning Document](PLANNING.md) - Project vision and roadmap
-- [Architecture Document](ARCHITECTURE.md) - Technical architecture details
-- [Tech Stack](TECH-STACK.md) - Detailed technology choices
+- [@IDEA](IDEA.md) - Project concept, game progression, and features.
+- [@TASK](TASK.md) - Current tasks, backlog, and progress.
+- [@STATE](STATE.md) - System state snapshots and checkpoints.
+- [@ARCHITECTURE](ARCHITECTURE.md) - System design, components, and technical architecture.
+- [@DECISIONS](DECISIONS.md) - Log of key technical and design decisions.
+- [@Tech Stack (inferred)](ikan-kan/package.json) - Dependencies defining the tech stack.
+
+## Contribution Guidelines
+
+(To be defined. Standard contribution practices like feature branches, pull requests, and code reviews will likely be adopted.)
 
 ## License
 

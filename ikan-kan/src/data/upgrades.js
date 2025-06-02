@@ -8,6 +8,7 @@
  * - staff: Improves staff efficiency
  * - pond: Improves pond quality and fish yields
  * - special: Special upgrades with unique effects
+ * - vessels: Boats and ships for fishing in larger bodies of water
  */
 
 const upgrades = {
@@ -220,6 +221,28 @@ const upgrades = {
     },
     icon: '🍞',
   },
+  attract_new_fish: {
+    id: 'attract_new_fish',
+    name: 'Attract New Species',
+    description: 'Improve pond conditions to attract a new, scale-bearing fish species.',
+    category: 'pond',
+    basePrice: 120,
+    priceGrowth: 1.8, 
+    maxLevel: 1,
+    effect: {
+      type: 'unlockFish', 
+      speciesId: 'pond_dweller_1',
+      bonusEffect: 'pond_scale_chance', // Custom tag to link to the gameSlice logic
+      bonusValue: 0.01 // The 1% chance
+    },
+    unlockCondition: {
+      upgrades: {
+        pond_cleaning: 1 
+      },
+      fish: 100
+    },
+    icon: '🧐',
+  },
   
   // Staff upgrades
   hire_kid: {
@@ -297,6 +320,123 @@ const upgrades = {
     },
     icon: '✨',
   },
+  study_pond_ecology: {
+    id: 'study_pond_ecology',
+    name: 'Study Pond Ecology',
+    description: 'Observe the pond carefully to gain initial research insights.',
+    category: 'special',
+    basePrice: 300,
+    priceGrowth: 1,
+    maxLevel: 1,
+    effect: {
+      type: 'grantKnowledge',
+      value: 10,
+    },
+    unlockCondition: {
+      upgrades: {
+        fiber_rod: 1,
+      },
+      fish: 250
+    },
+    icon: '🔬',
+  },
+  market_stall: {
+    id: 'market_stall',
+    name: 'Establish Market Stall',
+    description: 'Set up a stall to sell fish, boosting all fish income (clicks and passive) by 10%.',
+    category: 'special',
+    basePrice: 3000,
+    priceGrowth: 1, 
+    maxLevel: 1,
+    effect: {
+      type: 'globalMultiplier', 
+      target: 'allFishIncome', // A conceptual target, middleware will apply to both FPS and Click
+      value: 1.10,            // 10% increase
+    },
+    unlockCondition: {
+      gamePhase: 'lake',
+      researchCompleted: ['lake_ecology_study'] 
+    },
+    icon: '🏪',
+  },
+
+  // Vessel Upgrades (New Category)
+  rowboat: {
+    id: 'rowboat',
+    name: 'Rowboat',
+    description: 'A simple rowboat to explore the edges of the lake. Increases passive fish income.',
+    category: 'vessels',
+    basePrice: 750,
+    priceGrowth: 1.5,
+    maxLevel: 1, 
+    effect: {
+      type: 'fishPerSecond',
+      value: 3 
+    },
+    unlockCondition: {
+      gamePhase: 'lake', // Ensure this is checked by isUpgradeAvailable
+      fish: 500 
+    },
+    icon: '🛶',
+  },
+  small_fishing_boat: {
+    id: 'small_fishing_boat',
+    name: 'Small Fishing Boat',
+    description: 'A motorized boat allowing for more efficient fishing in the lake.',
+    category: 'vessels',
+    basePrice: 2500,
+    priceGrowth: 1.6,
+    maxLevel: 1,
+    effect: {
+      type: 'fishPerSecond',
+      value: 10 
+    },
+    unlockCondition: {
+      gamePhase: 'lake', // Ensure this is checked by isUpgradeAvailable
+      upgrades: { rowboat: 1 },
+      fish: 2000
+    },
+    icon: '🚤',
+  },
+  small_trawler: {
+    id: 'small_trawler',
+    name: 'Small Trawler',
+    description: 'A sturdy trawler capable of handling rougher coastal waters and hauling larger catches.',
+    category: 'vessels',
+    basePrice: 15000,
+    priceGrowth: 1.7,
+    maxLevel: 1,
+    effect: {
+      type: 'fishPerSecond',
+      value: 50
+    },
+    unlockCondition: {
+      gamePhase: 'coastal',
+      upgrades: { small_fishing_boat: 1 },
+      fish: 10000
+    },
+    icon: '🛥️' // Motorboat icon as placeholder
+  },
+  fishing_schooner: {
+    id: 'fishing_schooner',
+    name: 'Fishing Schooner',
+    description: 'A larger sailing vessel adapted for extended fishing trips along the coast.',
+    category: 'vessels',
+    basePrice: 50000,
+    priceGrowth: 1.8,
+    maxLevel: 1,
+    effect: {
+      type: 'fishPerSecond',
+      value: 150
+    },
+    unlockCondition: {
+      gamePhase: 'coastal',
+      upgrades: { small_trawler: 1 },
+      researchCompleted: ['advanced_sonar_techniques'], // Example dependency on research
+      fish: 40000
+    },
+    icon: '⛵'
+  },
 };
 
 export default upgrades;
@@ -338,6 +478,11 @@ export const isUpgradeAvailable = (upgrade, gameState) => {
         return false;
       }
     }
+  }
+
+  // Check gamePhase requirement (NEW)
+  if (upgrade.unlockCondition.gamePhase && gameState.phase !== upgrade.unlockCondition.gamePhase) {
+    return false;
   }
   
   return true;
